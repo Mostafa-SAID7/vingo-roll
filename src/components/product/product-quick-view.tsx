@@ -71,11 +71,15 @@ export function ProductQuickViewModal({ product, open, onOpenChange }: QuickView
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0">
+      <DialogContent className="w-[95vw] max-w-4xl max-h-[95vh] overflow-y-auto p-0">
         <DialogHeader className="sticky top-0 bg-background border-b border-border/30 p-6 flex flex-row items-center justify-between">
           <DialogTitle className="text-xl font-bold">{product.name}</DialogTitle>
           <button
-            onClick={() => onOpenChange(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onOpenChange(false);
+            }}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Close"
           >
@@ -83,7 +87,7 @@ export function ProductQuickViewModal({ product, open, onOpenChange }: QuickView
           </button>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 p-6">
           {/* Product Image */}
           <div className="flex items-center justify-center bg-muted rounded-lg p-4">
             <img
@@ -270,7 +274,16 @@ export function QuickViewButton({ product }: { product: Product }) {
       >
         <Eye className="h-4 w-4" aria-hidden="true" />
       </button>
-      <ProductQuickViewModal product={product} open={open} onOpenChange={setOpen} />
+      <ProductQuickViewModal 
+        product={product} 
+        open={open} 
+        onOpenChange={(newOpen) => {
+          // Prevent navigation when closing
+          if (!newOpen) {
+            setOpen(false);
+          }
+        }} 
+      />
     </>
   );
 }
