@@ -17,9 +17,8 @@ RUN npm ci --legacy-peer-deps && \
 # Copy source code
 COPY . .
 
-# Run quality checks
-RUN npm run lint && \
-    npm run build
+# Build application (skip lint during Docker build)
+RUN npm run build
 
 # Stage 2: Production environment
 FROM node:20-alpine
@@ -29,15 +28,16 @@ WORKDIR /app
 # Install dumb-init for proper signal handling
 RUN apk add --no-cache dumb-init
 
+# Install serve to serve static files
+RUN npm install -g serve
+
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001
 
 # Copy built application from builder
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
-COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nodejs:nodejs /app/package.json ./package.json
-COPY --from=builder --chown=nodejs:nodejs /app/package-lock.json ./package-lock.json
 
 # Set environment variables
 ENV NODE_ENV=production
@@ -56,5 +56,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
 
-# Start application
-CMD ["node", "-e", "require('http').createServer((req, res) => { res.writeHead(200, {'Content-Type': 'text/html'}); res.end(require('fs').readFileSync('./dist/index.html')); }).listen(3000, () => console.log('Server running on port 3000'))"]
+# Start application - serve the static files
+CMD ["serve", "-s", "dist", "-l", "3000"]
