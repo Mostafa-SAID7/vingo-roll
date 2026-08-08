@@ -1,0 +1,85 @@
+name: Rabbit Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "src/**"
+      - "tsconfig.json"
+      - "eslint.config.js"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  rabbit-review:
+    runs-on: ubuntu-latest
+    name: 🐰 Rabbit Code Review
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Rabbit Code Review
+        uses: cloudbees/rabbit-code-review-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          report-format: "github-pr"
+          
+      - name: Comment PR with Review Summary
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reviewFile = 'rabbit-review.json';
+            
+            if (fs.existsSync(reviewFile)) {
+              const review = JSON.parse(fs.readFileSync(reviewFile, 'utf8'));
+              
+              let comment = '🐰 **Rabbit Code Review Results**\n\n';
+              comment += `**Total Issues Found:** ${review.totalIssues}\n`;
+              comment += `**Critical:** ${review.critical || 0}\n`;
+              comment += `**High:** ${review.high || 0}\n`;
+              comment += `**Medium:** ${review.medium || 0}\n`;
+              comment += `**Low:** ${review.low || 0}\n\n`;
+              
+              if (review.issues && review.issues.length > 0) {
+                comment += '### Issues\n\n';
+                review.issues.forEach(issue => {
+                  comment += `- **${issue.severity}**: ${issue.file}:${issue.line} - ${issue.message}\n`;
+                });
+              }
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
+
+      - name: Fail on critical issues
+        run: |
+          if [ -f rabbit-review.json ]; then
+            CRITICAL=$(jq '.critical // 0' rabbit-review.json)
+            if [ "$CRITICAL" -gt 0 ]; then
+              echo "❌ Critical issues found in code review"
+              exit 1
+            fi
+          fi
+
