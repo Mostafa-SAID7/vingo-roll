@@ -24,52 +24,55 @@ export function ProductCard({
 
   return (
     <article className="group relative">
-      <div className="bg-muted relative aspect-[4/5] overflow-hidden rounded-sm">
-        <img
-          src={main?.src ?? ""}
-          alt={main?.alt ?? product.name}
-          width={1200}
-          height={1500}
-          loading={priority ? "eager" : "lazy"}
-          className="h-full w-full object-cover transition-all duration-700 group-hover:scale-[1.04] group-hover:opacity-0"
-        />
-        <img
-          src={hover?.src ?? ""}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          className="absolute inset-0 h-full w-full scale-[1.04] object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-        />
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          {product.sale ? <Badge variant="destructive">Sale</Badge> : null}
-          {product.newArrival ? <Badge>New</Badge> : null}
-          {product.bestseller ? <Badge variant="secondary">Bestseller</Badge> : null}
+      <Link
+        to="/product/$slug"
+        params={{ slug: product.slug }}
+        className="block relative"
+      >
+        <div className="bg-muted relative aspect-[4/5] overflow-hidden rounded-sm">
+          <img
+            src={main?.src ?? ""}
+            alt={main?.alt ?? product.name}
+            width={1200}
+            height={1500}
+            loading={priority ? "eager" : "lazy"}
+            className="h-full w-full object-cover transition-all duration-700 group-hover:scale-[1.04] group-hover:opacity-0"
+          />
+          <img
+            src={hover?.src ?? ""}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute inset-0 h-full w-full scale-[1.04] object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+          />
+          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+            {product.sale ? <Badge variant="destructive">Sale</Badge> : null}
+            {product.newArrival ? <Badge>New</Badge> : null}
+            {product.bestseller ? <Badge variant="secondary">Bestseller</Badge> : null}
+          </div>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggle(product.slug);
+            }}
+            aria-pressed={saved}
+            aria-label={
+              saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
+            }
+            className="bg-background/85 text-foreground hover:bg-background absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-full backdrop-blur transition-colors z-10"
+          >
+            <Heart className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
+          </button>
+          <QuickViewButton product={product} />
         </div>
-        <button
-          type="button"
-          onClick={() => toggle(product.slug)}
-          aria-pressed={saved}
-          aria-label={
-            saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
-          }
-          className="bg-background/85 text-foreground hover:bg-background absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-full backdrop-blur transition-colors"
-        >
-          <Heart className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
-        </button>
-        <QuickViewButton product={product} />
-      </div>
+      </Link>
 
       <div className="mt-4 flex items-start justify-between gap-4">
         <div>
           <h3 className="font-sans text-sm font-medium tracking-tight">
-            <Link
-              to="/product/$slug"
-              params={{ slug: product.slug }}
-              className="after:absolute after:inset-0"
-            >
-              {product.name}
-            </Link>
-          </h3>
+            {product.name}</h3>
           <p className="text-muted-foreground mt-1 line-clamp-2 max-w-xs text-xs leading-relaxed">
             {product.shortDescription}
           </p>

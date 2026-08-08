@@ -259,8 +259,12 @@ export function QuickViewButton({ product }: { product: Product }) {
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
-        className="bg-background/85 text-foreground hover:bg-background absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full backdrop-blur transition-colors opacity-0 group-hover:opacity-100"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen(true);
+        }}
+        className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-background/85 text-foreground backdrop-blur transition-all opacity-0 group-hover:opacity-100 hover:bg-background z-10"
         aria-label={`Quick view ${product.name}`}
         title="Quick view"
       >
