@@ -1,0 +1,287 @@
+name: Security & Code Quality
+
+on:
+  push:
+    branches: [main, develop, "feature/**", "bugfix/**"]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run security scans daily at 2 AM UTC
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+
+jobs:
+  dependency-check:
+    runs-on: ubuntu-latest
+    name: Dependency Scanning
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit npm dependencies
+        id: audit
+        run: npm audit --audit-level=moderate || true
+
+      - name: Check for vulnerable packages
+        continue-on-error: true
+        run: |
+          echo "## 📦 Dependency Audit Report" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate >> $GITHUB_STEP_SUMMARY 2>&1 || true
+
+      - name: Upload audit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-report
+          path: npm-audit.txt
+          retention-days: 30
+
+  sast-analysis:
+    runs-on: ubuntu-latest
+    name: Static Analysis (SAST)
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint security checks
+        id: eslint
+        run: npm run lint 2>&1 | tee eslint-report.txt || true
+        continue-on-error: true
+
+      - name: TypeScript strict mode check
+        run: npx tsc --strict --noEmit 2>&1 | tee ts-strict-report.txt || true
+        continue-on-error: true
+
+      - name: Check for security issues
+        id: security-check
+        run: |
+          # Check for common security patterns
+          echo "Scanning for security anti-patterns..."
+          
+          # Check for hardcoded secrets
+          if grep -r "password\s*=\s*['\"]" src/ --include="*.ts" --include="*.tsx" | grep -v node_modules; then
+            echo "⚠️ Warning: Possible hardcoded secrets found"
+          fi
+          
+          # Check for eval usage
+          if grep -r "eval(" src/ --include="*.ts" --include="*.tsx"; then
+            echo "⚠️ Warning: eval() usage found"
+          fi
+          
+          # Check for dangerouslySetInnerHTML
+          if grep -r "dangerouslySetInnerHTML" src/ --include="*.tsx"; then
+            echo "⚠️ Warning: dangerouslySetInnerHTML usage found"
+          fi
+          
+          echo "✅ Security pattern scan complete"
+
+      - name: Upload SAST reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sast-reports
+          path: |
+            eslint-report.txt
+            ts-strict-report.txt
+          retention-days: 30
+
+  code-analysis:
+    runs-on: ubuntu-latest
+    name: Code Quality Analysis
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check code complexity
+        continue-on-error: true
+        run: |
+          echo "## 📊 Code Quality Metrics" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### File Statistics" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          find src -type f \( -name "*.ts" -o -name "*.tsx" \) | wc -l | xargs echo "TypeScript files:" >> $GITHUB_STEP_SUMMARY
+          find src -type f \( -name "*.ts" -o -name "*.tsx" \) -exec wc -l {} + | tail -1 | awk '{print "Total lines: " $1}' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Check for code smells
+        continue-on-error: true
+        run: |
+          echo "## 🔍 Code Quality Checks" >> $GITHUB_STEP_SUMMARY
+          
+          # Check for TODO/FIXME comments
+          TODO_COUNT=$(grep -r "TODO\|FIXME" src --include="*.ts" --include="*.tsx" | wc -l)
+          echo "- TODO/FIXME comments: $TODO_COUNT" >> $GITHUB_STEP_SUMMARY
+          
+          # Check for console statements
+          CONSOLE_COUNT=$(grep -r "console\." src --include="*.ts" --include="*.tsx" | grep -v "node_modules" | wc -l)
+          echo "- Console statements: $CONSOLE_COUNT" >> $GITHUB_STEP_SUMMARY
+          
+          # Check for any statements
+          ANY_COUNT=$(grep -r ": any" src --include="*.ts" --include="*.tsx" | wc -l)
+          echo "- Any types: $ANY_COUNT" >> $GITHUB_STEP_SUMMARY
+
+  license-check:
+    runs-on: ubuntu-latest
+    name: License Compliance
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check license compliance
+        continue-on-error: true
+        run: |
+          echo "## 📜 License Compliance Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Check for restricted licenses
+          RESTRICTED_LICENSES="GPL|AGPL|SSPL"
+          
+          if npm ls --all 2>/dev/null | grep -E "$RESTRICTED_LICENSES"; then
+            echo "⚠️ **Warning**: Restricted licenses detected" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ No restricted licenses found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  secret-scanning:
+    runs-on: ubuntu-latest
+    name: Secret Scanning
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: TruffleHog Secret Scanning
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug --only-verified
+        continue-on-error: true
+
+      - name: Manual secret pattern check
+        run: |
+          echo "## 🔐 Secret Pattern Scanning" >> $GITHUB_STEP_SUMMARY
+          
+          # Check for common secret patterns
+          PATTERNS=(
+            'api[_-]?key\s*[=:]\s*["\x27]?[a-zA-Z0-9]+'
+            'password\s*[=:]\s*["\x27][^"\x27]+["\x27]'
+            'token\s*[=:]\s*["\x27]?[a-zA-Z0-9_-]+'
+            'secret\s*[=:]\s*["\x27][^"\x27]+["\x27]'
+            'private[_-]?key'
+            'aws[_-]?secret'
+            'github[_-]?token'
+          )
+          
+          FOUND_SECRETS=false
+          for pattern in "${PATTERNS[@]}"; do
+            if grep -rE "$pattern" src --include="*.ts" --include="*.tsx" --include="*.json" | grep -v node_modules | grep -v ".d.ts"; then
+              echo "⚠️ Potential secret pattern found: $pattern" >> $GITHUB_STEP_SUMMARY
+              FOUND_SECRETS=true
+            fi
+          done
+          
+          if [ "$FOUND_SECRETS" = false ]; then
+            echo "✅ No obvious secret patterns detected" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  security-summary:
+    runs-on: ubuntu-latest
+    needs: [dependency-check, sast-analysis, code-analysis, license-check, secret-scanning]
+    if: always()
+    name: Security Summary
+
+    steps:
+      - name: Generate security summary
+        run: |
+          echo "## 🔒 Security Scan Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Dependency Check: ${{ needs.dependency-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- SAST Analysis: ${{ needs.sast-analysis.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Code Analysis: ${{ needs.code-analysis.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- License Check: ${{ needs.license-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Secret Scanning: ${{ needs.secret-scanning.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Recommendations" >> $GITHUB_STEP_SUMMARY
+          echo "- Review all warnings in the logs" >> $GITHUB_STEP_SUMMARY
+          echo "- Fix high-severity issues before merging" >> $GITHUB_STEP_SUMMARY
+          echo "- Update dependencies regularly" >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const results = `
+## 🔒 Security Scan Results
+
+| Check | Status |
+|-------|--------|
+| Dependency Check | ${{ needs.dependency-check.result }} |
+| SAST Analysis | ${{ needs.sast-analysis.result }} |
+| Code Analysis | ${{ needs.code-analysis.result }} |
+| License Compliance | ${{ needs.license-check.result }} |
+| Secret Scanning | ${{ needs.secret-scanning.result }} |
+
+For details, check the workflow logs and artifacts.
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: results
+            });

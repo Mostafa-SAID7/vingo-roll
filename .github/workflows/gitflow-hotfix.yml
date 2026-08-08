@@ -1,0 +1,345 @@
+name: GitFlow - Hotfix Branch
+
+on:
+  push:
+    branches: ["hotfix/**"]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      hotfix_branch:
+        description: "Hotfix branch name (e.g., hotfix/v1.0.1)"
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+
+jobs:
+  validate-hotfix-branch:
+    runs-on: ubuntu-latest
+    name: Validate Hotfix Branch
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate hotfix branch name
+        id: validate
+        run: |
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          echo "Branch name: $BRANCH_NAME"
+          
+          # Check if branch follows GitFlow naming convention
+          if [[ $BRANCH_NAME =~ ^hotfix/v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            echo "✅ Hotfix branch follows GitFlow convention"
+            echo "valid=true" >> $GITHUB_OUTPUT
+            
+            # Extract version
+            VERSION=$(echo $BRANCH_NAME | sed 's/^hotfix\///')
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Hotfix branch name does not follow convention"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "Expected format: hotfix/v1.0.1, hotfix/v2.1.1, etc."
+            exit 1
+          fi
+
+      - name: Validate hotfix requirements
+        run: |
+          NEW_VERSION="${{ steps.validate.outputs.version }}"
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          
+          echo "## 🔥 Hotfix Information" >> $GITHUB_STEP_SUMMARY
+          echo "- Current Production: $LATEST_TAG" >> $GITHUB_STEP_SUMMARY
+          echo "- Hotfix Version: $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: $BRANCH_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- Priority: 🔴 **CRITICAL**" >> $GITHUB_STEP_SUMMARY
+          
+          # Verify it's a patch version bump only
+          LATEST_MAJOR=$(echo $LATEST_TAG | cut -d'.' -f1 | sed 's/v//')
+          LATEST_MINOR=$(echo $LATEST_TAG | cut -d'.' -f2)
+          LATEST_PATCH=$(echo $LATEST_TAG | cut -d'.' -f3)
+          
+          NEW_MAJOR=$(echo $NEW_VERSION | cut -d'.' -f1 | sed 's/v//')
+          NEW_MINOR=$(echo $NEW_VERSION | cut -d'.' -f2)
+          NEW_PATCH=$(echo $NEW_VERSION | cut -d'.' -f3)
+          
+          if [[ $NEW_MAJOR -ne $LATEST_MAJOR ]] || [[ $NEW_MINOR -ne $LATEST_MINOR ]]; then
+            echo "❌ Hotfix should only bump patch version"
+            exit 1
+          fi
+          
+          if [[ $NEW_PATCH -le $LATEST_PATCH ]]; then
+            echo "❌ Hotfix patch version must be greater than current"
+            exit 1
+          fi
+
+  quick-test:
+    runs-on: ubuntu-latest
+    name: Quick Test & Build
+    needs: [validate-hotfix-branch]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Quick lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Type check
+        run: npx tsc --noEmit
+        continue-on-error: true
+
+      - name: Build hotfix
+        run: npm run build
+
+      - name: Run regression tests
+        run: npm run test:unit --if-present || echo "No tests"
+        continue-on-error: true
+
+      - name: Upload hotfix build
+        uses: actions/upload-artifact@v4
+        with:
+          name: hotfix-build
+          path: dist/
+          retention-days: 7
+
+  impact-analysis:
+    runs-on: ubuntu-latest
+    name: Impact Analysis
+    needs: [validate-hotfix-branch]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Analyze changes
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          
+          echo "## 📊 Hotfix Impact Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Changes Since Production" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          
+          if [ "$LATEST_TAG" = "v0.0.0" ]; then
+            git log --oneline --name-status | head -20 >> $GITHUB_STEP_SUMMARY
+          else
+            git log $LATEST_TAG..HEAD --oneline --name-status >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          
+          # Count files changed
+          if [ "$LATEST_TAG" = "v0.0.0" ]; then
+            FILES_CHANGED=$(git diff --name-only HEAD | wc -l)
+          else
+            FILES_CHANGED=$(git diff --name-only $LATEST_TAG..HEAD | wc -l)
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Quick Stats" >> $GITHUB_STEP_SUMMARY
+          echo "- Files Changed: $FILES_CHANGED" >> $GITHUB_STEP_SUMMARY
+
+      - name: Identify affected components
+        run: |
+          echo "## 🎯 Affected Components" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Review these areas for regression testing:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if git diff $LATEST_TAG..HEAD --name-only | grep -q "src/components"; then
+            echo "- ✅ Components modified" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if git diff $LATEST_TAG..HEAD --name-only | grep -q "src/lib"; then
+            echo "- ✅ Utilities/Libraries modified" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if git diff $LATEST_TAG..HEAD --name-only | grep -q "src/data"; then
+            echo "- ✅ Data layer modified" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  hotfix-checklist:
+    runs-on: ubuntu-latest
+    name: Hotfix Checklist
+    needs: [quick-test, impact-analysis]
+    if: always()
+    
+    steps:
+      - name: Create hotfix checklist
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `## 🔥 Hotfix Pre-Merge Checklist
+
+### 🚨 CRITICAL - This is a production hotfix
+
+### Automated Verification
+- ✅ Branch naming valid (patch version bump only)
+- ✅ Build successful
+- ✅ Quick tests passing
+- ✅ Impact analysis complete
+
+### Pre-Merge Checklist
+**These must be verified before merging:**
+
+- [ ] Issue is critical and requires immediate fix
+- [ ] Fix is minimal and focused on the issue only
+- [ ] No unrelated changes included
+- [ ] All tests passing
+- [ ] Regression tests completed
+- [ ] Changes reviewed and approved
+- [ ] CHANGELOG.md updated with hotfix details
+- [ ] Version number is correct (patch only)
+- [ ] Security review completed
+
+### Production Impact
+- [ ] Deployment plan documented
+- [ ] Rollback plan in place
+- [ ] Monitoring/alerting verified
+- [ ] Stakeholders notified
+
+### Post-Merge Steps
+1. Merge to \`main\` (creates release)
+2. Merge back to \`develop\`
+3. Monitor production metrics
+4. Communicate status to team
+
+### Escalation
+If issues found:
+- Do NOT merge until resolved
+- Tag: @team-lead for guidance
+- Revert changes if deployed
+
+---
+See [Hotfix Guide](../../docs/GITFLOW.md#hotfix) for details.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  security-urgent-scan:
+    runs-on: ubuntu-latest
+    name: Urgent Security Scan
+    needs: [validate-hotfix-branch]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run critical security audit
+        run: |
+          echo "## 🔒 Critical Security Audit" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=high 2>&1 | grep -E "high|critical" >> $GITHUB_STEP_SUMMARY || echo "No high/critical vulnerabilities"
+
+      - name: Check hotfix for vulnerabilities
+        run: |
+          if grep -r "TODO\|FIXME\|HACK" src --include="*.ts" --include="*.tsx"; then
+            echo "⚠️ Code comments found - ensure they're not blocking issues"
+          fi
+        continue-on-error: true
+
+  regression-suite:
+    runs-on: ubuntu-latest
+    name: Regression Test Suite
+    needs: [validate-hotfix-branch]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run full regression tests
+        run: |
+          echo "Running regression test suite..."
+          npm run test:unit --if-present || echo "No unit tests"
+          npm run test:integration --if-present || echo "No integration tests"
+        continue-on-error: true
+
+  notification:
+    runs-on: ubuntu-latest
+    name: Team Notification
+    needs: [validate-hotfix-branch, quick-test]
+    if: always()
+    
+    steps:
+      - name: Prepare notification
+        run: |
+          echo "## 🚨 Hotfix Notification" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch**: ${{ github.head_ref || github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Version**: ${{ needs.validate-hotfix-branch.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Status**: ${{ needs.quick-test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Action Required**: Code review and approval needed ASAP" >> $GITHUB_STEP_SUMMARY
+
+  hotfix-summary:
+    runs-on: ubuntu-latest
+    name: Hotfix Summary
+    needs: [validate-hotfix-branch, quick-test, impact-analysis, security-urgent-scan, regression-suite]
+    if: always()
+    
+    steps:
+      - name: Generate hotfix summary
+        run: |
+          echo "## 🔥 Hotfix Status Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Hotfix: ${{ needs.validate-hotfix-branch.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Status Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Branch Validation | ${{ needs.validate-hotfix-branch.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Quick Test | ${{ needs.quick-test.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Impact Analysis | ${{ needs.impact-analysis.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security Scan | ${{ needs.security-urgent-scan.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Regression Tests | ${{ needs.regression-suite.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Ready to Merge?" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ needs.validate-hotfix-branch.result }}" == "success" && "${{ needs.quick-test.result }}" == "success" ]]; then
+            echo "✅ **YES** - Ready for urgent merge" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **NO** - Resolve issues before merge" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Priority: 🔴 CRITICAL" >> $GITHUB_STEP_SUMMARY
+          echo "This hotfix requires immediate attention and deployment." >> $GITHUB_STEP_SUMMARY

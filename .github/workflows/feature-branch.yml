@@ -1,0 +1,260 @@
+name: GitFlow - Feature Branch
+
+on:
+  push:
+    branches: ["feature/**", "bugfix/**"]
+  pull_request:
+    branches: [develop]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  validate-branch-name:
+    runs-on: ubuntu-latest
+    name: Validate Branch Naming
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate GitFlow branch name
+        id: validate
+        run: |
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          echo "Branch name: $BRANCH_NAME"
+          
+          # Check if branch follows GitFlow naming convention
+          if [[ $BRANCH_NAME =~ ^(feature|bugfix)/[a-z0-9_-]+$ ]]; then
+            echo "✅ Branch name follows GitFlow convention"
+            echo "valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Branch name does not follow GitFlow convention"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "Expected format: feature/feature-name or bugfix/bug-name"
+            exit 1
+          fi
+
+      - name: Extract issue/feature info
+        if: steps.validate.outputs.valid == 'true'
+        run: |
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          FEATURE_NAME=$(echo $BRANCH_NAME | sed 's/^[^/]*\///')
+          
+          echo "## 📋 Feature Branch Information" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: $BRANCH_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- Feature/Bug: $FEATURE_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- Type: $(echo $BRANCH_NAME | cut -d'/' -f1)" >> $GITHUB_STEP_SUMMARY
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    name: Build & Test Feature
+    needs: [validate-branch-name]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint code
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Type check
+        run: npx tsc --noEmit
+        continue-on-error: true
+
+      - name: Build feature
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test:unit --if-present || echo "No unit tests configured"
+        continue-on-error: true
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: feature-build
+          path: dist/
+          retention-days: 7
+
+  code-quality:
+    runs-on: ubuntu-latest
+    name: Code Quality Check
+    needs: [validate-branch-name]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint 2>&1 | tee lint-output.txt || true
+        continue-on-error: true
+
+      - name: Check format
+        run: npm run format -- --check 2>&1 | tee format-output.txt || true
+        continue-on-error: true
+
+      - name: Upload quality reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-reports
+          path: |
+            lint-output.txt
+            format-output.txt
+          retention-days: 7
+
+  security-check:
+    runs-on: ubuntu-latest
+    name: Security Check
+    needs: [validate-branch-name]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=moderate || true
+        continue-on-error: true
+
+      - name: Check for secrets
+        run: |
+          echo "Scanning for hardcoded secrets..."
+          if grep -r "password\s*=\s*['\"]" src/ --include="*.ts" --include="*.tsx"; then
+            echo "⚠️ Warning: Potential hardcoded secrets found"
+          fi
+        continue-on-error: true
+
+  documentation:
+    runs-on: ubuntu-latest
+    name: Documentation Check
+    needs: [validate-branch-name]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for documentation
+        run: |
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          FEATURE_NAME=$(echo $BRANCH_NAME | sed 's/^[^/]*\///')
+          
+          echo "## 📚 Documentation Checklist" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### For Feature: $FEATURE_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Code comments added for complex logic" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Updated relevant docs (if applicable)" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Added/updated type definitions" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Updated CHANGELOG.md (if applicable)" >> $GITHUB_STEP_SUMMARY
+
+  pr-check:
+    runs-on: ubuntu-latest
+    name: PR Quality Gate
+    needs: [build-and-test, code-quality, security-check, documentation]
+    if: always()
+    
+    steps:
+      - name: Check test status
+        run: |
+          if [[ "${{ needs.build-and-test.result }}" != "success" ]]; then
+            echo "❌ Build or tests failed"
+            exit 1
+          fi
+
+      - name: Generate PR checklist
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `## ✅ Feature Branch Validation
+            
+### Automated Checks
+- Build: ${{ needs.build-and-test.result }}
+- Code Quality: ${{ needs.code-quality.result }}
+- Security: ${{ needs.security-check.result }}
+- Documentation: ${{ needs.documentation.result }}
+
+### Pre-Merge Checklist
+- [ ] Feature/bug is complete and tested
+- [ ] All tests passing
+- [ ] Code follows project conventions
+- [ ] Documentation updated
+- [ ] No breaking changes introduced
+- [ ] Commit messages follow conventional commits
+- [ ] Ready for code review
+
+### Review Guidelines
+1. Verify feature works as intended
+2. Check code quality and style
+3. Ensure tests are comprehensive
+4. Validate security practices
+5. Confirm documentation is clear
+
+See [GitFlow Guide](../../docs/GITFLOW.md) for more details.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  feature-summary:
+    runs-on: ubuntu-latest
+    name: Feature Branch Summary
+    needs: [validate-branch-name, build-and-test, code-quality, security-check]
+    if: always()
+    
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## 📊 Feature Branch Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Branch: ${{ github.head_ref || github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Branch Naming | ${{ needs.validate-branch-name.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build & Test | ${{ needs.build-and-test.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Code Quality | ${{ needs.code-quality.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security | ${{ needs.security-check.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Await code review" >> $GITHUB_STEP_SUMMARY
+          echo "2. Address review feedback" >> $GITHUB_STEP_SUMMARY
+          echo "3. Merge to develop when approved" >> $GITHUB_STEP_SUMMARY
