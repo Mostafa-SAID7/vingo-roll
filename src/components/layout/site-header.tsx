@@ -186,6 +186,8 @@ export function SiteHeader() {
                 key={menu.label}
                 label={menu.label}
                 columns={menu.columns}
+                image={menu.image}
+                imageAlt={menu.imageAlt}
                 isOpen={openMenu === menu.label}
                 onMouseEnter={() => setOpenMenu(menu.label)}
                 onMouseLeave={() => setOpenMenu(null)}

@@ -3,6 +3,8 @@ import type { Category, Collection, Room } from "@/types";
 export const nav = {
   shop: {
     label: "Shop",
+    image: "/images/products/woven-shade.jpg",
+    imageAlt: "Premium window treatments collection",
     columns: [
       {
         title: "Curtains",
@@ -13,8 +15,6 @@ export const nav = {
           { label: "Thermal", to: "/shop/$category", slug: "thermal-curtains" },
           { label: "Drapery", to: "/shop/$category", slug: "drapery" },
         ],
-        image: "/images/rooms/bedroom-blackout.jpg",
-        imageAlt: "Premium blackout curtains in modern bedroom",
       },
       {
         title: "Shades & Blinds",
@@ -25,8 +25,6 @@ export const nav = {
           { label: "Wood & Woven", to: "/shop/$category", slug: "wood-woven" },
           { label: "Smart & Motorized", to: "/shop/$category", slug: "smart-motorized" },
         ],
-        image: "/images/products/woven-shade.jpg",
-        imageAlt: "Beautiful woven shades with natural light filtering",
       },
       {
         title: "Discover",
@@ -37,13 +35,13 @@ export const nav = {
           { label: "Style Finder", to: "/style-finder" },
           { label: "Sale", to: "/shop/$category", slug: "sale" },
         ],
-        image: "/images/hero/hero-living-room.jpg",
-        imageAlt: "Curated collection of window treatments",
       },
     ],
   },
   inspiration: {
     label: "Inspiration",
+    image: "/images/hero/hero-living-room.jpg",
+    imageAlt: "Inspiration gallery showcase",
     columns: [
       {
         title: "Explore",
@@ -53,13 +51,13 @@ export const nav = {
           { label: "Collections", to: "/collections" },
           { label: "Smart Home", to: "/smart-home" },
         ],
-        image: "/images/hero/hero-living-room.jpg",
-        imageAlt: "Inspiration gallery showcase",
       },
     ],
   },
   services: {
     label: "Services",
+    image: "/images/hero/hero-living-room.jpg",
+    imageAlt: "Professional design and measurement services",
     columns: [
       {
         title: "Help me decide",
@@ -70,13 +68,13 @@ export const nav = {
           { label: "Order Swatches", to: "/swatches" },
           { label: "Quick Quote", to: "/quote" },
         ],
-        image: "/images/hero/hero-living-room.jpg",
-        imageAlt: "Professional design and measurement services",
       },
     ],
   },
   guides: {
     label: "Guides",
+    image: "/images/rooms/bedroom-blackout.jpg",
+    imageAlt: "Helpful guides and resources",
     columns: [
       {
         title: "Know-how",
@@ -87,8 +85,6 @@ export const nav = {
           { label: "Shipping", to: "/guides/shipping" },
           { label: "Returns", to: "/guides/returns" },
         ],
-        image: "/images/rooms/bedroom-blackout.jpg",
-        imageAlt: "Helpful guides and resources",
       },
     ],
   },
