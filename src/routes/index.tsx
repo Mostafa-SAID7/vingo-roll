@@ -304,20 +304,20 @@ function Home() {
       </Section>
 
       {/* Final CTA */}
-      <section className="relative">
-        <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
-          <img
-            src={IMG.bedroom}
-            alt="Bedroom with espresso blackout curtains catching morning light"
-            width={1200}
-            height={900}
-            loading="lazy"
-            className="h-full w-full object-cover"
-          />
-          <div className="veil absolute inset-0" aria-hidden="true" />
-          <div className="absolute inset-0 flex items-center">
-            <div className="container-page text-center">
-              <h2 className="mx-auto max-w-2xl text-3xl text-white md:text-5xl">
+      <Section>
+        <div className="relative mx-auto max-w-3xl overflow-hidden rounded-lg">
+          <div className="relative h-[480px] w-full">
+            <img
+              src={IMG.bedroom}
+              alt="Bedroom with espresso blackout curtains catching morning light"
+              width={1200}
+              height={900}
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+            <div className="veil absolute inset-0" aria-hidden="true" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
+              <h2 className="mx-auto max-w-2xl text-center text-3xl text-white md:text-4xl">
                 Start with eight swatches and a conversation.
               </h2>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -336,7 +336,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </Section>
     </>
   );
 }
