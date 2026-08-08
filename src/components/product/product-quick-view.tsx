@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Eye, X, Plus, Minus } from "lucide-react";
+import { Eye, Plus, Minus } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import type { Product, MaterialOption, ColorOption, SizeOption } from "@/types";
@@ -72,19 +72,8 @@ export function ProductQuickViewModal({ product, open, onOpenChange }: QuickView
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[95vw] max-w-4xl max-h-[95vh] overflow-y-auto p-0">
-        <DialogHeader className="sticky top-0 bg-background border-b border-border/30 p-6 flex flex-row items-center justify-between">
+        <DialogHeader className="sticky top-0 bg-background border-b border-border/30 p-6">
           <DialogTitle className="text-xl font-bold">{product.name}</DialogTitle>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onOpenChange(false);
-            }}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Close"
-          >
-            <X className="h-5 w-5" />
-          </button>
         </DialogHeader>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 p-6">

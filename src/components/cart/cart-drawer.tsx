@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ShoppingBag, X, Minus, Plus, Trash2 } from "lucide-react";
+import { ShoppingBag, Minus, Plus, Trash2 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useCartStore, cartSubtotal, cartCount } from "@/store/cart-store";
@@ -46,16 +46,7 @@ export function CartDrawer() {
 
       <SheetContent side="right" className="w-full max-w-md overflow-y-auto p-0 flex flex-col">
         <SheetHeader className="border-b border-border/30 px-6 py-4">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="text-xl">Your Cart</SheetTitle>
-            <button
-              onClick={handleClose}
-              aria-label="Close cart"
-              className="hover:text-foreground text-muted-foreground transition-colors"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+          <SheetTitle className="text-xl">Your Cart</SheetTitle>
         </SheetHeader>
 
         {!hydrated ? (
