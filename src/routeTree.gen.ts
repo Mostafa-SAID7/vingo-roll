@@ -10,11 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as QuoteRouteImport } from './routes/quote'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as SmartHomeRouteImport } from './routes/smart-home'
+import { Route as StyleFinderRouteImport } from './routes/style-finder'
+import { Route as SwatchesRouteImport } from './routes/swatches'
 import { Route as TradeRouteImport } from './routes/trade'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as AboutOurStoryRouteImport } from './routes/about/our-story'
+import { Route as AccountIndexRouteImport } from './routes/account/index'
 import { Route as CollectionsIndexRouteImport } from './routes/collections/index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections/$slug'
 import { Route as GuidesIndexRouteImport } from './routes/guides/index'
@@ -29,6 +36,7 @@ import { Route as LegalAccessibilityRouteImport } from './routes/legal/accessibi
 import { Route as LegalCookiesRouteImport } from './routes/legal/cookies'
 import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
 import { Route as LegalTermsRouteImport } from './routes/legal/terms'
+import { Route as ProductSlugRouteImport } from './routes/product/$slug'
 import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as ServicesDesignConsultationRouteImport } from './routes/services/design-consultation'
 import { Route as ServicesMeasuringInstallationRouteImport } from './routes/services/measuring-installation'
@@ -41,9 +49,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuoteRoute = QuoteRouteImport.update({
+  id: '/quote',
+  path: '/quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SmartHomeRoute = SmartHomeRouteImport.update({
@@ -51,9 +74,24 @@ const SmartHomeRoute = SmartHomeRouteImport.update({
   path: '/smart-home',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StyleFinderRoute = StyleFinderRouteImport.update({
+  id: '/style-finder',
+  path: '/style-finder',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SwatchesRoute = SwatchesRouteImport.update({
+  id: '/swatches',
+  path: '/swatches',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TradeRoute = TradeRouteImport.update({
   id: '/trade',
   path: '/trade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutIndexRoute = AboutIndexRouteImport.update({
@@ -64,6 +102,11 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
 const AboutOurStoryRoute = AboutOurStoryRouteImport.update({
   id: '/about/our-story',
   path: '/about/our-story',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountIndexRoute = AccountIndexRouteImport.update({
+  id: '/account/',
+  path: '/account/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
@@ -136,6 +179,11 @@ const LegalTermsRoute = LegalTermsRouteImport.update({
   path: '/legal/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductSlugRoute = ProductSlugRouteImport.update({
+  id: '/product/$slug',
+  path: '/product/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
   id: '/services/',
   path: '/services/',
@@ -171,9 +219,15 @@ const ShopNeedsIndexRoute = ShopNeedsIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/quote': typeof QuoteRoute
+  '/search': typeof SearchRoute
   '/smart-home': typeof SmartHomeRoute
+  '/style-finder': typeof StyleFinderRoute
+  '/swatches': typeof SwatchesRoute
   '/trade': typeof TradeRoute
+  '/wishlist': typeof WishlistRoute
   '/about/our-story': typeof AboutOurStoryRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
@@ -186,10 +240,12 @@ export interface FileRoutesByFullPath {
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/product/$slug': typeof ProductSlugRoute
   '/services/design-consultation': typeof ServicesDesignConsultationRoute
   '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/about/': typeof AboutIndexRoute
+  '/account/': typeof AccountIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/guides/': typeof GuidesIndexRoute
   '/inspiration/': typeof InspirationIndexRoute
@@ -199,9 +255,15 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/quote': typeof QuoteRoute
+  '/search': typeof SearchRoute
   '/smart-home': typeof SmartHomeRoute
+  '/style-finder': typeof StyleFinderRoute
+  '/swatches': typeof SwatchesRoute
   '/trade': typeof TradeRoute
+  '/wishlist': typeof WishlistRoute
   '/about/our-story': typeof AboutOurStoryRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
@@ -214,10 +276,12 @@ export interface FileRoutesByTo {
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/product/$slug': typeof ProductSlugRoute
   '/services/design-consultation': typeof ServicesDesignConsultationRoute
   '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/about': typeof AboutIndexRoute
+  '/account': typeof AccountIndexRoute
   '/collections': typeof CollectionsIndexRoute
   '/guides': typeof GuidesIndexRoute
   '/inspiration': typeof InspirationIndexRoute
@@ -228,9 +292,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/quote': typeof QuoteRoute
+  '/search': typeof SearchRoute
   '/smart-home': typeof SmartHomeRoute
+  '/style-finder': typeof StyleFinderRoute
+  '/swatches': typeof SwatchesRoute
   '/trade': typeof TradeRoute
+  '/wishlist': typeof WishlistRoute
   '/about/our-story': typeof AboutOurStoryRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
@@ -243,10 +313,12 @@ export interface FileRoutesById {
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/product/$slug': typeof ProductSlugRoute
   '/services/design-consultation': typeof ServicesDesignConsultationRoute
   '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
   '/about/': typeof AboutIndexRoute
+  '/account/': typeof AccountIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/guides/': typeof GuidesIndexRoute
   '/inspiration/': typeof InspirationIndexRoute
@@ -258,9 +330,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cart'
     | '/contact'
+    | '/quote'
+    | '/search'
     | '/smart-home'
+    | '/style-finder'
+    | '/swatches'
     | '/trade'
+    | '/wishlist'
     | '/about/our-story'
     | '/collections/$slug'
     | '/guides/care'
@@ -273,10 +351,12 @@ export interface FileRouteTypes {
     | '/legal/cookies'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/product/$slug'
     | '/services/design-consultation'
     | '/services/measuring-installation'
     | '/shop/$category'
     | '/about/'
+    | '/account/'
     | '/collections/'
     | '/guides/'
     | '/inspiration/'
@@ -286,9 +366,15 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cart'
     | '/contact'
+    | '/quote'
+    | '/search'
     | '/smart-home'
+    | '/style-finder'
+    | '/swatches'
     | '/trade'
+    | '/wishlist'
     | '/about/our-story'
     | '/collections/$slug'
     | '/guides/care'
@@ -301,10 +387,12 @@ export interface FileRouteTypes {
     | '/legal/cookies'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/product/$slug'
     | '/services/design-consultation'
     | '/services/measuring-installation'
     | '/shop/$category'
     | '/about'
+    | '/account'
     | '/collections'
     | '/guides'
     | '/inspiration'
@@ -314,9 +402,15 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/cart'
     | '/contact'
+    | '/quote'
+    | '/search'
     | '/smart-home'
+    | '/style-finder'
+    | '/swatches'
     | '/trade'
+    | '/wishlist'
     | '/about/our-story'
     | '/collections/$slug'
     | '/guides/care'
@@ -329,10 +423,12 @@ export interface FileRouteTypes {
     | '/legal/cookies'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/product/$slug'
     | '/services/design-consultation'
     | '/services/measuring-installation'
     | '/shop/$category'
     | '/about/'
+    | '/account/'
     | '/collections/'
     | '/guides/'
     | '/inspiration/'
@@ -343,9 +439,15 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
+  QuoteRoute: typeof QuoteRoute
+  SearchRoute: typeof SearchRoute
   SmartHomeRoute: typeof SmartHomeRoute
+  StyleFinderRoute: typeof StyleFinderRoute
+  SwatchesRoute: typeof SwatchesRoute
   TradeRoute: typeof TradeRoute
+  WishlistRoute: typeof WishlistRoute
   AboutOurStoryRoute: typeof AboutOurStoryRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   GuidesCareRoute: typeof GuidesCareRoute
@@ -358,10 +460,12 @@ export interface RootRouteChildren {
   LegalCookiesRoute: typeof LegalCookiesRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
   LegalTermsRoute: typeof LegalTermsRoute
+  ProductSlugRoute: typeof ProductSlugRoute
   ServicesDesignConsultationRoute: typeof ServicesDesignConsultationRoute
   ServicesMeasuringInstallationRoute: typeof ServicesMeasuringInstallationRoute
   ShopCategoryRoute: typeof ShopCategoryRoute
   AboutIndexRoute: typeof AboutIndexRoute
+  AccountIndexRoute: typeof AccountIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   GuidesIndexRoute: typeof GuidesIndexRoute
   InspirationIndexRoute: typeof InspirationIndexRoute
@@ -379,11 +483,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quote': {
+      id: '/quote'
+      path: '/quote'
+      fullPath: '/quote'
+      preLoaderRoute: typeof QuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/smart-home': {
@@ -393,11 +518,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SmartHomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/style-finder': {
+      id: '/style-finder'
+      path: '/style-finder'
+      fullPath: '/style-finder'
+      preLoaderRoute: typeof StyleFinderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/swatches': {
+      id: '/swatches'
+      path: '/swatches'
+      fullPath: '/swatches'
+      preLoaderRoute: typeof SwatchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trade': {
       id: '/trade'
       path: '/trade'
       fullPath: '/trade'
       preLoaderRoute: typeof TradeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about/': {
@@ -412,6 +558,13 @@ declare module '@tanstack/react-router' {
       path: '/about/our-story'
       fullPath: '/about/our-story'
       preLoaderRoute: typeof AboutOurStoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account/': {
+      id: '/account/'
+      path: '/account'
+      fullPath: '/account/'
+      preLoaderRoute: typeof AccountIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collections/': {
@@ -512,6 +665,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalTermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/product/$slug': {
+      id: '/product/$slug'
+      path: '/product/$slug'
+      fullPath: '/product/$slug'
+      preLoaderRoute: typeof ProductSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services/': {
       id: '/services/'
       path: '/services'
@@ -559,9 +719,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CartRoute: CartRoute,
   ContactRoute: ContactRoute,
+  QuoteRoute: QuoteRoute,
+  SearchRoute: SearchRoute,
   SmartHomeRoute: SmartHomeRoute,
+  StyleFinderRoute: StyleFinderRoute,
+  SwatchesRoute: SwatchesRoute,
   TradeRoute: TradeRoute,
+  WishlistRoute: WishlistRoute,
   AboutOurStoryRoute: AboutOurStoryRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   GuidesCareRoute: GuidesCareRoute,
@@ -574,10 +740,12 @@ const rootRouteChildren: RootRouteChildren = {
   LegalCookiesRoute: LegalCookiesRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,
   LegalTermsRoute: LegalTermsRoute,
+  ProductSlugRoute: ProductSlugRoute,
   ServicesDesignConsultationRoute: ServicesDesignConsultationRoute,
   ServicesMeasuringInstallationRoute: ServicesMeasuringInstallationRoute,
   ShopCategoryRoute: ShopCategoryRoute,
   AboutIndexRoute: AboutIndexRoute,
+  AccountIndexRoute: AccountIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   GuidesIndexRoute: GuidesIndexRoute,
   InspirationIndexRoute: InspirationIndexRoute,
