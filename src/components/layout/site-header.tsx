@@ -72,20 +72,18 @@ export function SiteHeader() {
 
   return (
     <>
-      <div className="bg-primary text-primary-foreground relative px-4 py-2 text-center text-[11px] tracking-[0.16em] uppercase">
-        {bannerVisible && (
-          <>
-            <span>Free swatches on every order · Complimentary design consultation</span>
-            <button
-              onClick={() => setBannerVisible(false)}
-              className="hover:opacity-70 absolute right-4 top-1/2 -translate-y-1/2 transition-opacity"
-              aria-label="Close announcement"
-            >
-              <X className="h-4 w-4" aria-hidden="true" />
-            </button>
-          </>
-        )}
-      </div>
+      {bannerVisible && (
+        <div className="bg-primary text-primary-foreground relative px-4 py-2 text-center text-[11px] tracking-[0.16em] uppercase">
+          <span>Free swatches on every order · Complimentary design consultation</span>
+          <button
+            onClick={() => setBannerVisible(false)}
+            className="hover:opacity-70 absolute right-4 top-1/2 -translate-y-1/2 transition-opacity"
+            aria-label="Close announcement"
+          >
+            <X className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+      )}
       <header
         className={cn(
           "bg-background/90 sticky top-0 z-50 border-b backdrop-blur transition-colors",
