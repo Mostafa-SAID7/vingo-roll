@@ -13,10 +13,12 @@ export type CartItem = {
 
 type CartState = {
   items: CartItem[];
-  add: (item: Omit<CartItem, "key">) => void;
+  lastRemovedItem: CartItem | null;
+  add: (item: Omit<CartItem, "key">) => string; // Returns the key
   remove: (key: string) => void;
   setQuantity: (key: string, quantity: number) => void;
   clear: () => void;
+  undoRemove: () => void;
 };
 
 const keyFor = (slug: string, options: Record<string, string>) =>
@@ -29,9 +31,12 @@ export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       items: [],
-      add: (item) =>
+      lastRemovedItem: null,
+      add: (item) => {
+        let addedKey = "";
         set((state) => {
           const key = keyFor(item.slug, item.options);
+          addedKey = key;
           const existing = state.items.find((i) => i.key === key);
           if (existing) {
             return {
@@ -41,15 +46,32 @@ export const useCartStore = create<CartState>()(
             };
           }
           return { items: [...state.items, { ...item, key }] };
+        });
+        return addedKey;
+      },
+      remove: (key) =>
+        set((state) => {
+          const removedItem = state.items.find((i) => i.key === key);
+          return {
+            items: state.items.filter((i) => i.key !== key),
+            lastRemovedItem: removedItem || null,
+          };
         }),
-      remove: (key) => set((state) => ({ items: state.items.filter((i) => i.key !== key) })),
       setQuantity: (key, quantity) =>
         set((state) => ({
           items: state.items.map((i) =>
             i.key === key ? { ...i, quantity: Math.max(1, Math.min(20, quantity)) } : i,
           ),
         })),
-      clear: () => set({ items: [] }),
+      clear: () => set({ items: [], lastRemovedItem: null }),
+      undoRemove: () =>
+        set((state) => {
+          if (!state.lastRemovedItem) return state;
+          return {
+            items: [...state.items, state.lastRemovedItem],
+            lastRemovedItem: null,
+          };
+        }),
     }),
     { name: "vingo-cart" },
   ),

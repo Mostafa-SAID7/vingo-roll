@@ -6,6 +6,7 @@ import { useWishlistStore } from "@/store/wishlist-store";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { QuickViewButton } from "@/components/product/product-quick-view";
 
 export function ProductCard({
   product,
@@ -55,6 +56,7 @@ export function ProductCard({
         >
           <Heart className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
         </button>
+        <QuickViewButton product={product} />
       </div>
 
       <div className="mt-4 flex items-start justify-between gap-4">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { Heart, Menu, Moon, Search, ShoppingBag, Sun, User, ChevronDown } from "lucide-react";
+import { Heart, Menu, Moon, Search, Sun, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -10,8 +10,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { MegaMenu } from "@/components/layout/mega-menu";
+import { CartDrawer } from "@/components/cart/cart-drawer";
 import { nav } from "@/data/navigation";
-import { useCartStore, cartCount } from "@/store/cart-store";
 import { useWishlistStore } from "@/store/wishlist-store";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { useTheme } from "@/providers/theme-provider";
@@ -51,7 +51,6 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const items = useCartStore((s) => s.items);
   const wishlist = useWishlistStore((s) => s.slugs);
   const hydrated = useHydrated();
   const router = useRouter();
@@ -226,14 +225,7 @@ export function SiteHeader() {
             >
               <User className="h-[18px] w-[18px]" aria-hidden="true" />
             </Link>
-            <Link
-              to="/cart"
-              aria-label="Cart"
-              className="hover:text-accent relative grid h-10 w-10 place-items-center transition-colors"
-            >
-              <ShoppingBag className="h-[18px] w-[18px]" aria-hidden="true" />
-              <CountBadge count={hydrated ? cartCount(items) : 0} />
-            </Link>
+            <CartDrawer />
           </div>
         </div>
       </header>

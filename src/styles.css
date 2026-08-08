@@ -414,3 +414,15 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Shared Animations for Error Pages */
+@keyframes fadeUpStagger {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
