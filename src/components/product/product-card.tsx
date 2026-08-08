@@ -71,23 +71,28 @@ export function ProductCard({
           {product.newArrival ? <Badge>New</Badge> : null}
           {product.bestseller ? <Badge variant="secondary">Bestseller</Badge> : null}
         </div>
-        <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggle(product.slug);
-          }}
-          aria-pressed={saved}
-          aria-label={
-            saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
-          }
-          className="bg-background/85 text-foreground hover:bg-background absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-full backdrop-blur transition-colors z-30"
-        >
-          <Heart className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
-        </button>
 
-        {/* Add to Cart Button - Visible on Hover */}
+        {/* Right Side Icons Stack - Heart & Eye */}
+        <div className="absolute top-3 right-3 flex flex-col gap-1.5 z-30">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggle(product.slug);
+            }}
+            aria-pressed={saved}
+            aria-label={
+              saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
+            }
+            className="bg-background/85 text-foreground hover:bg-background grid h-9 w-9 place-items-center rounded-full backdrop-blur transition-colors"
+          >
+            <Heart className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
+          </button>
+          <QuickViewButton product={product} />
+        </div>
+
+        {/* Add to Cart Button - Visible on Hover, Bottom Left */}
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -100,8 +105,6 @@ export function ProductCard({
           <ShoppingBag className="h-4 w-4" />
           Add to Cart
         </button>
-
-        <QuickViewButton product={product} />
       </div>
 
       <div className="mt-4 flex items-start justify-between gap-4">
