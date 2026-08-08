@@ -15,15 +15,6 @@ echo "========================================="
 echo "Image: $DOCKER_IMAGE"
 echo "Tag: $DOCKER_TAG"
 
-# Step 1: Check Docker is installed
-echo ""
-echo "1️⃣  Checking Docker installation..."
-if ! command -v docker &> /dev/null; then
-    echo "❌ Docker is not installed. Please install Docker first."
-    exit 1
-fi
-echo "✅ Docker is installed"
-
 # Step 2: Lint check
 echo ""
 echo "2️⃣  Running ESLint checks..."
