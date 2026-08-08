@@ -306,8 +306,8 @@ function buildProduct(seed: Seed): Product {
       Warranty: "5 years on hardware",
     },
     lightControl: seed.light,
-    rooms: seed.rooms as any, // string array, will be handled by data layer
-    needs: seed.needs as any, // string array, will be handled by data layer  
+    rooms: seed.rooms,
+    needs: seed.needs,
     styles: seed.style,
     installation: "both",
     motorized: seed.motorized ?? seed.needs.includes("smart-motorized"),

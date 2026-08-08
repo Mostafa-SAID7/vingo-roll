@@ -49,7 +49,7 @@ export function useProductSearch(
   query: string
 ) {
   return useSearch(products, query, {
-    fields: ["name", "description"] as any,
+    fields: ["name", "description"] as const,
     caseSensitive: false,
     minChars: 2,
   });
@@ -63,7 +63,7 @@ export function useRoomSearch(
   query: string
 ) {
   return useSearch(rooms, query, {
-    fields: ["name", "description"] as any,
+    fields: ["name", "description"] as const,
     caseSensitive: false,
     minChars: 1,
   });

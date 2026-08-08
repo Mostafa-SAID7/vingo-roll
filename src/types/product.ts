@@ -57,8 +57,8 @@ export type Product = {
   features: string[];
   specifications: Record<string, string>;
   lightControl?: LightControl;
-  rooms?: Array<{ id: string; name: string; slug: string }>;
-  needs?: Array<{ id: string; name: string; slug: string }>;
+  rooms?: (string | { id: string; name: string; slug: string })[];
+  needs?: (string | { id: string; name: string; slug: string })[];
   styles?: string[];
   installation?: Installation;
   motorized?: boolean;

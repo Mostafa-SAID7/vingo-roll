@@ -170,7 +170,7 @@ function ErrorBoundaryFallback({
           </div>
 
           {/* Technical Details (Dev Only or Expandable) */}
-          {(isDev || true) && (
+          {isDev && (
             <div
               className="space-y-2"
               style={{ animation: "fadeUpStagger 0.7s ease-out 500ms both" }}

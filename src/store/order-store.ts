@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Order, Address } from "@/types/common";
+import type { Order, Address, OrderStatus } from "@/types/common";
 import { generateOrderId, calculateShipping, calculateTax, getEstimatedDelivery } from "@/types/common";
 import type { CartItem } from "@/store/cart-store";
 
@@ -80,11 +80,11 @@ export const useOrderStore = create<OrderState>()(
         return get().orders.filter((order) => order.userId === userId);
       },
 
-      updateOrderStatus: (orderId, status) => {
+      updateOrderStatus: (orderId: string, status: OrderStatus) => {
         set((state) => ({
           orders: state.orders.map((order) =>
             order.id === orderId
-              ? { ...order, status: status as any, updatedAt: new Date().toISOString() }
+              ? { ...order, status, updatedAt: new Date().toISOString() }
               : order
           ),
         }));

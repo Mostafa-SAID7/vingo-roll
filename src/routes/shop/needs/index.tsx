@@ -24,7 +24,14 @@ export const Route = createFileRoute("/shop/needs/")({
 function Page() {
   const initial = Route.useSearch().need ?? null;
   const [active, setActive] = useState<string | null>(initial);
-  const filtered = active ? products.filter((p) => p.needs?.some((n: any) => n === active || n.id === active)) : products;
+  const filtered = active
+    ? products.filter((p) =>
+        p.needs?.some(
+          (n: string | { id: string; name: string; slug: string }) =>
+            n === active || (typeof n === "object" && n.id === active)
+        )
+      )
+    : products;
 
   return (
     <>
