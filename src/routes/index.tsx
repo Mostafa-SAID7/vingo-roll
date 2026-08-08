@@ -304,8 +304,8 @@ function Home() {
       </Section>
 
       {/* Final CTA */}
-      <Section>
-        <div className="relative mx-auto max-w-3xl overflow-hidden rounded-lg">
+      <section className="container-page py-12">
+        <div className="relative mx-auto w-[90%] overflow-hidden rounded-lg">
           <div className="relative h-[480px] w-full">
             <img
               src={IMG.bedroom}
@@ -336,7 +336,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </Section>
+      </section>
     </>
   );
 }
