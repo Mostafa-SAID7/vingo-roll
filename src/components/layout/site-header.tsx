@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { Heart, Menu, Moon, Search, Sun, User } from "lucide-react";
+import { Heart, Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -51,6 +51,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [bannerVisible, setBannerVisible] = useState(true);
   const wishlist = useWishlistStore((s) => s.slugs);
   const hydrated = useHydrated();
   const router = useRouter();
@@ -71,8 +72,19 @@ export function SiteHeader() {
 
   return (
     <>
-      <div className="bg-primary text-primary-foreground px-4 py-2 text-center text-[11px] tracking-[0.16em] uppercase">
-        Free swatches on every order · Complimentary design consultation
+      <div className="bg-primary text-primary-foreground relative px-4 py-2 text-center text-[11px] tracking-[0.16em] uppercase">
+        {bannerVisible && (
+          <>
+            <span>Free swatches on every order · Complimentary design consultation</span>
+            <button
+              onClick={() => setBannerVisible(false)}
+              className="hover:opacity-70 absolute right-4 top-1/2 -translate-y-1/2 transition-opacity"
+              aria-label="Close announcement"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </>
+        )}
       </div>
       <header
         className={cn(
