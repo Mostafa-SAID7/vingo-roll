@@ -1,0 +1,254 @@
+# Rabbit Code Review Configuration
+# Automated code quality and security analysis
+
+version: "1.0"
+
+# Analysis settings
+analysis:
+  # Enable/disable specific checks
+  enabled: true
+
+  # Include patterns
+  include:
+    - "src/**/*.ts"
+    - "src/**/*.tsx"
+    - "src/**/*.js"
+    - "src/**/*.jsx"
+
+  # Exclude patterns
+  exclude:
+    - "node_modules/**"
+    - "dist/**"
+    - "build/**"
+    - "coverage/**"
+    - "**/*.test.ts"
+    - "**/*.spec.ts"
+    - "**/*.stories.tsx"
+
+# Code quality rules
+quality:
+  # TypeScript strict mode checks
+  typescript:
+    enabled: true
+    strict: true
+    checkTypes: true
+    checkNulls: true
+    checkImplicitAny: true
+    checkImplicitThis: true
+
+  # ESLint rules
+  eslint:
+    enabled: true
+    config: "eslint.config.js"
+    useDefaultConfig: false
+    errorOnly: false
+
+  # Code complexity
+  complexity:
+    enabled: true
+    maxCyclomaticComplexity: 10
+    maxCognitiveComplexity: 15
+    maxNestingLevel: 4
+    maxLineLength: 120
+
+  # Duplication detection
+  duplication:
+    enabled: true
+    minTokens: 50
+    minLines: 5
+    threshold: 0.95
+
+# Security analysis
+security:
+  enabled: true
+
+  # SAST (Static Application Security Testing)
+  sast:
+    enabled: true
+    rules:
+      - "sql-injection"
+      - "xss-vulnerability"
+      - "csrf-vulnerability"
+      - "hardcoded-secrets"
+      - "insecure-crypto"
+      - "command-injection"
+
+  # Dependency scanning
+  dependencies:
+    enabled: true
+    checkVulnerabilities: true
+    checkLicenses: true
+    allowedLicenses:
+      - "MIT"
+      - "Apache-2.0"
+      - "BSD-2-Clause"
+      - "BSD-3-Clause"
+      - "ISC"
+
+  # Secret detection
+  secrets:
+    enabled: true
+    patterns:
+      - "password"
+      - "api_key"
+      - "secret"
+      - "token"
+      - "credential"
+
+# Performance analysis
+performance:
+  enabled: true
+
+  # Bundle size checks
+  bundle:
+    enabled: true
+    maxSize: "2MB"
+    maxGzipSize: "500KB"
+    checkChunkSize: true
+
+  # Memory leaks detection
+  memoryLeaks:
+    enabled: true
+    checkUnsubscribes: true
+    checkEventListeners: true
+    checkTimers: true
+
+  # Render performance
+  rendering:
+    enabled: true
+    checkUnneededRenders: true
+    checkLargeComponents: true
+
+# Best practices
+bestPractices:
+  enabled: true
+
+  # React/component patterns
+  react:
+    enabled: true
+    checkHooks: true
+    checkPropTypes: true
+    checkDependencies: true
+    checkUnusedProps: true
+
+  # Code organization
+  organization:
+    enabled: true
+    checkUnusedVariables: true
+    checkUnusedFunctions: true
+    checkUnusedImports: true
+    checkOrphanedFiles: true
+
+  # Documentation
+  documentation:
+    enabled: true
+    requireComments: false
+    requireTypeAnnotations: true
+    requireJSDoc: false
+    checkMissingREADME: true
+
+# Reporting
+reporting:
+  # Report format
+  format: "detailed"
+
+  # Include statistics
+  includeStats: true
+  includeSummary: true
+  includeMetrics: true
+
+  # Severity levels
+  severities:
+    critical:
+      - sql-injection
+      - hardcoded-secrets
+      - insecure-crypto
+    high:
+      - xss-vulnerability
+      - csrf-vulnerability
+      - memory-leak
+      - performance-issue
+    medium:
+      - complexity-high
+      - duplication-detected
+      - missing-type
+    low:
+      - code-style
+      - documentation-missing
+      - unused-code
+
+  # Comment on PR
+  commentOnPR: true
+  commentTreshold: "low" # Comment on all issues
+
+  # Fail on severity
+  failOn: "critical" # Fail if critical issues found
+
+# Ignore patterns
+ignore:
+  files:
+    - "**/*.config.js"
+    - "**/*.config.ts"
+    - "dist/**"
+    - "build/**"
+
+  rules:
+    - rule: "unused-variable"
+      files: "**/*.test.ts"
+    - rule: "complexity-high"
+      files: "**/index.ts"
+
+# Custom rules
+customRules:
+  enabled: true
+  rules:
+    - name: "no-console-in-production"
+      pattern: "console\\.(log|warn|error)"
+      severity: "medium"
+      files: "src/**/*.ts"
+      exclude: "**/utils/logger.ts"
+
+    - name: "proper-error-handling"
+      pattern: "catch\\s*\\(\\s*\\)"
+      severity: "high"
+      files: "src/**/*.ts"
+
+    - name: "required-type-annotations"
+      pattern: "function\\s+\\w+\\([^)]*\\)\\s*{"
+      severity: "medium"
+      files: "src/**/*.ts"
+      exclude: "**/**.test.ts"
+
+# Integration settings
+integration:
+  # GitHub integration
+  github:
+    enabled: true
+    createReviews: true
+    createComments: true
+    createChecks: true
+    suggestFixes: true
+
+  # Slack integration (optional)
+  slack:
+    enabled: false
+    webhook: "${SLACK_WEBHOOK_URL}"
+    notifyOnCritical: true
+
+  # Email notifications (optional)
+  email:
+    enabled: false
+    recipients:
+      - "dev@vingo-roll.com"
+    notifyOnCritical: true
+
+# Cache settings
+cache:
+  enabled: true
+  ttl: 3600 # 1 hour
+
+# Debug settings
+debug:
+  enabled: false
+  verbose: false
+  logFile: ".rabbit-review.log"
