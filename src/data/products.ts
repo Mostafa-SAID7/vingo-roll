@@ -269,16 +269,15 @@ const seeds: Seed[] = [
 ];
 
 function buildProduct(seed: Seed): Product {
-  return {
+  const product: Product = {
     id: seed.slug,
     slug: seed.slug,
     name: seed.name,
     shortDescription: seed.short,
     description: `${seed.short} Every ${seed.name} is cut to order in our workroom, pressed, and inspected before it ships. Choose your fabric, colour and drop — or send us your measurements and we will confirm them with you before cutting.`,
     categoryId: seed.categoryId,
-    collectionId: seed.collectionId || undefined,
     price: seed.price,
-    compareAtPrice: seed.compareAtPrice,
+    ...(seed.compareAtPrice !== undefined && { compareAtPrice: seed.compareAtPrice }),
     currency: "USD",
     rating: seed.rating,
     reviewCount: seed.reviews,
@@ -305,15 +304,24 @@ function buildProduct(seed: Seed): Product {
       "Lead time": "3–4 weeks",
       Warranty: "5 years on hardware",
     },
-    lightControl: seed.light,
-    rooms: seed.rooms,
-    needs: seed.needs,
-    styles: seed.style,
+    ...(seed.light !== undefined && { lightControl: seed.light }),
+    ...(seed.rooms.length > 0 && { rooms: seed.rooms }),
+    ...(seed.needs.length > 0 && { needs: seed.needs }),
+    ...(seed.style.length > 0 && { styles: seed.style }),
     installation: "both",
     motorized: seed.motorized ?? seed.needs.includes("smart-motorized"),
     stockStatus: seed.flags?.newArrival ? "made-to-order" : "in-stock",
-    ...seed.flags,
+    ...(seed.flags?.featured && { featured: seed.flags.featured }),
+    ...(seed.flags?.bestseller && { bestseller: seed.flags.bestseller }),
+    ...(seed.flags?.newArrival && { newArrival: seed.flags.newArrival }),
+    ...(seed.flags?.sale && { sale: seed.flags.sale }),
   };
+  
+  if (seed.collectionId) {
+    product.collectionId = seed.collectionId;
+  }
+  
+  return product;
 }
 
 export const products: Product[] = seeds.map(buildProduct);

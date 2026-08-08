@@ -43,7 +43,6 @@ export {
   CarouselNext,
 } from "./carousel";
 export {
-  Chart,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -173,7 +172,7 @@ export {
 export { Popover, PopoverTrigger, PopoverContent } from "./popover";
 export { Progress } from "./progress";
 export { RadioGroup, RadioGroupItem } from "./radio-group";
-export { Resizable, ResizablePanelGroup, ResizablePanel, ResizableHandle } from "./resizable";
+export { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "./resizable";
 export { ScrollArea, ScrollBar } from "./scroll-area";
 export {
   Sheet,
