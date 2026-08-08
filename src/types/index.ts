@@ -37,9 +37,9 @@ export type Product = {
   shortDescription: string;
   description: string;
   categoryId: string;
-  collectionId?: string;
+  collectionId?: string | undefined;
   price: number;
-  compareAtPrice?: number;
+  compareAtPrice?: number | undefined;
   currency: string;
   rating: number;
   reviewCount: number;
@@ -49,17 +49,17 @@ export type Product = {
   sizes: SizeOption[];
   features: string[];
   specifications: Record<string, string>;
-  lightControl?: LightControl;
-  roomTypes?: string[];
-  needs?: string[];
-  styleTags?: string[];
-  installation?: Installation;
-  motorized?: boolean;
+  lightControl?: LightControl | undefined;
+  roomTypes?: string[] | undefined;
+  needs?: string[] | undefined;
+  styleTags?: string[] | undefined;
+  installation?: Installation | undefined;
+  motorized?: boolean | undefined;
   stockStatus: StockStatus;
-  featured?: boolean;
-  bestseller?: boolean;
-  newArrival?: boolean;
-  sale?: boolean;
+  featured?: boolean | undefined;
+  bestseller?: boolean | undefined;
+  newArrival?: boolean | undefined;
+  sale?: boolean | undefined;
 };
 
 export type Category = {
@@ -108,7 +108,7 @@ export type Swatch = {
   lightControl: LightControl;
   rooms: string[];
   style: string;
-  image?: string;
+  image?: string | undefined;
 };
 
 export type InspirationPost = {

@@ -44,13 +44,13 @@ const roomPool = ["living-room", "bedroom", "dining-room", "home-office", "kitch
 
 export const swatches: Swatch[] = materialsList.map((m, i) => ({
   id: `swatch-${i + 1}`,
-  name: `${names[i]} ${m.material}`,
+  name: `${names[i] ?? "Natural"} ${m.material}`,
   material: m.material,
   colorFamily: m.family,
   hex: m.hex,
   lightControl: m.light,
-  rooms: [roomPool[i % roomPool.length], roomPool[(i + 2) % roomPool.length]],
-  style: styles[i % styles.length],
+  rooms: [roomPool[i % roomPool.length]!, roomPool[(i + 2) % roomPool.length]!],
+  style: styles[i % styles.length]!,
   image: IMG.linen,
 }));
 
