@@ -11,6 +11,7 @@ Vingo Roll Studio implements a comprehensive, modern error handling strategy wit
 The React Error Boundary (`src/routes/__root.tsx`) wraps the entire application to catch unhandled component errors.
 
 **Features:**
+
 - Catches errors in any child component during rendering
 - Prevents white-screen-of-death errors
 - Provides development-friendly error details in dev mode
@@ -18,6 +19,7 @@ The React Error Boundary (`src/routes/__root.tsx`) wraps the entire application 
 - Smooth animations for error display
 
 **Usage:**
+
 ```tsx
 <ErrorBoundary>
   <YourApp />
@@ -32,6 +34,7 @@ React Router's built-in error and 404 handlers capture route-level errors:
 - **Error Handler**: Catches errors thrown during route loading or rendering
 
 **Current Handlers:**
+
 - `NotFoundComponent`: Modern 404 page with animations
 - `ErrorComponent`: Generic error page for route errors
 
@@ -52,17 +55,20 @@ Used by the server to render errors that happen during SSR or hydration.
 The 404 page features:
 
 **Visual Elements:**
+
 - Floating window icon (🪟) with animation
 - Large gradient "404" text (purple to pink gradient)
 - Clear, empathetic messaging
 - Modern rounded UI with proper spacing
 
 **Animations:**
+
 - `slideUp`: Staggered entrance animations (0.1s intervals)
 - `float`: Gentle vertical movement on the icon
 - All elements animate in sequence for polish
 
 **Actions:**
+
 - "Browse collection" (primary button)
 - "Find your style" (secondary button)
 - Links to shop and style-finder routes
@@ -72,17 +78,20 @@ The 404 page features:
 The generic error page features:
 
 **Visual Elements:**
+
 - Warning icon (⚠️) with shake animation
 - Empathetic error messaging
 - Optional dev-only error details in a scrollable panel
 - Styled code block for error stack trace
 
 **Animations:**
+
 - `shake`: Attention-grabbing icon animation
 - `slideUp`: Staggered component entrance
 - Smooth transitions and hover effects
 
 **Actions:**
+
 - "Go to homepage" (primary button)
 - "Reload page" (secondary button)
 - Dev mode shows: Error message, stack trace, file location
@@ -92,6 +101,7 @@ The generic error page features:
 Critical errors that occur before React loads display a minimal but styled HTML page:
 
 **Features:**
+
 - No JavaScript required
 - Responsive design with media queries
 - Dark mode support via `prefers-color-scheme`
@@ -104,46 +114,70 @@ Critical errors that occur before React loads display a minimal but styled HTML 
 ### Animation Keyframes
 
 **slideUp**
+
 ```css
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 ```
+
 Used for all entrance animations with staggered delays.
 
 **shake**
+
 ```css
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 ```
+
 Creates attention-grabbing effect for error states.
 
 **float**
+
 ```css
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 ```
+
 Gentle vertical movement for decorative elements.
 
 ### Colors
 
 **Gradients:**
+
 - Primary: Purple (#667eea) to Pink (#764ba2)
 - Used on: 404 code, error icons, buttons
 
 **CSS Variables (Light/Dark Mode):**
+
 ```css
---color-bg: #fafafa (light) / #0f172a (dark)
---color-fg: #111 (light) / #f1f5f9 (dark)
---color-muted: #4b5563 (light) / #94a3b8 (dark)
---color-accent: #667eea
---color-accent-alt: #764ba2
+--color-bg: #fafafa (light) / #0f172a (dark) --color-fg: #111 (light) / #f1f5f9 (dark)
+  --color-muted: #4b5563 (light) / #94a3b8 (dark) --color-accent: #667eea
+  --color-accent-alt: #764ba2;
 ```
 
 ## Error Boundary Implementation
@@ -176,6 +210,7 @@ class ErrorBoundary extends Component {
 ### Development Mode Features
 
 In development (`import.meta.env.DEV`):
+
 - Full error message displayed
 - Stack trace visible
 - Component hierarchy information
@@ -186,16 +221,16 @@ In development (`import.meta.env.DEV`):
 ### Throwing Errors in Routes
 
 ```typescript
-export const Route = createFileRoute('/product/$slug')({
+export const Route = createFileRoute("/product/$slug")({
   loader: ({ params }) => {
-    const product = getProduct(params.slug)
+    const product = getProduct(params.slug);
     if (!product) {
-      throw notFound() // Triggers 404 handler
+      throw notFound(); // Triggers 404 handler
     }
-    return { product }
+    return { product };
   },
   component: Page,
-})
+});
 ```
 
 ### Handling Async Errors
@@ -203,11 +238,11 @@ export const Route = createFileRoute('/product/$slug')({
 ```typescript
 async function fetchData() {
   try {
-    const data = await api.get('/data')
-    return data
+    const data = await api.get("/data");
+    return data;
   } catch (error) {
     // ErrorBoundary will catch this if thrown
-    throw error
+    throw error;
   }
 }
 ```

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { Heart, Menu, Moon, Search, ShoppingBag, Sun, User, X, ChevronDown } from "lucide-react";
+import { Heart, Menu, Moon, Search, ShoppingBag, Sun, User, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { MegaMenu } from "@/components/layout/mega-menu";
 import { nav } from "@/data/navigation";
 import { useCartStore, cartCount } from "@/store/cart-store";
 import { useWishlistStore } from "@/store/wishlist-store";
@@ -181,51 +182,15 @@ export function SiteHeader() {
 
           <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
             {menus.map((menu) => (
-              <div key={menu.label} className="relative">
-                <button
-                  type="button"
-                  aria-expanded={openMenu === menu.label}
-                  onMouseEnter={() => setOpenMenu(menu.label)}
-                  onClick={() => setOpenMenu(openMenu === menu.label ? null : menu.label)}
-                  className="hover:text-accent flex items-center gap-1 px-3 py-2 text-[13px] tracking-[0.12em] uppercase transition-colors"
-                >
-                  {menu.label}
-                  <ChevronDown className="h-3 w-3" aria-hidden="true" />
-                </button>
-                {openMenu === menu.label ? (
-                  <div className="bg-popover border-border animate-fade-in shadow-warm absolute top-full left-1/2 z-50 w-max min-w-[16rem] -translate-x-1/2 border p-6">
-                    <div className="flex gap-10">
-                      {menu.columns.map((col) => (
-                        <div key={col.title}>
-                          <p className="eyebrow mb-3">{col.title}</p>
-                          <ul className="space-y-2">
-                            {col.links.map((link) => (
-                              <li key={link.label}>
-                                {"slug" in link && link.slug ? (
-                                  <Link
-                                    to="/shop/$category"
-                                    params={{ category: link.slug }}
-                                    className="text-muted-foreground hover:text-foreground text-sm"
-                                  >
-                                    {link.label}
-                                  </Link>
-                                ) : (
-                                  <Link
-                                    to={link.to}
-                                    className="text-muted-foreground hover:text-foreground text-sm"
-                                  >
-                                    {link.label}
-                                  </Link>
-                                )}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-              </div>
+              <MegaMenu
+                key={menu.label}
+                label={menu.label}
+                columns={menu.columns}
+                isOpen={openMenu === menu.label}
+                onMouseEnter={() => setOpenMenu(menu.label)}
+                onMouseLeave={() => setOpenMenu(null)}
+                onClick={() => setOpenMenu(openMenu === menu.label ? null : menu.label)}
+              />
             ))}
             <Link
               to="/about"
@@ -273,5 +238,3 @@ export function SiteHeader() {
     </>
   );
 }
-
-export { X };

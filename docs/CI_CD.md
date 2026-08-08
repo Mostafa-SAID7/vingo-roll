@@ -45,12 +45,12 @@ Located in: `.github/workflows/`
 
 ### Overview Table
 
-| Workflow | Trigger | Purpose | Actions |
-| --- | --- | --- | --- |
-| **Build** | Push to any branch, PR | Test code quality | Lint, TypeScript, build |
-| **Release** | Push to main, manual | Create releases | Tag, release notes, version bump |
-| **Deploy** | Release published, manual | Deploy to servers | Build, test, deploy |
-| **Docs** | Changes to docs, manual | Validate documentation | Link check, structure validation |
+| Workflow    | Trigger                   | Purpose                | Actions                          |
+| ----------- | ------------------------- | ---------------------- | -------------------------------- |
+| **Build**   | Push to any branch, PR    | Test code quality      | Lint, TypeScript, build          |
+| **Release** | Push to main, manual      | Create releases        | Tag, release notes, version bump |
+| **Deploy**  | Release published, manual | Deploy to servers      | Build, test, deploy              |
+| **Docs**    | Changes to docs, manual   | Validate documentation | Link check, structure validation |
 
 ---
 
@@ -61,6 +61,7 @@ Located in: `.github/workflows/`
 **Purpose**: Verify code quality and build on every push
 
 **Triggers**:
+
 - Push to: `main`, `develop`, `feature/*`, `bugfix/*`
 - Pull requests to: `main`, `develop`
 - Manual trigger via GitHub Actions
@@ -98,6 +99,7 @@ Located in: `.github/workflows/`
 **Purpose**: Automatically create releases with semantic versioning
 
 **Triggers**:
+
 - Push to `main` branch
 - Tag push (v*)
 - Manual workflow dispatch with optional version override
@@ -153,18 +155,21 @@ You can manually trigger release with a specific version:
 **Purpose**: Deploy releases to staging and production
 
 **Triggers**:
+
 - Release published
 - Manual workflow dispatch (select environment)
 
 ### Deployment Environments
 
 #### Staging
+
 - **URL**: https://staging.vingo-roll.example.com
 - **Auto-triggered**: On release publish
 - **Approval**: No approval needed
 - **Rollback**: Automatic on failure
 
 #### Production
+
 - **URL**: https://vingo-roll.example.com
 - **Auto-triggered**: Manual only
 - **Approval**: Manual workflow dispatch required
@@ -209,6 +214,7 @@ Before production deployment:
 **Purpose**: Validate documentation quality and integrity
 
 **Triggers**:
+
 - Push to `main` or `develop` (changes to docs)
 - Pull requests (changes to docs)
 - Manual trigger
@@ -257,6 +263,7 @@ Required files that must exist:
 ### Workflow Status
 
 Status indicators:
+
 - ✅ **Success** - All jobs completed successfully
 - ❌ **Failed** - One or more jobs failed
 - ⏸️ **Skipped** - Workflow conditions not met
@@ -282,6 +289,7 @@ Status indicators:
 ```
 
 **Solution**:
+
 1. Pull latest code
 2. Run `npm run lint` locally
 3. Fix errors
@@ -295,6 +303,7 @@ Status indicators:
 ```
 
 **Solution**:
+
 1. Run TypeScript check locally: `npx tsc --noEmit`
 2. Fix type errors
 3. Verify with `npm run build`
@@ -309,11 +318,13 @@ Status indicators:
 ```
 
 **Solution**:
+
 - Ensure commits follow [Conventional Commits](../GITFLOW.md#commit-convention)
 - Use: `feat:`, `fix:`, `perf:`, `BREAKING CHANGE`
 - Docs/chore commits don't trigger releases
 
 **Manual Release**:
+
 1. Go to GitHub Actions
 2. Select "Automated Release & Tagging"
 3. Click "Run workflow"
@@ -329,6 +340,7 @@ Status indicators:
 ```
 
 **Solution**:
+
 1. Check workflow logs for error
 2. Fix issue locally
 3. Push fix to main
@@ -344,6 +356,7 @@ Status indicators:
 ```
 
 **Solution**:
+
 1. Fix link in documentation
 2. Verify file exists
 3. Commit changes
@@ -389,10 +402,12 @@ Status indicators:
 ### Required Permissions
 
 **For Release Workflow**:
+
 - `contents: write` - Create tags and releases
 - `packages: write` - Publish packages
 
 **For Deployment Workflow**:
+
 - `contents: read` - Read code
 - `deployments: write` - Create deployments
 
@@ -407,10 +422,10 @@ Edit files in `.github/workflows/`:
 ```yaml
 on:
   push:
-    branches: [main, develop]  # Trigger on these branches
+    branches: [main, develop] # Trigger on these branches
   pull_request:
-    branches: [main]           # Trigger on PRs to main
-  workflow_dispatch:           # Allow manual trigger
+    branches: [main] # Trigger on PRs to main
+  workflow_dispatch: # Allow manual trigger
 ```
 
 ### Adding New Workflows

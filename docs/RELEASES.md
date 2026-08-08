@@ -48,12 +48,12 @@ vMAJOR.MINOR.PATCH
 
 ### Version Bumping
 
-| Change Type | Bump | Example | Commit Type |
-| --- | --- | --- | --- |
-| **Breaking API change** | MAJOR | 1.x.x → 2.0.0 | `BREAKING CHANGE` |
-| **New features (backward compatible)** | MINOR | 1.2.x → 1.3.0 | `feat:` |
-| **Bug fixes** | PATCH | 1.2.3 → 1.2.4 | `fix:` |
-| **Performance improvements** | PATCH | 1.2.3 → 1.2.4 | `perf:` |
+| Change Type                            | Bump  | Example       | Commit Type       |
+| -------------------------------------- | ----- | ------------- | ----------------- |
+| **Breaking API change**                | MAJOR | 1.x.x → 2.0.0 | `BREAKING CHANGE` |
+| **New features (backward compatible)** | MINOR | 1.2.x → 1.3.0 | `feat:`           |
+| **Bug fixes**                          | PATCH | 1.2.3 → 1.2.4 | `fix:`            |
+| **Performance improvements**           | PATCH | 1.2.3 → 1.2.4 | `perf:`           |
 
 ### Current Version
 
@@ -185,6 +185,7 @@ docs: update README            ← No bump
 ### Automatic Release (Recommended)
 
 1. **Make commits** with conventional message types:
+
    ```bash
    git commit -m "feat: add new feature"
    git commit -m "fix: resolve issue"
@@ -331,17 +332,17 @@ Next feature: v1.3.0 (minor bump continues)
 
 ### Current Releases
 
-| Version | Date | Status | Key Features |
-| --- | --- | --- | --- |
-| v1.0.0 | 2026-08-08 | ✅ Latest | MVP, all core features |
-| v1.0.0-beta | 2026-07-01 | 🔴 Beta | Pre-release testing |
+| Version     | Date       | Status    | Key Features           |
+| ----------- | ---------- | --------- | ---------------------- |
+| v1.0.0      | 2026-08-08 | ✅ Latest | MVP, all core features |
+| v1.0.0-beta | 2026-07-01 | 🔴 Beta   | Pre-release testing    |
 
 ### Upcoming
 
-| Version | Status | Target |
-| --- | --- | --- |
-| v1.1.0 | 🔄 In Development | Q1 2027 |
-| v2.0.0 | 📋 Planned | Q2 2027 |
+| Version | Status            | Target  |
+| ------- | ----------------- | ------- |
+| v1.1.0  | 🔄 In Development | Q1 2027 |
+| v2.0.0  | 📋 Planned        | Q2 2027 |
 
 ### View All Releases
 
@@ -357,11 +358,13 @@ Next feature: v1.3.0 (minor bump continues)
 **Location**: `.github/workflows/release.yml`
 
 **Triggers**:
+
 - Push to main branch
 - Manual trigger via GitHub Actions
 - Tag push
 
 **Steps**:
+
 1. Determine version from commits
 2. Create git tag
 3. Generate release notes

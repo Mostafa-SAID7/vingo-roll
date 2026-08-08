@@ -16,6 +16,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 ### ✨ Added
 
 #### Core Features
+
 - **Product Catalog**: Complete product management with images, descriptions, pricing, and variants
 - **Product Details**: Rich product pages with images, specifications, reviews, and FAQ
 - **Shopping Cart**: Full-featured cart with add/remove, quantity adjustment, and totals
@@ -25,6 +26,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 - **Inspiration Gallery**: Style inspiration and room design lookbooks
 
 #### User Experience
+
 - **Modern UI/UX**: Glassmorphism design with smooth animations
 - **Dark Mode**: Full dark mode support with system preference detection
 - **Responsive Design**: Mobile-first design for all screen sizes
@@ -34,6 +36,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 - **Loading States**: Skeleton screens and loading indicators
 
 #### E-commerce Features
+
 - **Product Variants**: Support for materials, colors, sizes, and mounting options
 - **Pricing**: Dynamic pricing with material and size adjustments
 - **Reviews**: Product review system with ratings and filtering
@@ -42,6 +45,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 - **Swatch Orders**: Request free samples before purchasing
 
 #### Guides & Resources
+
 - **Style Finder**: Interactive quiz to find the perfect window treatment style
 - **Measuring Guide**: Detailed instructions for accurate measurements
 - **Care Instructions**: Product care and maintenance guide
@@ -51,6 +55,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 - **Installation Services**: Measuring and installation support
 
 #### About & Legal
+
 - **About Us**: Company story and brand values
 - **Contact Us**: Contact form and customer support
 - **Privacy Policy**: GDPR-compliant privacy information
@@ -59,6 +64,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 - **Accessibility Statement**: WCAG compliance information
 
 #### Technical Excellence
+
 - **TypeScript**: Full type safety across the codebase
 - **React 19**: Latest React features and performance optimizations
 - **TanStack Router**: Modern client-side routing with data loaders
@@ -71,6 +77,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 - **Lucide Icons**: Modern icon system
 
 #### Development Features
+
 - **Modern Build System**: Vite for fast development and optimized builds
 - **Code Quality**:
   - ESLint for code linting
@@ -82,6 +89,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 - **Source Maps**: Debuggable production builds
 
 #### Documentation
+
 - **Comprehensive README**: Project overview and quick start guide
 - **GitFlow Documentation**: Complete branching strategy and workflow
 - **Contributing Guidelines**: Developer contribution process
@@ -91,6 +99,7 @@ This is the first stable release of Vingo Roll Studio, a modern ecommerce platfo
 - **Environment Setup**: Local development configuration
 
 #### Deployment & CI/CD
+
 - **GitHub Actions**: Automated testing and build pipeline
 - **Automated Releases**: Semantic versioning with automatic tagging
 - **Release Notes**: Auto-generated changelog for each release
@@ -192,8 +201,8 @@ To contribute to future releases, please read [CONTRIBUTING.md](./CONTRIBUTING.m
 
 ## Release History
 
-| Version | Date | Status |
-| --- | --- | --- |
+| Version                    | Date       | Status      |
+| -------------------------- | ---------- | ----------- |
 | [1.0.0](#100---2026-08-08) | 2026-08-08 | ✅ Released |
 
 ---
