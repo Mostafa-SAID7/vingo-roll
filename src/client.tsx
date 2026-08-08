@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { RouterProvider } from '@tanstack/react-router'
 import { getRouter } from './router'
 
 // Debug logging
@@ -22,8 +23,8 @@ async function hydrate() {
     console.log('Creating React root...')
     const root = ReactDOM.createRoot(rootElement)
     
-    console.log('Rendering app...')
-    root.render(<RootApp router={router} />)
+    console.log('Rendering app with RouterProvider...')
+    root.render(<RouterProvider router={router} />)
     
     console.log('=== App Rendered Successfully ===')
   } catch (err: any) {
@@ -34,11 +35,6 @@ async function hydrate() {
       rootElement.innerHTML = `<div style="color: red; padding: 20px; font-family: monospace; white-space: pre-wrap;">Error initializing app: ${msg}</div>`
     }
   }
-}
-
-function RootApp({ router }: { router: ReturnType<typeof getRouter> }) {
-  console.log('RootApp rendering...')
-  return <router.RouterProvider />
 }
 
 // Start immediately
