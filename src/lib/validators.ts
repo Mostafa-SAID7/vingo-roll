@@ -111,7 +111,7 @@ export function validateExpiry(expiry: string): { valid: boolean; error?: string
   }
 
   const [month, year] = expiry.split("/");
-  const monthNum = parseInt(month, 10);
+  const monthNum = parseInt(month || "0", 10);
 
   if (monthNum < 1 || monthNum > 12) {
     return { valid: false, error: "Invalid month" };
@@ -120,7 +120,7 @@ export function validateExpiry(expiry: string): { valid: boolean; error?: string
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear() % 100;
   const currentMonth = currentDate.getMonth() + 1;
-  const cardYear = parseInt(year, 10);
+  const cardYear = parseInt(year || "0", 10);
 
   if (cardYear < currentYear || (cardYear === currentYear && monthNum < currentMonth)) {
     return { valid: false, error: "Card expired" };
