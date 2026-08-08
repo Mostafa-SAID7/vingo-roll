@@ -85,6 +85,7 @@ Does this affect accessibility?
 - [ ] No
 
 If yes:
+
 - [ ] Keyboard navigation
 - [ ] Screen reader
 - [ ] Color contrast
@@ -93,4 +94,3 @@ If yes:
 ## Additional Context
 
 Add any other relevant information here.
-

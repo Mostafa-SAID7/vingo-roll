@@ -35,7 +35,7 @@ export function LoadingProvider({ children }: { children: React.ReactNode }) {
     const checkStylesLoaded = () => {
       const stylesheets = document.styleSheets;
       let allLoaded = true;
-      
+
       for (let i = 0; i < stylesheets.length; i++) {
         try {
           if (!(stylesheets[i] as CSSStyleSheet).cssRules) {
@@ -70,4 +70,3 @@ export function LoadingProvider({ children }: { children: React.ReactNode }) {
     </LoadingContext.Provider>
   );
 }
-

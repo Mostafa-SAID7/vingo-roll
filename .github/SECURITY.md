@@ -37,6 +37,7 @@ Subject: [SECURITY] Vulnerability Report - [Brief Description]
 ### For Users
 
 1. **Keep Dependencies Updated**
+
    ```bash
    npm audit
    npm update
@@ -95,11 +96,11 @@ This project follows:
 
 ## Supported Versions
 
-| Version | Status | Security Updates |
-|---------|--------|-----------------|
-| 1.7.x   | Current | Yes |
+| Version | Status     | Security Updates    |
+| ------- | ---------- | ------------------- |
+| 1.7.x   | Current    | Yes                 |
 | 1.6.x   | Maintained | Yes (critical only) |
-| < 1.6.0 | EOL | No |
+| < 1.6.0 | EOL        | No                  |
 
 ## Contact
 
@@ -110,4 +111,3 @@ This project follows:
 ## Acknowledgments
 
 We appreciate security researchers who responsibly disclose vulnerabilities.
-

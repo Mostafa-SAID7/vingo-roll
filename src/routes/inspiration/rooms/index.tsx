@@ -88,7 +88,8 @@ function Page() {
             </div>
             <h4 className="font-semibold mb-2">Explore Treatments</h4>
             <p className="text-sm text-muted-foreground">
-              Browse curated products that work beautifully in that room, from sheer curtains to motorized blinds.
+              Browse curated products that work beautifully in that room, from sheer curtains to
+              motorized blinds.
             </p>
           </div>
 
@@ -98,7 +99,8 @@ function Page() {
             </div>
             <h4 className="font-semibold mb-2">Get Design Help</h4>
             <p className="text-sm text-muted-foreground">
-              Not sure? Book a free consultation or take our style finder quiz for personalized recommendations.
+              Not sure? Book a free consultation or take our style finder quiz for personalized
+              recommendations.
             </p>
           </div>
         </div>
@@ -110,7 +112,8 @@ function Page() {
           <div className="max-w-lg">
             <h3 className="text-2xl font-bold mb-3">Need expert guidance?</h3>
             <p className="text-muted-foreground mb-6">
-              Our design specialists can help you choose the perfect treatments for each room. Schedule a free consultation.
+              Our design specialists can help you choose the perfect treatments for each room.
+              Schedule a free consultation.
             </p>
             <Button asChild>
               <Link to="/services/design-consultation">Book a Consultation</Link>

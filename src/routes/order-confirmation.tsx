@@ -21,7 +21,7 @@ export const Route = createFileRoute("/order-confirmation")({
 
 function Page() {
   const search = useSearch({ from: Route.id });
-  const orderId = search['orderId'] ?? "";
+  const orderId = search["orderId"] ?? "";
   const { user } = useAuth();
   const getOrderById = useOrderStore((s) => s.getOrderById);
 
@@ -123,7 +123,9 @@ function Page() {
                   <div className="flex-1">
                     <p className="font-medium">{item.name}</p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      {Object.entries(item.options).map(([key, value]) => `${key}: ${value}`).join(" • ")}
+                      {Object.entries(item.options)
+                        .map(([key, value]) => `${key}: ${value}`)
+                        .join(" • ")}
                     </p>
                     <p className="text-sm text-muted-foreground mt-2">
                       Qty: {item.quantity} @ {formatPrice(item.unitPrice)}
@@ -163,8 +165,8 @@ function Page() {
           <div className="bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-200 rounded p-4 text-sm">
             <p className="font-semibold mb-2">What's Next?</p>
             <p>
-              A confirmation email has been sent to <strong>{user.email}</strong>. You can track your order from your
-              account dashboard. We'll notify you when your order ships.
+              A confirmation email has been sent to <strong>{user.email}</strong>. You can track
+              your order from your account dashboard. We'll notify you when your order ships.
             </p>
           </div>
         </div>

@@ -7,14 +7,14 @@ version: "1.0"
 analysis:
   # Enable/disable specific checks
   enabled: true
-  
+
   # Include patterns
   include:
     - "src/**/*.ts"
     - "src/**/*.tsx"
     - "src/**/*.js"
     - "src/**/*.jsx"
-  
+
   # Exclude patterns
   exclude:
     - "node_modules/**"
@@ -61,7 +61,7 @@ quality:
 # Security analysis
 security:
   enabled: true
-  
+
   # SAST (Static Application Security Testing)
   sast:
     enabled: true
@@ -98,7 +98,7 @@ security:
 # Performance analysis
 performance:
   enabled: true
-  
+
   # Bundle size checks
   bundle:
     enabled: true
@@ -122,7 +122,7 @@ performance:
 # Best practices
 bestPractices:
   enabled: true
-  
+
   # React/component patterns
   react:
     enabled: true
@@ -151,12 +151,12 @@ bestPractices:
 reporting:
   # Report format
   format: "detailed"
-  
+
   # Include statistics
   includeStats: true
   includeSummary: true
   includeMetrics: true
-  
+
   # Severity levels
   severities:
     critical:
@@ -179,10 +179,10 @@ reporting:
 
   # Comment on PR
   commentOnPR: true
-  commentTreshold: "low"  # Comment on all issues
-  
+  commentTreshold: "low" # Comment on all issues
+
   # Fail on severity
-  failOn: "critical"  # Fail if critical issues found
+  failOn: "critical" # Fail if critical issues found
 
 # Ignore patterns
 ignore:
@@ -207,12 +207,12 @@ customRules:
       severity: "medium"
       files: "src/**/*.ts"
       exclude: "**/utils/logger.ts"
-    
+
     - name: "proper-error-handling"
       pattern: "catch\\s*\\(\\s*\\)"
       severity: "high"
       files: "src/**/*.ts"
-    
+
     - name: "required-type-annotations"
       pattern: "function\\s+\\w+\\([^)]*\\)\\s*{"
       severity: "medium"
@@ -245,11 +245,10 @@ integration:
 # Cache settings
 cache:
   enabled: true
-  ttl: 3600  # 1 hour
+  ttl: 3600 # 1 hour
 
 # Debug settings
 debug:
   enabled: false
   verbose: false
   logFile: ".rabbit-review.log"
-

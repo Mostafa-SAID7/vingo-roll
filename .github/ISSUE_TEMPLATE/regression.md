@@ -72,4 +72,3 @@ Paste any errors or console messages
 ## Additional Context
 
 Any other relevant information about this regression.
-

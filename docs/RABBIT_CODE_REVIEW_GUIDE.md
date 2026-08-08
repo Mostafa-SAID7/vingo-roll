@@ -11,6 +11,7 @@ Rabbit Code Review is an automated code quality and security analysis tool that 
 ## 🚀 Features
 
 ### Code Quality Analysis
+
 - ✅ TypeScript type checking (strict mode)
 - ✅ ESLint rule validation
 - ✅ Cyclomatic complexity analysis
@@ -19,6 +20,7 @@ Rabbit Code Review is an automated code quality and security analysis tool that 
 - ✅ Naming conventions checking
 
 ### Security Analysis
+
 - ✅ SAST (Static Application Security Testing)
 - ✅ SQL injection detection
 - ✅ XSS vulnerability detection
@@ -29,6 +31,7 @@ Rabbit Code Review is an automated code quality and security analysis tool that 
 - ✅ License compliance checking
 
 ### Performance Analysis
+
 - ✅ Bundle size checking
 - ✅ Memory leak detection
 - ✅ Render performance analysis
@@ -36,6 +39,7 @@ Rabbit Code Review is an automated code quality and security analysis tool that 
 - ✅ Component complexity analysis
 
 ### Best Practices
+
 - ✅ React hooks validation
 - ✅ Component patterns checking
 - ✅ Code organization verification
@@ -47,6 +51,7 @@ Rabbit Code Review is an automated code quality and security analysis tool that 
 ## 📁 Configuration Files
 
 ### Primary Configuration
+
 ```
 .rabbit-code-review.yml
 ```
@@ -54,6 +59,7 @@ Rabbit Code Review is an automated code quality and security analysis tool that 
 Comprehensive configuration for all code review rules and settings.
 
 ### GitHub Workflow
+
 ```
 .github/workflows/rabbit-code-review.yml
 ```
@@ -67,6 +73,7 @@ Automated workflow that runs on every PR.
 ### Step 1: Enable Rabbit Code Review
 
 The workflow is already configured. It will activate automatically on:
+
 - PR creation
 - PR updates
 - PR reopening
@@ -79,6 +86,7 @@ The workflow uses GitHub's built-in `GITHUB_TOKEN` for authentication. No additi
 ### Step 3: Review Configuration (Optional)
 
 Edit `.rabbit-code-review.yml` to customize:
+
 - Which files to scan
 - Complexity thresholds
 - Security rules
@@ -147,6 +155,7 @@ Low: 2
 ### Include/Exclude Patterns
 
 **Include files to scan:**
+
 ```yaml
 include:
   - "src/**/*.ts"
@@ -154,6 +163,7 @@ include:
 ```
 
 **Exclude files:**
+
 ```yaml
 exclude:
   - "node_modules/**"
@@ -165,15 +175,16 @@ exclude:
 
 ```yaml
 complexity:
-  maxCyclomaticComplexity: 10      # Function complexity
-  maxCognitiveComplexity: 15       # Mental effort needed
-  maxNestingLevel: 4               # Nesting depth
-  maxLineLength: 120               # Line character limit
+  maxCyclomaticComplexity: 10 # Function complexity
+  maxCognitiveComplexity: 15 # Mental effort needed
+  maxNestingLevel: 4 # Nesting depth
+  maxLineLength: 120 # Line character limit
 ```
 
 ### Security Rules
 
 **Enable/disable specific checks:**
+
 ```yaml
 security:
   sast:
@@ -189,19 +200,19 @@ security:
 
 ```yaml
 severities:
-  critical:          # Blocks merge (fail PR check)
+  critical: # Blocks merge (fail PR check)
     - sql-injection
     - hardcoded-secrets
-  
-  high:              # Should be fixed
+
+  high: # Should be fixed
     - xss-vulnerability
     - memory-leak
-  
-  medium:            # Consider fixing
+
+  medium: # Consider fixing
     - complexity-high
     - duplication
-  
-  low:               # Minor issues
+
+  low: # Minor issues
     - code-style
     - documentation
 ```
@@ -282,6 +293,7 @@ Performance
 ### Viewing Reports
 
 Reports are available:
+
 - ✅ In PR comments (live)
 - ✅ In GitHub Checks tab
 - ✅ In workflow artifacts (if enabled)
@@ -294,12 +306,14 @@ Reports are available:
 ### Workflow Not Running
 
 **Check:**
+
 1. Workflow file exists: `.github/workflows/rabbit-code-review.yml`
 2. PR targets correct branches
 3. Files match `paths` filter in workflow
 4. Workflows are enabled in repository settings
 
 **Fix:**
+
 ```bash
 # Verify workflow syntax
 cd .github/workflows
@@ -309,12 +323,14 @@ cat rabbit-code-review.yml | head -20
 ### Configuration Not Applied
 
 **Check:**
+
 1. `.rabbit-code-review.yml` is in repository root
 2. YAML syntax is valid
 3. Configuration is committed and pushed
 4. Workflow uses `main` branch configuration
 
 **Fix:**
+
 ```bash
 # Validate YAML
 npm install -g yaml-validator
@@ -324,12 +340,14 @@ yaml-validator .rabbit-code-review.yml
 ### Too Many False Positives
 
 **Solutions:**
+
 1. Adjust complexity thresholds in `.rabbit-code-review.yml`
 2. Add exclusions for specific files
 3. Create custom rules for your patterns
 4. Suppress specific rules for code sections
 
 **Example - Suppress rule:**
+
 ```typescript
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function complexFunction(args: any) {
@@ -340,6 +358,7 @@ function complexFunction(args: any) {
 ### Workflow Timing Out
 
 **Solutions:**
+
 1. Reduce number of files analyzed
 2. Exclude large directories
 3. Disable heavy analysis (complexity, duplication)
@@ -352,6 +371,7 @@ function complexFunction(args: any) {
 ### Secret Detection
 
 Rabbit detects:
+
 - API keys and tokens
 - Database passwords
 - Private keys
@@ -359,6 +379,7 @@ Rabbit detects:
 - AWS credentials
 
 **If detected:**
+
 1. Rabbit will flag as CRITICAL
 2. PR will fail checks
 3. Rotate the exposed secret immediately
@@ -368,6 +389,7 @@ Rabbit detects:
 ### SAST Rules
 
 Rabbit checks for:
+
 - SQL injection vulnerabilities
 - XSS (Cross-Site Scripting) issues
 - CSRF (Cross-Site Request Forgery) vulnerabilities
@@ -379,30 +401,35 @@ Rabbit checks for:
 ## 📝 Best Practices
 
 ### Keep Complexity Low
+
 - Break functions into smaller pieces
 - Extract helper functions
 - Use early returns
 - Reduce nesting levels
 
 ### Write Type Annotations
+
 - Always type function parameters
 - Always type return values
 - Use strict TypeScript mode
 - Avoid `any` types
 
 ### Handle Errors Properly
+
 - Don't swallow exceptions
 - Provide meaningful error messages
 - Use try-catch appropriately
 - Log errors for debugging
 
 ### Avoid Code Duplication
+
 - Extract common patterns
 - Create reusable utilities
 - Use shared components
 - Follow DRY principle
 
 ### Document Your Code
+
 - Add comments for complex logic
 - Write clear variable names
 - Include type definitions
@@ -413,16 +440,19 @@ Rabbit checks for:
 ## 🎓 Learning Resources
 
 ### Code Quality
+
 - [Cyclomatic Complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity)
 - [ESLint Rules](https://eslint.org/docs/rules/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 
 ### Security
+
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [CWE Top 25](https://cwe.mitre.org/top25/)
 - [Secure Coding](https://www.securecoding.cert.org/)
 
 ### Performance
+
 - [Web Vitals](https://web.dev/vitals/)
 - [React Performance](https://react.dev/learn/render-and-commit)
 - [Bundle Analysis](https://webpack.js.org/plugins/bundle-analyzer/)
@@ -432,18 +462,21 @@ Rabbit checks for:
 ## 🔗 Integration Points
 
 ### GitHub Integration
+
 - ✅ PR comments
 - ✅ Check runs
 - ✅ Status checks
 - ✅ Review suggestions
 
 ### CI/CD Pipeline
+
 - ✅ Runs on every PR
 - ✅ Blocks merge if critical
 - ✅ Passes artifacts to deploy
 - ✅ Integrates with other checks
 
 ### Team Communication
+
 - ✅ PR feedback loop
 - ✅ Issue tracking
 - ✅ Code review insights
@@ -488,6 +521,7 @@ For issues with Rabbit Code Review:
 ## ✨ Summary
 
 Rabbit Code Review is now:
+
 - ✅ Configured for your project
 - ✅ Running on every PR
 - ✅ Providing automated feedback
@@ -496,4 +530,3 @@ Rabbit Code Review is now:
 - ✅ Analyzing performance
 
 No further setup needed - it works automatically!
-

@@ -7,4 +7,14 @@ import { faqs } from "./faqs";
 import { testimonials } from "./testimonials";
 
 // Re-export all content-related data
-export { swatches, SWATCH_LIMIT, inspiration, getInspiration, reviews, getReviews, services, faqs, testimonials };
+export {
+  swatches,
+  SWATCH_LIMIT,
+  inspiration,
+  getInspiration,
+  reviews,
+  getReviews,
+  services,
+  faqs,
+  testimonials,
+};

@@ -28,8 +28,8 @@ function Page() {
     ? products.filter((p) =>
         p.needs?.some(
           (n: string | { id: string; name: string; slug: string }) =>
-            n === active || (typeof n === "object" && n.id === active)
-        )
+            n === active || (typeof n === "object" && n.id === active),
+        ),
       )
     : products;
 

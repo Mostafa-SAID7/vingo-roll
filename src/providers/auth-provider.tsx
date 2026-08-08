@@ -125,26 +125,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setError(null);
   }, []);
 
-  const updateProfile = useCallback(async (data: Partial<User>) => {
-    if (!user) throw new Error("Not authenticated");
+  const updateProfile = useCallback(
+    async (data: Partial<User>) => {
+      if (!user) throw new Error("Not authenticated");
 
-    setIsLoading(true);
-    setError(null);
+      setIsLoading(true);
+      setError(null);
 
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 400));
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 400));
 
-      const updated = { ...user, ...data };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      setUser(updated);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Update failed";
-      setError(message);
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [user]);
+        const updated = { ...user, ...data };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        setUser(updated);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Update failed";
+        setError(message);
+        throw err;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [user],
+  );
 
   const value: AuthContextValue = {
     user,

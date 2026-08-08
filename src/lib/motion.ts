@@ -55,7 +55,7 @@ export function getTransitionStyle(
   properties: string | string[] = "all",
   duration: number = MOTION_DURATION.NORMAL,
   easing: string = MOTION_EASING.OUT,
-  delay: number = 0
+  delay: number = 0,
 ): Record<string, string> {
   const propString = Array.isArray(properties) ? properties.join(", ") : properties;
 
@@ -70,7 +70,7 @@ export function getAnimationStyle(
   duration: number = MOTION_DURATION.NORMAL,
   easing: string = MOTION_EASING.OUT,
   delay: number = 0,
-  iterationCount: number | string = 1
+  iterationCount: number | string = 1,
 ): Record<string, string> {
   return {
     animation: `${animation} ${duration}ms ${easing} ${delay}ms ${iterationCount}`,
@@ -111,7 +111,7 @@ export const getEasing = {
 export function getStaggerDelay(
   index: number,
   baseDelay: number = 0,
-  stepDelay: number = 50
+  stepDelay: number = 50,
 ): number {
   return baseDelay + index * stepDelay;
 }
@@ -119,7 +119,7 @@ export function getStaggerDelay(
 export function getSequentialDelays(
   count: number,
   baseDelay: number = 0,
-  stepDelay: number = 50
+  stepDelay: number = 50,
 ): number[] {
   return Array.from({ length: count }, (_, i) => getStaggerDelay(i, baseDelay, stepDelay));
 }
@@ -141,7 +141,7 @@ export function getRespectfulTransitionStyle(
   properties: string | string[] = "all",
   duration: number = MOTION_DURATION.NORMAL,
   easing: string = MOTION_EASING.OUT,
-  delay: number = 0
+  delay: number = 0,
 ): Record<string, string> {
   const actualDuration = getRespectfulDuration(duration);
   return getTransitionStyle(properties, actualDuration, easing, delay);
@@ -209,7 +209,7 @@ export function animateElement(
   element: Element | null,
   animation: string,
   duration: number = MOTION_DURATION.NORMAL,
-  easing: string = MOTION_EASING.OUT
+  easing: string = MOTION_EASING.OUT,
 ): Promise<void> {
   if (!element) return Promise.resolve();
 

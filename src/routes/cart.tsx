@@ -142,7 +142,9 @@ function Page() {
                 Free shipping on orders over {formatPrice(500)}.
               </p>
               <Button asChild className="mt-6 w-full" size="lg">
-                <Link to="/checkout" onClick={handleCheckout}>Proceed to Checkout</Link>
+                <Link to="/checkout" onClick={handleCheckout}>
+                  Proceed to Checkout
+                </Link>
               </Button>
               <Button asChild className="mt-3 w-full" variant="outline">
                 <Link to="/quote">Request a quote instead</Link>

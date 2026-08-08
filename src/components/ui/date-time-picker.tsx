@@ -3,11 +3,7 @@ import { format } from "date-fns";
 import { Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -32,15 +28,9 @@ export function DateTimePicker({
   className,
 }: DateTimePickerProps) {
   const [open, setOpen] = useState(false);
-  const [tempDate, setTempDate] = useState<Date | undefined>(
-    value ? new Date(value) : undefined
-  );
-  const [hours, setHours] = useState<string>(
-    value ? format(new Date(value), "HH") : "09"
-  );
-  const [minutes, setMinutes] = useState<string>(
-    value ? format(new Date(value), "mm") : "00"
-  );
+  const [tempDate, setTempDate] = useState<Date | undefined>(value ? new Date(value) : undefined);
+  const [hours, setHours] = useState<string>(value ? format(new Date(value), "HH") : "09");
+  const [minutes, setMinutes] = useState<string>(value ? format(new Date(value), "mm") : "00");
 
   const handleDateSelect = (date: Date | undefined) => {
     setTempDate(date);
@@ -126,18 +116,10 @@ export function DateTimePicker({
 
           {/* Action Buttons */}
           <div className="border-t pt-4 flex gap-2">
-            <Button
-              variant="outline"
-              className="flex-1"
-              onClick={() => setOpen(false)}
-            >
+            <Button variant="outline" className="flex-1" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button
-              className="flex-1"
-              onClick={handleConfirm}
-              disabled={!tempDate}
-            >
+            <Button className="flex-1" onClick={handleConfirm} disabled={!tempDate}>
               Confirm
             </Button>
           </div>

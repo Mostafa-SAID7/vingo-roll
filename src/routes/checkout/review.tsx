@@ -66,7 +66,7 @@ function Page() {
         items,
         addressData as Address,
         paymentData.paymentMethod,
-        paymentData.shippingMethod || "standard"
+        paymentData.shippingMethod || "standard",
       );
 
       // Clear cart
@@ -174,7 +174,10 @@ function Page() {
               <h3 className="text-sm font-semibold mb-4">Order Items</h3>
               <div className="space-y-4">
                 {items.map((item) => (
-                  <div key={item.slug} className="flex gap-4 pb-4 border-b border-border/50 last:pb-0 last:border-0">
+                  <div
+                    key={item.slug}
+                    className="flex gap-4 pb-4 border-b border-border/50 last:pb-0 last:border-0"
+                  >
                     <img
                       src={item.image}
                       alt={item.name}
@@ -183,13 +186,17 @@ function Page() {
                     <div className="flex-1">
                       <p className="font-medium text-sm">{item.name}</p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        {Object.entries(item.options).map(([key, value]) => `${key}: ${value}`).join(" • ")}
+                        {Object.entries(item.options)
+                          .map(([key, value]) => `${key}: ${value}`)
+                          .join(" • ")}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         Qty: {item.quantity} @ {formatPrice(item.unitPrice)} each
                       </p>
                     </div>
-                    <p className="font-medium text-sm">{formatPrice(item.unitPrice * item.quantity)}</p>
+                    <p className="font-medium text-sm">
+                      {formatPrice(item.unitPrice * item.quantity)}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -221,12 +228,7 @@ function Page() {
                   <span>{formatPrice(total)}</span>
                 </div>
 
-                <Button
-                  type="submit"
-                  disabled={isProcessing}
-                  className="w-full"
-                  size="lg"
-                >
+                <Button type="submit" disabled={isProcessing} className="w-full" size="lg">
                   {isProcessing ? "Processing..." : "Place Order"}
                 </Button>
               </div>

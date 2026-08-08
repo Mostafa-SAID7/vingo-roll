@@ -10,7 +10,7 @@ export function LoadingOverlay() {
         "fixed inset-0 z-50 flex items-center justify-center",
         "bg-gradient-to-br from-background via-background to-accent/5",
         "transition-all duration-500 pointer-events-none",
-        isInitialLoading ? "opacity-100 backdrop-blur-sm" : "opacity-0 backdrop-blur-0"
+        isInitialLoading ? "opacity-100 backdrop-blur-sm" : "opacity-0 backdrop-blur-0",
       )}
       aria-hidden={!isInitialLoading}
       style={{
@@ -50,9 +50,7 @@ export function LoadingOverlay() {
           <p className="text-base font-semibold text-foreground tracking-wide">
             Loading your experience
           </p>
-          <p className="text-sm text-muted-foreground/80">
-            Preparing styles and content
-          </p>
+          <p className="text-sm text-muted-foreground/80">Preparing styles and content</p>
         </div>
 
         {/* Enhanced progress bar */}
@@ -83,4 +81,3 @@ export function LoadingOverlay() {
     </div>
   );
 }
-

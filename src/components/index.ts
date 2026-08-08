@@ -16,7 +16,15 @@ export { SiteHeader, SiteFooter, MegaMenu } from "./layout";
 // ============================================================================
 // COMMON COMPONENTS
 // ============================================================================
-export { Crumbs, PageHeader, Section, SectionHeading, EmptyState, TrustLayer, Reveal } from "./common";
+export {
+  Crumbs,
+  PageHeader,
+  Section,
+  SectionHeading,
+  EmptyState,
+  TrustLayer,
+  Reveal,
+} from "./common";
 
 // ============================================================================
 // PRODUCT COMPONENTS
@@ -36,4 +44,10 @@ export { CartDrawer } from "./cart";
 // ============================================================================
 // ERROR COMPONENTS
 // ============================================================================
-export { ErrorBoundary, RouteErrorBoundary, ErrorPage, NotFoundPage, AnimatedWovenBackground } from "./error-pages";
+export {
+  ErrorBoundary,
+  RouteErrorBoundary,
+  ErrorPage,
+  NotFoundPage,
+  AnimatedWovenBackground,
+} from "./error-pages";

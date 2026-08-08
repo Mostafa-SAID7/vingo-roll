@@ -5,6 +5,7 @@
 ### Phase 1: Verification (30 minutes)
 
 - [ ] **Verify all workflows exist**
+
   ```bash
   ls -la .github/workflows/
   # Should show 11 files:
@@ -82,6 +83,7 @@
 #### Test 1: Feature Development
 
 1. **Create test feature branch**
+
    ```bash
    git checkout develop
    git pull origin develop
@@ -89,6 +91,7 @@
    ```
 
 2. **Make a small change**
+
    ```bash
    echo "# Test feature" >> README.md
    git add README.md
@@ -133,12 +136,14 @@
 #### Test 2: Bug Fix
 
 1. **Create test bugfix branch**
+
    ```bash
    git checkout develop
    git checkout -b bugfix/test-bug-fix
    ```
 
 2. **Make a change**
+
    ```bash
    echo "# Bug fix" >> README.md
    git add README.md
@@ -163,12 +168,14 @@
 #### Test 3: Release
 
 1. **Create test release branch**
+
    ```bash
    git checkout develop
    git checkout -b release/v1.1.0
    ```
 
 2. **Update version**
+
    ```bash
    # Edit package.json version to 1.1.0
    # Edit CHANGELOG.md
@@ -204,12 +211,14 @@
 #### Test 4: Hotfix (Optional - Critical Only)
 
 1. **Create hotfix branch** (ONLY if production bug)
+
    ```bash
    git checkout main
    git checkout -b hotfix/v1.0.1
    ```
 
 2. **Fix critical issue**
+
    ```bash
    # Make minimal fix only
    git commit -m "fix: critical production issue"
@@ -271,19 +280,19 @@
 
 ### Current Implementation
 
-| Workflow | File | Status | Purpose |
-|----------|------|--------|---------|
-| Testing | test.yml | ✅ Active | Unit, integration, E2E tests |
-| Security | security.yml | ✅ Active | Scan, audit, quality checks |
-| Feature Branch | feature-branch.yml | ✅ Active | Feature/bugfix validation |
-| Release | gitflow-release.yml | ✅ Active | Release branch management |
-| Hotfix | gitflow-hotfix.yml | ✅ Active | Emergency hotfix workflow |
-| PR Validation | pr-validation.yml | ✅ Active | All PR quality gates |
-| Build | build.yml | ✅ Active | Build verification |
-| CI | ci.yml | ✅ Active | Continuous integration |
-| Docs | docs.yml | ✅ Active | Documentation |
-| Deploy | deploy.yml | ✅ Active | Deployment (manual) |
-| Release Tags | release.yml | ✅ Active | Automated tagging |
+| Workflow       | File                | Status    | Purpose                      |
+| -------------- | ------------------- | --------- | ---------------------------- |
+| Testing        | test.yml            | ✅ Active | Unit, integration, E2E tests |
+| Security       | security.yml        | ✅ Active | Scan, audit, quality checks  |
+| Feature Branch | feature-branch.yml  | ✅ Active | Feature/bugfix validation    |
+| Release        | gitflow-release.yml | ✅ Active | Release branch management    |
+| Hotfix         | gitflow-hotfix.yml  | ✅ Active | Emergency hotfix workflow    |
+| PR Validation  | pr-validation.yml   | ✅ Active | All PR quality gates         |
+| Build          | build.yml           | ✅ Active | Build verification           |
+| CI             | ci.yml              | ✅ Active | Continuous integration       |
+| Docs           | docs.yml            | ✅ Active | Documentation                |
+| Deploy         | deploy.yml          | ✅ Active | Deployment (manual)          |
+| Release Tags   | release.yml         | ✅ Active | Automated tagging            |
 
 ### What's Automated
 
@@ -310,6 +319,7 @@
 ## Quick Reference Commands
 
 ### Create Feature Branch
+
 ```bash
 git checkout develop
 git pull origin develop
@@ -317,28 +327,33 @@ git checkout -b feature/feature-name
 ```
 
 ### Create Bugfix Branch
+
 ```bash
 git checkout develop
 git checkout -b bugfix/bug-name
 ```
 
 ### Create Release Branch
+
 ```bash
 git checkout develop
 git checkout -b release/vX.Y.Z
 ```
 
 ### Create Hotfix Branch
+
 ```bash
 git checkout main
 git checkout -b hotfix/vX.Y.Z  # PATCH only!
 ```
 
 ### View Workflow Status
+
 - GitHub: Actions tab → Select workflow
 - Or: https://github.com/ORG/REPO/actions
 
 ### Debug Failed Workflow
+
 1. Click workflow run
 2. Click failed job
 3. Expand steps to see error
@@ -351,6 +366,7 @@ git checkout -b hotfix/vX.Y.Z  # PATCH only!
 ### Issue: Feature branch workflow didn't run
 
 **Solution**:
+
 - [ ] Check branch name follows `feature/name` convention
 - [ ] Verify branch exists on GitHub
 - [ ] Wait a few seconds, refresh
@@ -359,6 +375,7 @@ git checkout -b hotfix/vX.Y.Z  # PATCH only!
 ### Issue: PR validation failed
 
 **Solution**:
+
 - [ ] Check which check failed
 - [ ] Run locally: `npm run build`
 - [ ] Run tests: `npm run test:unit`
@@ -369,6 +386,7 @@ git checkout -b hotfix/vX.Y.Z  # PATCH only!
 ### Issue: Security scan failed
 
 **Solution**:
+
 - [ ] Review vulnerability report
 - [ ] Update dependency: `npm update package`
 - [ ] Remove hardcoded secrets
@@ -378,6 +396,7 @@ git checkout -b hotfix/vX.Y.Z  # PATCH only!
 ### Issue: Release validation failed
 
 **Solution**:
+
 - [ ] Check version format (v1.2.3)
 - [ ] Verify CHANGELOG updated
 - [ ] Verify package.json version matches
@@ -424,6 +443,7 @@ git checkout -b hotfix/vX.Y.Z  # PATCH only!
 ### For Developers
 
 Teach them:
+
 1. Branch naming conventions
 2. How to create feature branches
 3. How to write conventional commits
@@ -433,6 +453,7 @@ Teach them:
 ### For QA
 
 Teach them:
+
 1. How to report bugs (bugfix branches)
 2. How to verify fixes
 3. How to participate in release testing
@@ -441,6 +462,7 @@ Teach them:
 ### For Release Manager
 
 Teach them:
+
 1. Release branch creation
 2. Version numbering (semver)
 3. Changelog maintenance
@@ -453,13 +475,13 @@ Teach them:
 
 Track these metrics:
 
-| Metric | Baseline | Target | Current |
-|--------|----------|--------|---------|
-| Build success rate | ? | 95%+ | ? |
-| Test coverage | ? | 80%+ | ? |
-| PR cycle time | ? | < 24h | ? |
-| Security issues | ? | Decreasing | ? |
-| Release frequency | ? | 2-4/month | ? |
+| Metric             | Baseline | Target     | Current |
+| ------------------ | -------- | ---------- | ------- |
+| Build success rate | ?        | 95%+       | ?       |
+| Test coverage      | ?        | 80%+       | ?       |
+| PR cycle time      | ?        | < 24h      | ?       |
+| Security issues    | ?        | Decreasing | ?       |
+| Release frequency  | ?        | 2-4/month  | ?       |
 
 ---
 

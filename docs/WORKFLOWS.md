@@ -6,19 +6,19 @@ This project uses comprehensive GitHub Actions workflows to ensure code quality,
 
 ## Workflow Files
 
-| File | Purpose | Trigger |
-|------|---------|---------|
-| `test.yml` | Testing & coverage | push, PR |
-| `security.yml` | Security scanning | push, PR, daily schedule |
-| `feature-branch.yml` | Feature branch validation | push to feature/*, bugfix/* |
-| `gitflow-release.yml` | Release branch workflow | push to release/*, PR to main |
-| `gitflow-hotfix.yml` | Critical hotfix workflow | push to hotfix/*, PR to main |
-| `pr-validation.yml` | PR quality gates | PR events |
-| `build.yml` | Build verification | push, PR |
-| `ci.yml` | Continuous integration | push, PR |
-| `release.yml` | Automated release tagging | push to main |
-| `deploy.yml` | Deployment workflow | manual trigger |
-| `docs.yml` | Documentation generation | push to main |
+| File                  | Purpose                   | Trigger                       |
+| --------------------- | ------------------------- | ----------------------------- |
+| `test.yml`            | Testing & coverage        | push, PR                      |
+| `security.yml`        | Security scanning         | push, PR, daily schedule      |
+| `feature-branch.yml`  | Feature branch validation | push to feature/_, bugfix/_   |
+| `gitflow-release.yml` | Release branch workflow   | push to release/*, PR to main |
+| `gitflow-hotfix.yml`  | Critical hotfix workflow  | push to hotfix/*, PR to main  |
+| `pr-validation.yml`   | PR quality gates          | PR events                     |
+| `build.yml`           | Build verification        | push, PR                      |
+| `ci.yml`              | Continuous integration    | push, PR                      |
+| `release.yml`         | Automated release tagging | push to main                  |
+| `deploy.yml`          | Deployment workflow       | manual trigger                |
+| `docs.yml`            | Documentation generation  | push to main                  |
 
 ## Quick Start
 
@@ -29,17 +29,19 @@ This project uses comprehensive GitHub Actions workflows to ensure code quality,
 
 ```yaml
 Jobs:
-- unit-tests (Node 20.x, 22.x)
-- integration-tests
-- e2e-tests
-- coverage-analysis
+  - unit-tests (Node 20.x, 22.x)
+  - integration-tests
+  - e2e-tests
+  - coverage-analysis
 ```
 
 **Artifacts**:
+
 - `coverage-reports/` - Code coverage data
 - Codecov integration for coverage tracking
 
 **View Results**:
+
 1. Go to your PR
 2. Look for "Testing & Coverage" check
 3. Click "Details" to see full logs
@@ -51,19 +53,21 @@ Jobs:
 
 ```yaml
 Jobs:
-- dependency-check (npm audit)
-- sast-analysis (ESLint, TypeScript)
-- code-analysis (complexity, smells)
-- license-check (GPL/AGPL detection)
-- secret-scanning (TruffleHog + patterns)
+  - dependency-check (npm audit)
+  - sast-analysis (ESLint, TypeScript)
+  - code-analysis (complexity, smells)
+  - license-check (GPL/AGPL detection)
+  - secret-scanning (TruffleHog + patterns)
 ```
 
-**Important**: 
+**Important**:
+
 - Weekly scans catch vulnerabilities
 - PR comments show issues immediately
 - High/critical issues block merge
 
 **View Results**:
+
 1. Check PR security checks
 2. Review artifacts for detailed reports
 3. Address high-severity issues
@@ -97,6 +101,7 @@ feature_name                 ❌ BAD (no prefix)
 #### PR Comments
 
 When you open a PR from a feature branch:
+
 - Automated validation checklist
 - File changes summary
 - Build status
@@ -129,6 +134,7 @@ release/v1.0            ❌ WRONG (missing patch)
 #### Release Process
 
 1. **Create release branch** from develop
+
    ```bash
    git checkout -b release/v1.2.0 develop
    ```
@@ -136,6 +142,7 @@ release/v1.0            ❌ WRONG (missing patch)
 2. **Only bug fixes and version bumps** allowed
 
 3. **Update version** in package.json
+
    ```json
    {
      "version": "1.2.0"
@@ -143,16 +150,20 @@ release/v1.0            ❌ WRONG (missing patch)
    ```
 
 4. **Update CHANGELOG.md**
+
    ```markdown
    ## [1.2.0] - 2024-08-08
 
    ### Added
+
    - New feature description
 
    ### Fixed
+
    - Bug fix description
 
    ### Changed
+
    - Breaking change description
    ```
 
@@ -169,6 +180,7 @@ release/v1.0            ❌ WRONG (missing patch)
 #### Release Checklist
 
 Workflow validates:
+
 - ✅ Version format correct
 - ✅ Build successful
 - ✅ All tests passing
@@ -177,6 +189,7 @@ Workflow validates:
 - ✅ Bundle size reasonable
 
 Manual checks before merge:
+
 - [ ] CHANGELOG updated
 - [ ] package.json version updated
 - [ ] Documentation current
@@ -213,6 +226,7 @@ hotfix/v2.0.0           ❌ WRONG (major version)
 #### Hotfix Process
 
 1. **Create from main**
+
    ```bash
    git checkout -b hotfix/v1.0.1 main
    ```
@@ -235,6 +249,7 @@ hotfix/v2.0.0           ❌ WRONG (major version)
 #### Hotfix Checklist
 
 Before merge:
+
 - [ ] Issue is critical
 - [ ] Fix is minimal
 - [ ] No unrelated changes
@@ -294,6 +309,7 @@ ci(workflow): update workflow
 ### Expected Comments
 
 Workflow automatically comments:
+
 - ✅ File changes summary
 - ✅ Build status
 - ✅ Test results
@@ -302,12 +318,12 @@ Workflow automatically comments:
 
 ## Artifact Retention
 
-| Artifact | Retention |
-|----------|-----------|
-| Build artifacts | 5-7 days |
-| Coverage reports | 30 days |
-| Quality reports | 30 days |
-| Test logs | 7 days |
+| Artifact         | Retention |
+| ---------------- | --------- |
+| Build artifacts  | 5-7 days  |
+| Coverage reports | 30 days   |
+| Quality reports  | 30 days   |
+| Test logs        | 7 days    |
 
 ## Scheduled Workflows
 
@@ -347,12 +363,14 @@ Every day at 2:00 AM UTC:
 ### Workflow Failed - Security Issue
 
 **High/Critical Vulnerabilities**:
+
 1. Review the vulnerability details
 2. Update dependency: `npm update package-name`
 3. Test the update
 4. Commit and push
 
 **Secrets Detected**:
+
 1. Remove the secret immediately
 2. Rotate credentials if in git history
 3. Use `.env` or GitHub secrets
@@ -393,26 +411,29 @@ gh workflow run build.yml -f force_version=v1.2.3
 ### Customizing Node Versions
 
 Edit `test.yml`:
+
 ```yaml
 strategy:
   matrix:
-    node-version: [18.x, 20.x, 22.x]  # Add more versions
+    node-version: [18.x, 20.x, 22.x] # Add more versions
 ```
 
 ### Changing Audit Level
 
 Edit `security.yml`:
+
 ```yaml
 - name: Audit npm dependencies
-  run: npm audit --audit-level=high  # Change to high/critical
+  run: npm audit --audit-level=high # Change to high/critical
 ```
 
 ### Adjusting Test Timeouts
 
 Edit `test.yml`:
+
 ```yaml
 - name: Run tests
-  timeout-minutes: 15  # Increase timeout
+  timeout-minutes: 15 # Increase timeout
   run: npm run test:unit
 ```
 
@@ -429,16 +450,19 @@ Add to README.md:
 ## CI/CD Metrics
 
 ### Build Success Rate Target: 95%+
+
 - Monitor build failures
 - Address common issues
 - Update dependencies regularly
 
 ### Test Coverage Target: 80%+
+
 - Add tests for new features
 - Maintain coverage ratio
 - Review coverage reports
 
 ### Security Issue Response: 24 hours
+
 - Critical: immediate
 - High: within 24 hours
 - Medium: within 1 week
@@ -449,6 +473,7 @@ Add to README.md:
 Recommended branch protection rules:
 
 ### Main Branch
+
 ```
 ✅ Require status checks to pass:
   - ci/build
@@ -463,6 +488,7 @@ Recommended branch protection rules:
 ```
 
 ### Develop Branch
+
 ```
 ✅ Require status checks to pass:
   - ci/build
@@ -479,6 +505,7 @@ Recommended branch protection rules:
 ### Faster Builds
 
 1. **Use Node caching**
+
    ```yaml
    - uses: actions/setup-node@v4
      with:
@@ -486,6 +513,7 @@ Recommended branch protection rules:
    ```
 
 2. **Use matrix builds for parallelization**
+
    ```yaml
    strategy:
      matrix:
@@ -501,6 +529,7 @@ Recommended branch protection rules:
 ### Artifact Size
 
 Keep artifacts small:
+
 - Only upload necessary files
 - Set appropriate retention
 - Clean up after use
@@ -519,6 +548,7 @@ Keep artifacts small:
 ### Issue: Workflow takes too long
 
 **Solution**:
+
 - Run jobs in parallel (use `needs` strategically)
 - Use caching for dependencies
 - Remove unnecessary steps
@@ -527,6 +557,7 @@ Keep artifacts small:
 ### Issue: Out of memory errors
 
 **Solution**:
+
 - Increase runner specs (use larger runners)
 - Reduce parallelization
 - Clean up artifacts
@@ -535,6 +566,7 @@ Keep artifacts small:
 ### Issue: Secrets exposed in logs
 
 **Solution**:
+
 - Add `::add-mask::` to sensitive data
 - Review GitHub Actions masking
 - Use encrypted secrets

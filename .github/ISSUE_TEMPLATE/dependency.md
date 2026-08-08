@@ -86,4 +86,3 @@ If updating or replacing, describe the migration steps:
 - [Link to npm package]
 - [Security advisory if applicable]
 - [Related issues/PRs]
-

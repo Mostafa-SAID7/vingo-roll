@@ -258,18 +258,23 @@ export function CatalogView({
                 <LayoutGrid className="h-4 w-4" aria-hidden="true" />
               )}
             </Button>
-          <Select value={filters.sortBy} onValueChange={(value) => setFilters((f) => ({ ...f, sortBy: value as FilterState["sortBy"] }))}>
-            <SelectTrigger className="w-[10.5rem]" aria-label="Sort products">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="featured">Featured</SelectItem>
-              <SelectItem value="newest">Newest</SelectItem>
-              <SelectItem value="price-asc">Price: low to high</SelectItem>
-              <SelectItem value="price-desc">Price: high to low</SelectItem>
-              <SelectItem value="bestseller">Top rated</SelectItem>
-            </SelectContent>
-          </Select>
+            <Select
+              value={filters.sortBy}
+              onValueChange={(value) =>
+                setFilters((f) => ({ ...f, sortBy: value as FilterState["sortBy"] }))
+              }
+            >
+              <SelectTrigger className="w-[10.5rem]" aria-label="Sort products">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="featured">Featured</SelectItem>
+                <SelectItem value="newest">Newest</SelectItem>
+                <SelectItem value="price-asc">Price: low to high</SelectItem>
+                <SelectItem value="price-desc">Price: high to low</SelectItem>
+                <SelectItem value="bestseller">Top rated</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 

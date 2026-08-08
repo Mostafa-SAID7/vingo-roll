@@ -13,42 +13,38 @@ export function useProductFilters(products: Product[], filters: FilterState): Pr
 
     // Price filter
     filtered = filtered.filter(
-      (p) => p.price >= filters.priceRange[0] && p.price <= filters.priceRange[1]
+      (p) => p.price >= filters.priceRange[0] && p.price <= filters.priceRange[1],
     );
 
     // Material tier filter
     if (filters.materialTiers.length > 0) {
       filtered = filtered.filter((p) =>
-        p.materials?.some((m) => filters.materialTiers.includes(m.tier || ""))
+        p.materials?.some((m) => filters.materialTiers.includes(m.tier || "")),
       );
     }
 
     // Light control filter
     if (filters.lightControl.length > 0) {
       filtered = filtered.filter((p) =>
-        p.materials?.some((m) => filters.lightControl.includes(m.lightControl || ""))
+        p.materials?.some((m) => filters.lightControl.includes(m.lightControl || "")),
       );
     }
 
     // Room filter
     if (filters.rooms.length > 0) {
-      filtered = filtered.filter((p) =>
-        p.rooms?.some((r) => filters.rooms.includes(r.slug))
-      );
+      filtered = filtered.filter((p) => p.rooms?.some((r) => filters.rooms.includes(r.slug)));
     }
 
     // Collection filter
     if (filters.collections.length > 0) {
       filtered = filtered.filter((p) =>
-        p.collections?.some((c) => filters.collections.includes(c.slug))
+        p.collections?.some((c) => filters.collections.includes(c.slug)),
       );
     }
 
     // Style filter
     if (filters.styles.length > 0) {
-      filtered = filtered.filter((p) =>
-        p.styles?.some((s) => filters.styles.includes(s))
-      );
+      filtered = filtered.filter((p) => p.styles?.some((s) => filters.styles.includes(s)));
     }
 
     // Sorting
@@ -60,10 +56,7 @@ export function useProductFilters(products: Product[], filters: FilterState): Pr
  * applySorting - Internal helper to apply sort logic
  * Extracted for reusability and testability
  */
-function applySorting(
-  products: Product[],
-  sortBy: FilterState["sortBy"]
-): Product[] {
+function applySorting(products: Product[], sortBy: FilterState["sortBy"]): Product[] {
   const sorted = [...products];
 
   switch (sortBy) {

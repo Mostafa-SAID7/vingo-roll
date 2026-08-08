@@ -26,7 +26,7 @@ export function SearchView({ query: q }: SearchViewProps) {
       description: `${p.shortDescription} ${p.styles?.join(" ")} ${p.needs?.join(" ")}`,
     })),
     q,
-    { minChars: 1 }
+    { minChars: 1 },
   );
 
   const searchCategories = useSearch(
@@ -36,7 +36,7 @@ export function SearchView({ query: q }: SearchViewProps) {
       description: c.description,
     })),
     q,
-    { minChars: 1 }
+    { minChars: 1 },
   );
 
   const searchPosts = useSearch(
@@ -46,7 +46,7 @@ export function SearchView({ query: q }: SearchViewProps) {
       description: `${i.excerpt} ${i.room}`,
     })),
     q,
-    { minChars: 1 }
+    { minChars: 1 },
   );
 
   // Now use the search results in useMemo

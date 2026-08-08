@@ -9,6 +9,7 @@ The shimmer loading effect provides an elegant, modern loading experience during
 ## 🎨 Features
 
 ### 1. **LoadingOverlay Component**
+
 - Full-screen loading indicator that appears during initial page load
 - Smooth fade-out transition (500ms) when styles are ready
 - Premium triple-ring spinner with staggered animations
@@ -16,6 +17,7 @@ The shimmer loading effect provides an elegant, modern loading experience during
 - Dynamic progress bar with loading dots
 
 ### 2. **Skeleton Components**
+
 - **Skeleton**: Base component for shimmer placeholders
   - Variants: `text`, `circle`, `rect`, `image`
   - Smooth gradient animation (2.5s ease-in-out)
@@ -36,6 +38,7 @@ The shimmer loading effect provides an elegant, modern loading experience during
   - Complete layout mockup for better perceived performance
 
 ### 3. **LoadingProvider**
+
 - React Context for managing loading state
 - Automatically detects when styles are fully loaded
 - Emits `isInitialLoading` and `isStylesLoaded` states
@@ -60,6 +63,7 @@ src/
 ## 🎯 Usage
 
 ### 1. Using LoadingOverlay (automatic)
+
 The LoadingOverlay is included in the root layout and displays automatically:
 
 ```tsx
@@ -69,7 +73,7 @@ function RootComponent() {
     <LoadingProvider>
       <ClientProvider>
         <ErrorBoundary>
-          <LoadingOverlay />  {/* Displays during initial load */}
+          <LoadingOverlay /> {/* Displays during initial load */}
           {/* ... rest of app ... */}
         </ErrorBoundary>
       </ClientProvider>
@@ -79,6 +83,7 @@ function RootComponent() {
 ```
 
 ### 2. Using Skeleton Components
+
 For custom loading states:
 
 ```tsx
@@ -99,16 +104,17 @@ import { SkeletonCard, SkeletonProductGrid, SkeletonPage } from "@/components/co
 ```
 
 ### 3. Checking Loading State
+
 ```tsx
 import { useLoadingState } from "@/providers/loading-provider";
 
 function MyComponent() {
   const { isInitialLoading, isStylesLoaded } = useLoadingState();
-  
+
   if (isInitialLoading) {
     return <SkeletonPage />;
   }
-  
+
   return <YourContent />;
 }
 ```
@@ -118,6 +124,7 @@ function MyComponent() {
 ## 🎬 Animations
 
 ### Shimmer Animation (2.5s)
+
 - Smooth gradient sweep from left to right
 - Easing: ease-in-out for natural motion
 - Repeats infinitely during load
@@ -137,6 +144,7 @@ function MyComponent() {
 ```
 
 ### Fade-In-Up Animation (0.6s)
+
 - Staggered entry for skeleton items
 - Each item delays by 0.1s
 - Creates cascading reveal effect
@@ -155,6 +163,7 @@ function MyComponent() {
 ```
 
 ### Spinner Animations
+
 - Outer ring: 2.5s forward rotation
 - Middle ring: 3s reverse rotation
 - Inner glow: Subtle pulse effect
@@ -164,6 +173,7 @@ function MyComponent() {
 ## 🎨 Customization
 
 ### Adjust Loading Duration
+
 ```tsx
 // src/providers/loading-provider.tsx
 const timer = setTimeout(() => {
@@ -173,6 +183,7 @@ const timer = setTimeout(() => {
 ```
 
 ### Modify Shimmer Speed
+
 ```css
 /* src/styles.css */
 @utility animate-shimmer {
@@ -181,11 +192,14 @@ const timer = setTimeout(() => {
 ```
 
 ### Change Skeleton Card Layout
+
 ```tsx
 // src/components/common/skeleton.tsx
 export function SkeletonCard() {
   return (
-    <div className="space-y-4 rounded-lg border border-border p-6"> {/* Changed padding */}
+    <div className="space-y-4 rounded-lg border border-border p-6">
+      {" "}
+      {/* Changed padding */}
       {/* ... rest of component ... */}
     </div>
   );
@@ -193,10 +207,13 @@ export function SkeletonCard() {
 ```
 
 ### Update Overlay Colors
+
 ```tsx
 // src/components/common/loading-overlay.tsx
-<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 
-               bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse" />
+<div
+  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 
+               bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"
+/>
 ```
 
 ---
@@ -242,19 +259,23 @@ Page content visible
 ## 🐛 Troubleshooting
 
 ### Loading overlay doesn't appear
+
 - Ensure `LoadingProvider` wraps entire app in `__root.tsx`
 - Check z-index conflicts with other components
 
 ### Shimmer animation looks janky
+
 - Verify hardware acceleration is enabled
 - Check browser DevTools Performance tab
 - Reduce animation complexity if needed
 
 ### Content flashes during transition
+
 - Increase loading duration in `loading-provider.tsx`
 - Add delay to content render with Suspense
 
 ### Loading state sticks indefinitely
+
 - Check console for errors during initialization
 - Verify stylesheets load correctly
 - Test in incognito/private mode
@@ -287,4 +308,3 @@ Page content visible
 - **Created**: August 8, 2026
 - **Last Updated**: August 8, 2026
 - **Status**: ✅ Production Ready
-

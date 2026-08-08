@@ -188,6 +188,7 @@ docker system prune -a
 **Base Image**: `node:22-alpine`
 **Size**: ~150MB (optimized)
 **Features**:
+
 - Multi-stage build (reduces final size)
 - Non-root user (security)
 - Health checks enabled
@@ -195,6 +196,7 @@ docker system prune -a
 - Production-optimized
 
 **Build Process**:
+
 1. Stage 1: Build application in Node 22
 2. Stage 2: Copy only built assets and run in production
 
@@ -203,6 +205,7 @@ docker system prune -a
 **Base Image**: `node:22-alpine`
 **Size**: ~300MB (includes dev dependencies)
 **Features**:
+
 - Full node_modules
 - Volume mounting for hot-reload
 - Both Vite (5173) and API (3000) ports
@@ -238,9 +241,11 @@ docker inspect vingo-roll-studio | grep -A 10 "Health"
 ### Port Mapping
 
 **Production**:
+
 - Container Port 3000 → Host Port 3000
 
 **Development**:
+
 - Container Port 5173 → Host Port 5173 (Vite)
 - Container Port 3000 → Host Port 3000 (API)
 
@@ -257,6 +262,7 @@ PORT=3000
 ### Setting Environment Variables
 
 In `docker-compose.yml`:
+
 ```yaml
 environment:
   - NODE_ENV=production
@@ -265,6 +271,7 @@ environment:
 ```
 
 Or via command line:
+
 ```bash
 docker run -e NODE_ENV=production vingo-roll-studio:latest
 ```
@@ -275,8 +282,8 @@ docker run -e NODE_ENV=production vingo-roll-studio:latest
 
 ```yaml
 volumes:
-  - .:/app                    # Mount source code
-  - /app/node_modules         # Anonymous volume (prevents override)
+  - .:/app # Mount source code
+  - /app/node_modules # Anonymous volume (prevents override)
 ```
 
 ### Benefits
@@ -438,6 +445,7 @@ docker system prune -a --volumes
 ## Support
 
 For issues or questions:
+
 1. Check Docker logs: `docker logs -f vingo-roll-studio`
 2. Review this guide
 3. Check Docker documentation: https://docs.docker.com

@@ -34,7 +34,7 @@ export function validatePassword(password: string): { valid: boolean; error?: st
 
 export function validatePasswordMatch(
   password: string,
-  confirmPassword: string
+  confirmPassword: string,
 ): { valid: boolean; error?: string } {
   if (password !== confirmPassword) {
     return { valid: false, error: ERROR_MESSAGES.AUTH.PASSWORDS_DONT_MATCH };
@@ -67,20 +67,20 @@ export function validateAddress(address: {
 }): { valid: boolean; errors: Record<string, string> } {
   const errors: Record<string, string> = {};
 
-  if (!address.firstName?.trim()) errors['firstName'] = "First name required";
-  if (!address.lastName?.trim()) errors['lastName'] = "Last name required";
-  if (!address.street1?.trim()) errors['street1'] = "Address required";
-  if (!address.city?.trim()) errors['city'] = "City required";
-  if (!address.state) errors['state'] = "State required";
+  if (!address.firstName?.trim()) errors["firstName"] = "First name required";
+  if (!address.lastName?.trim()) errors["lastName"] = "Last name required";
+  if (!address.street1?.trim()) errors["street1"] = "Address required";
+  if (!address.city?.trim()) errors["city"] = "City required";
+  if (!address.state) errors["state"] = "State required";
   if (!address.postalCode?.trim()) {
-    errors['postalCode'] = "ZIP code required";
+    errors["postalCode"] = "ZIP code required";
   } else if (!REGEX.ZIP_CODE.test(address.postalCode)) {
-    errors['postalCode'] = ERROR_MESSAGES.VALIDATION.INVALID_ZIP;
+    errors["postalCode"] = ERROR_MESSAGES.VALIDATION.INVALID_ZIP;
   }
   if (!address.phone?.trim()) {
-    errors['phone'] = "Phone number required";
+    errors["phone"] = "Phone number required";
   } else if (!REGEX.PHONE.test(address.phone)) {
-    errors['phone'] = ERROR_MESSAGES.VALIDATION.INVALID_PHONE;
+    errors["phone"] = ERROR_MESSAGES.VALIDATION.INVALID_PHONE;
   }
 
   return { valid: Object.keys(errors).length === 0, errors };
@@ -167,10 +167,7 @@ export function validatePrice(price: number): { valid: boolean; error?: string }
   return { valid: true };
 }
 
-export function validatePriceRange(
-  min: number,
-  max: number
-): { valid: boolean; error?: string } {
+export function validatePriceRange(min: number, max: number): { valid: boolean; error?: string } {
   const minValidation = validatePrice(min);
   if (!minValidation.valid) return minValidation;
 
@@ -216,17 +213,17 @@ export function validateSlug(slug: string): { valid: boolean; error?: string } {
 // BATCH VALIDATION (Multiple fields)
 // ============================================================================
 
-export function validateLoginForm(data: {
-  email?: string;
-  password?: string;
-}): { valid: boolean; errors: Record<string, string> } {
+export function validateLoginForm(data: { email?: string; password?: string }): {
+  valid: boolean;
+  errors: Record<string, string>;
+} {
   const errors: Record<string, string> = {};
 
   const emailValidation = validateEmail(data.email ?? "");
-  if (!emailValidation.valid) errors['email'] = emailValidation.error!;
+  if (!emailValidation.valid) errors["email"] = emailValidation.error!;
 
   const passwordValidation = validatePassword(data.password ?? "");
-  if (!passwordValidation.valid) errors['password'] = passwordValidation.error!;
+  if (!passwordValidation.valid) errors["password"] = passwordValidation.error!;
 
   return { valid: Object.keys(errors).length === 0, errors };
 }
@@ -240,17 +237,17 @@ export function validateSignupForm(data: {
   const errors: Record<string, string> = {};
 
   const emailValidation = validateEmail(data.email || "");
-  if (!emailValidation.valid) errors['email'] = emailValidation.error!;
+  if (!emailValidation.valid) errors["email"] = emailValidation.error!;
 
   const nameValidation = validateName(data.name || "");
-  if (!nameValidation.valid) errors['name'] = nameValidation.error!;
+  if (!nameValidation.valid) errors["name"] = nameValidation.error!;
 
   const passwordValidation = validatePassword(data.password || "");
-  if (!passwordValidation.valid) errors['password'] = passwordValidation.error!;
+  if (!passwordValidation.valid) errors["password"] = passwordValidation.error!;
 
   if (data.password) {
     const matchValidation = validatePasswordMatch(data.password, data.confirmPassword || "");
-    if (!matchValidation.valid) errors['confirmPassword'] = matchValidation.error!;
+    if (!matchValidation.valid) errors["confirmPassword"] = matchValidation.error!;
   }
 
   return { valid: Object.keys(errors).length === 0, errors };
@@ -265,16 +262,16 @@ export function validatePaymentForm(data: {
   const errors: Record<string, string> = {};
 
   const cardValidation = validateCardNumber(data.cardNumber || "");
-  if (!cardValidation.valid) errors['cardNumber'] = cardValidation.error!;
+  if (!cardValidation.valid) errors["cardNumber"] = cardValidation.error!;
 
   const nameValidation = validateCardholderName(data.cardName || "");
-  if (!nameValidation.valid) errors['cardName'] = nameValidation.error!;
+  if (!nameValidation.valid) errors["cardName"] = nameValidation.error!;
 
   const expiryValidation = validateExpiry(data.expiry || "");
-  if (!expiryValidation.valid) errors['expiry'] = expiryValidation.error!;
+  if (!expiryValidation.valid) errors["expiry"] = expiryValidation.error!;
 
   const cvcValidation = validateCVC(data.cvc || "");
-  if (!cvcValidation.valid) errors['cvc'] = cvcValidation.error!;
+  if (!cvcValidation.valid) errors["cvc"] = cvcValidation.error!;
 
   return { valid: Object.keys(errors).length === 0, errors };
 }

@@ -48,11 +48,11 @@ function Page() {
 
     if (paymentMethod === "credit-card") {
       if (!/^\d{16}$/.test(cardData.cardNumber.replace(/\s/g, ""))) {
-        newErrors['cardNumber'] = "Invalid card number";
+        newErrors["cardNumber"] = "Invalid card number";
       }
-      if (!cardData.cardName.trim()) newErrors['cardName'] = "Cardholder name required";
-      if (!/^\d{2}\/\d{2}$/.test(cardData.expiry)) newErrors['expiry'] = "Use MM/YY format";
-      if (!/^\d{3}$/.test(cardData.cvc)) newErrors['cvc'] = "Invalid CVC";
+      if (!cardData.cardName.trim()) newErrors["cardName"] = "Cardholder name required";
+      if (!/^\d{2}\/\d{2}$/.test(cardData.expiry)) newErrors["expiry"] = "Use MM/YY format";
+      if (!/^\d{3}$/.test(cardData.cvc)) newErrors["cvc"] = "Invalid CVC";
     }
 
     setErrors(newErrors);
@@ -91,7 +91,7 @@ function Page() {
         paymentMethod,
         shippingMethod,
         last4: cardData.cardNumber.slice(-4),
-      })
+      }),
     );
 
     navigate({ to: "/checkout/review" });
@@ -101,9 +101,19 @@ function Page() {
 
   return (
     <>
-      <Crumbs items={[{ label: "Home", to: "/" }, { label: "Checkout", to: "/checkout" }, { label: "Payment" }]} />
+      <Crumbs
+        items={[
+          { label: "Home", to: "/" },
+          { label: "Checkout", to: "/checkout" },
+          { label: "Payment" },
+        ]}
+      />
 
-      <PageHeader eyebrow="Step 2 of 3" title="Payment Method" description="How would you like to pay?" />
+      <PageHeader
+        eyebrow="Step 2 of 3"
+        title="Payment Method"
+        description="How would you like to pay?"
+      />
 
       <Section>
         <div className="grid lg:grid-cols-3 gap-8">
@@ -119,13 +129,15 @@ function Page() {
                       key={method.id}
                       className={cn(
                         "border-border flex items-start gap-4 rounded-lg border p-4 cursor-pointer transition-colors hover:bg-muted",
-                        shippingMethod === method.id && "border-accent bg-accent/5"
+                        shippingMethod === method.id && "border-accent bg-accent/5",
                       )}
                     >
                       <RadioGroupItem value={method.id} id={`ship-${method.id}`} className="mt-1" />
                       <label htmlFor={`ship-${method.id}`} className="flex-1 cursor-pointer">
                         <div className="font-medium text-sm">{method.name}</div>
-                        <div className="text-muted-foreground text-xs mt-1">{method.description}</div>
+                        <div className="text-muted-foreground text-xs mt-1">
+                          {method.description}
+                        </div>
                       </label>
                       <div className="font-medium text-sm whitespace-nowrap">
                         {method.cost === 0 ? "FREE" : formatPrice(method.cost)}
@@ -148,7 +160,10 @@ function Page() {
                   ].map((method) => (
                     <div key={method.id} className="flex items-center gap-3">
                       <RadioGroupItem value={method.id} id={`pay-${method.id}`} />
-                      <label htmlFor={`pay-${method.id}`} className="cursor-pointer text-sm font-medium">
+                      <label
+                        htmlFor={`pay-${method.id}`}
+                        className="cursor-pointer text-sm font-medium"
+                      >
                         {method.label}
                       </label>
                     </div>
@@ -169,10 +184,14 @@ function Page() {
                     placeholder="1234 5678 9012 3456"
                     value={cardData.cardNumber}
                     onChange={(e) => handleCardNumberChange(e.target.value)}
-                    className={errors['cardNumber'] ? "border-destructive" : ""}
+                    className={errors["cardNumber"] ? "border-destructive" : ""}
                   />
-                  {errors['cardNumber'] && <p className="text-destructive text-xs mt-1">{errors['cardNumber']}</p>}
-                  <p className="text-xs text-muted-foreground mt-2">Demo: Use any 16-digit number</p>
+                  {errors["cardNumber"] && (
+                    <p className="text-destructive text-xs mt-1">{errors["cardNumber"]}</p>
+                  )}
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Demo: Use any 16-digit number
+                  </p>
                 </div>
 
                 <div>
@@ -182,9 +201,11 @@ function Page() {
                     placeholder="Jane Doe"
                     value={cardData.cardName}
                     onChange={(e) => setCardData((p) => ({ ...p, cardName: e.target.value }))}
-                    className={errors['cardName'] ? "border-destructive" : ""}
+                    className={errors["cardName"] ? "border-destructive" : ""}
                   />
-                  {errors['cardName'] && <p className="text-destructive text-xs mt-1">{errors['cardName']}</p>}
+                  {errors["cardName"] && (
+                    <p className="text-destructive text-xs mt-1">{errors["cardName"]}</p>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -195,9 +216,11 @@ function Page() {
                       placeholder="MM/YY"
                       value={cardData.expiry}
                       onChange={(e) => handleExpiryChange(e.target.value)}
-                      className={errors['expiry'] ? "border-destructive" : ""}
+                      className={errors["expiry"] ? "border-destructive" : ""}
                     />
-                    {errors['expiry'] && <p className="text-destructive text-xs mt-1">{errors['expiry']}</p>}
+                    {errors["expiry"] && (
+                      <p className="text-destructive text-xs mt-1">{errors["expiry"]}</p>
+                    )}
                   </div>
                   <div>
                     <Label htmlFor="cvc">CVC</Label>
@@ -207,9 +230,11 @@ function Page() {
                       value={cardData.cvc}
                       onChange={(e) => handleCvcChange(e.target.value)}
                       maxLength={3}
-                      className={errors['cvc'] ? "border-destructive" : ""}
+                      className={errors["cvc"] ? "border-destructive" : ""}
                     />
-                    {errors['cvc'] && <p className="text-destructive text-xs mt-1">{errors['cvc']}</p>}
+                    {errors["cvc"] && (
+                      <p className="text-destructive text-xs mt-1">{errors["cvc"]}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -220,11 +245,7 @@ function Page() {
               <Button type="submit" className="flex-1">
                 Review Order
               </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => navigate({ to: "/checkout" })}
-              >
+              <Button type="button" variant="outline" onClick={() => navigate({ to: "/checkout" })}>
                 Back
               </Button>
             </div>

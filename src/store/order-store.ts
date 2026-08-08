@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Order, Address, OrderStatus } from "@/types/common";
-import { generateOrderId, calculateShipping, calculateTax, getEstimatedDelivery } from "@/types/common";
+import {
+  generateOrderId,
+  calculateShipping,
+  calculateTax,
+  getEstimatedDelivery,
+} from "@/types/common";
 import type { CartItem } from "@/store/cart-store";
 
 interface OrderState {
@@ -15,7 +20,7 @@ interface OrderState {
     shippingAddress: Address,
     paymentMethod: string,
     shippingMethod?: string,
-    billingAddress?: Address
+    billingAddress?: Address,
   ) => Order;
 
   addOrder: (order: Order) => void;
@@ -35,7 +40,14 @@ export const useOrderStore = create<OrderState>()(
       orders: [],
       currentOrder: null,
 
-      createOrder: (userId, items, shippingAddress, paymentMethod, shippingMethod = "standard", billingAddress) => {
+      createOrder: (
+        userId,
+        items,
+        shippingAddress,
+        paymentMethod,
+        shippingMethod = "standard",
+        billingAddress,
+      ) => {
         const subtotal = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
         const shipping = calculateShipping(subtotal, shippingMethod);
         const tax = calculateTax(subtotal, shippingAddress.state);
@@ -85,7 +97,7 @@ export const useOrderStore = create<OrderState>()(
           orders: state.orders.map((order) =>
             order.id === orderId
               ? { ...order, status, updatedAt: new Date().toISOString() }
-              : order
+              : order,
           ),
         }));
       },
@@ -102,6 +114,6 @@ export const useOrderStore = create<OrderState>()(
         set({ currentOrder: null });
       },
     }),
-    { name: "vingo-orders" }
-  )
+    { name: "vingo-orders" },
+  ),
 );

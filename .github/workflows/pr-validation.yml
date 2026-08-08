@@ -15,7 +15,7 @@ jobs:
   validate-pr:
     runs-on: ubuntu-latest
     name: PR Metadata Validation
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,18 +26,18 @@ jobs:
           script: |
             const title = context.payload.pull_request.title;
             const body = context.payload.pull_request.body;
-            
+
             console.log('PR Title:', title);
             console.log('PR Body length:', body?.length || 0);
-            
+
             // Check PR title format
             const titleRegex = /^(feat|fix|docs|style|refactor|perf|test|chore|ci)(\(.+\))?:/;
-            
+
             if (!titleRegex.test(title)) {
               console.warn('⚠️ PR title does not follow conventional commits format');
               console.warn('Expected: feat(scope): description or fix: description');
             }
-            
+
             // Check PR has description
             if (!body || body.trim().length < 20) {
               core.setFailed('PR description is required and must be at least 20 characters');
@@ -50,7 +50,7 @@ jobs:
           script: |
             const body = context.payload.pull_request.body;
             const hasLinkedIssue = body && (body.includes('#') || body.includes('Fixes') || body.includes('Closes'));
-            
+
             if (!hasLinkedIssue) {
               console.warn('⚠️ PR does not appear to link to any issues');
             }
@@ -65,7 +65,7 @@ jobs:
   lint-and-format:
     runs-on: ubuntu-latest
     name: Lint & Format Check
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -98,23 +98,23 @@ jobs:
           script: |
             const fs = require('fs');
             let comment = '## 🔍 Code Quality Issues\n\n';
-            
+
             try {
               const lintOutput = fs.readFileSync('lint-output.txt', 'utf8');
               if (lintOutput) {
                 comment += '### ESLint Issues\n```\n' + lintOutput.substring(0, 500) + '\n```\n\n';
               }
             } catch (e) {}
-            
+
             try {
               const formatOutput = fs.readFileSync('format-output.txt', 'utf8');
               if (formatOutput) {
                 comment += '### Format Issues\n```\n' + formatOutput.substring(0, 500) + '\n```\n\n';
               }
             } catch (e) {}
-            
+
             comment += '**Please fix these issues before merging.**';
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -133,7 +133,7 @@ jobs:
   type-check:
     runs-on: ubuntu-latest
     name: TypeScript Check
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -161,9 +161,9 @@ jobs:
             const output = fs.readFileSync('ts-check.txt', 'utf8');
             const lines = output.split('\n');
             const errors = lines.filter(line => line.includes('error')).length;
-            
+
             const comment = `## ⚠️ TypeScript Issues\n\nFound **${errors}** type errors.\n\n\`\`\`\n${output.substring(0, 1000)}\n\`\`\`\n\n**Please resolve these before merging.**`;
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -174,7 +174,7 @@ jobs:
   build-check:
     runs-on: ubuntu-latest
     name: Build Check
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -216,7 +216,7 @@ jobs:
   test-coverage:
     runs-on: ubuntu-latest
     name: Test Coverage
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -250,7 +250,7 @@ jobs:
   security-scan:
     runs-on: ubuntu-latest
     name: Security Scan
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -279,7 +279,7 @@ jobs:
   file-changes:
     runs-on: ubuntu-latest
     name: File Changes Analysis
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -295,9 +295,9 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number,
             });
-            
+
             console.log(`PR touches ${files.length} files`);
-            
+
             const changes = {
               components: 0,
               data: 0,
@@ -307,7 +307,7 @@ jobs:
               workflows: 0,
               other: 0
             };
-            
+
             files.forEach(file => {
               if (file.filename.includes('components')) changes.components++;
               else if (file.filename.includes('data')) changes.data++;
@@ -317,12 +317,12 @@ jobs:
               else if (file.filename.includes('.github/workflows')) changes.workflows++;
               else changes.other++;
             });
-            
+
             let summary = '## 📊 File Changes\n\n| Category | Count |\n|----------|-------|\n';
             Object.entries(changes).forEach(([key, count]) => {
               if (count > 0) summary += `| ${key} | ${count} |\n`;
             });
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -333,7 +333,7 @@ jobs:
   size-check:
     runs-on: ubuntu-latest
     name: Bundle Size Check
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -350,7 +350,7 @@ jobs:
       - name: Build and check size
         run: |
           npm run build
-          
+
           echo "## 📦 Bundle Size" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -d "dist" ]; then
@@ -364,9 +364,19 @@ jobs:
   pr-ready-check:
     runs-on: ubuntu-latest
     name: PR Ready Check
-    needs: [validate-pr, lint-and-format, type-check, build-check, test-coverage, security-scan, file-changes, size-check]
+    needs:
+      [
+        validate-pr,
+        lint-and-format,
+        type-check,
+        build-check,
+        test-coverage,
+        security-scan,
+        file-changes,
+        size-check,
+      ]
     if: always()
-    
+
     steps:
       - name: Determine PR status
         run: |
@@ -380,7 +390,7 @@ jobs:
           echo "| Build | ${{ needs.build-check.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Tests | ${{ needs.test-coverage.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Security | ${{ needs.security-scan.result }} |" >> $GITHUB_STEP_SUMMARY
-          
+
       - name: Set PR status
         if: |
           needs.validate-pr.result == 'success' &&

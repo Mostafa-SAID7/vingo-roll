@@ -3,6 +3,7 @@
 ## How to Use Issue Templates
 
 ### 1. **Bug Report** 🐛
+
 **Use when:** Something is broken or not working as expected
 
 - Provide clear reproduction steps
@@ -15,6 +16,7 @@
 ---
 
 ### 2. **Feature Request** ✨
+
 **Use when:** You want a new feature or improvement
 
 - Describe the problem it solves
@@ -27,6 +29,7 @@
 ---
 
 ### 3. **Question** ❓
+
 **Use when:** You need help or clarification
 
 - Check documentation first
@@ -39,6 +42,7 @@
 ---
 
 ### 4. **Security Issue** 🔒
+
 **Use when:** You found a security vulnerability
 
 - ⚠️ **DO NOT create public issues for security bugs**
@@ -51,6 +55,7 @@
 ---
 
 ### 5. **Accessibility Issue** ♿
+
 **Use when:** Something is not accessible to all users
 
 - Describe the barrier
@@ -63,6 +68,7 @@
 ---
 
 ### 6. **Performance Issue** ⚡
+
 **Use when:** Something is slow or uses too many resources
 
 - Measure and report metrics
@@ -75,6 +81,7 @@
 ---
 
 ### 7. **Dependency Issue** 📦
+
 **Use when:** There's a problem with npm packages
 
 - Specify package name and version
@@ -87,6 +94,7 @@
 ---
 
 ### 8. **Documentation Issue** 📚
+
 **Use when:** Documentation is missing or incorrect
 
 - Link to the affected documentation
@@ -99,6 +107,7 @@
 ---
 
 ### 9. **UI/UX Issue** 🎨
+
 **Use when:** Design or user experience needs improvement
 
 - Include current vs desired screenshots
@@ -111,6 +120,7 @@
 ---
 
 ### 10. **Regression Issue** 🔄
+
 **Use when:** Something that worked before is now broken
 
 - Specify last working version
@@ -123,6 +133,7 @@
 ---
 
 ### 11. **Chore / Maintenance** 🧹
+
 **Use when:** Code cleanup, refactoring, or maintenance tasks
 
 - Describe what needs to be done
@@ -136,66 +147,67 @@
 
 ## Standard Labels
 
-| Label | Color | Usage |
-|-------|-------|-------|
-| `bug` | 🔴 Red | Something is broken |
-| `enhancement` | 💚 Green | New feature or improvement |
-| `documentation` | 📘 Blue | Docs need update |
-| `question` | 🟠 Orange | User is asking for help |
-| `security` | ⚫ Black | Security-related issue |
-| `accessibility` | 🟣 Purple | Accessibility barrier |
-| `performance` | ⚡ Yellow | Performance problem |
-| `dependencies` | 📦 Brown | Dependency issue |
-| `ui-ux` | 🎨 Pink | Design/UX issue |
-| `chore` | 🧹 Gray | Maintenance task |
-| `regression` | 🔄 Red | Feature broke |
-| `good first issue` | 💜 Purple | For newcomers |
-| `help wanted` | 🆘 Red | Need community help |
-| `wontfix` | ⛔ Red | Won't be fixed |
-| `invalid` | ⚪ Gray | Not a valid issue |
+| Label              | Color     | Usage                      |
+| ------------------ | --------- | -------------------------- |
+| `bug`              | 🔴 Red    | Something is broken        |
+| `enhancement`      | 💚 Green  | New feature or improvement |
+| `documentation`    | 📘 Blue   | Docs need update           |
+| `question`         | 🟠 Orange | User is asking for help    |
+| `security`         | ⚫ Black  | Security-related issue     |
+| `accessibility`    | 🟣 Purple | Accessibility barrier      |
+| `performance`      | ⚡ Yellow | Performance problem        |
+| `dependencies`     | 📦 Brown  | Dependency issue           |
+| `ui-ux`            | 🎨 Pink   | Design/UX issue            |
+| `chore`            | 🧹 Gray   | Maintenance task           |
+| `regression`       | 🔄 Red    | Feature broke              |
+| `good first issue` | 💜 Purple | For newcomers              |
+| `help wanted`      | 🆘 Red    | Need community help        |
+| `wontfix`          | ⛔ Red    | Won't be fixed             |
+| `invalid`          | ⚪ Gray   | Not a valid issue          |
 
 ---
 
 ## Priority Labels
 
-| Label | Urgency | Response Time |
-|-------|---------|---------------|
-| `priority: critical` | 🔴 Must fix now | < 24 hours |
-| `priority: high` | 🟠 Soon | < 3 days |
-| `priority: medium` | 🟡 Normal | < 1 week |
-| `priority: low` | 🟢 Eventually | < 2 weeks |
+| Label                | Urgency         | Response Time |
+| -------------------- | --------------- | ------------- |
+| `priority: critical` | 🔴 Must fix now | < 24 hours    |
+| `priority: high`     | 🟠 Soon         | < 3 days      |
+| `priority: medium`   | 🟡 Normal       | < 1 week      |
+| `priority: low`      | 🟢 Eventually   | < 2 weeks     |
 
 ---
 
 ## Status Labels
 
-| Label | Meaning |
-|-------|---------|
-| `status: triage` | Waiting to be reviewed |
-| `status: in-progress` | Someone is working on it |
-| `status: blocked` | Waiting for something else |
-| `status: ready` | Ready to be implemented |
-| `status: review` | Waiting for review |
-| `status: done` | Completed |
+| Label                 | Meaning                    |
+| --------------------- | -------------------------- |
+| `status: triage`      | Waiting to be reviewed     |
+| `status: in-progress` | Someone is working on it   |
+| `status: blocked`     | Waiting for something else |
+| `status: ready`       | Ready to be implemented    |
+| `status: review`      | Waiting for review         |
+| `status: done`        | Completed                  |
 
 ---
 
 ## Type Labels
 
-| Label | Type of Work |
-|-------|-------------|
-| `type: api` | API-related |
-| `type: frontend` | Frontend/UI |
-| `type: backend` | Backend logic |
-| `type: ci-cd` | CI/CD pipeline |
-| `type: test` | Testing |
-| `type: build` | Build system |
+| Label            | Type of Work   |
+| ---------------- | -------------- |
+| `type: api`      | API-related    |
+| `type: frontend` | Frontend/UI    |
+| `type: backend`  | Backend logic  |
+| `type: ci-cd`    | CI/CD pipeline |
+| `type: test`     | Testing        |
+| `type: build`    | Build system   |
 
 ---
 
 ## Best Practices
 
 ### Before Creating an Issue
+
 - [ ] Search existing issues first
 - [ ] Check documentation
 - [ ] Review closed issues
@@ -203,6 +215,7 @@
 - [ ] Prepare all required information
 
 ### When Creating an Issue
+
 - [ ] Use the appropriate template
 - [ ] Be clear and concise
 - [ ] Include all relevant details
@@ -210,6 +223,7 @@
 - [ ] Use proper formatting
 
 ### When Commenting
+
 - [ ] Stay on topic
 - [ ] Be respectful
 - [ ] Provide helpful information
@@ -221,6 +235,7 @@
 ## Closing Issues
 
 Issues are closed when:
+
 - ✅ Bug is fixed and deployed
 - ✅ Feature is implemented and merged
 - ✅ Question is answered
@@ -271,4 +286,3 @@ Issues are closed when:
 - 💬 [Discussions](https://github.com/Mostafa-SAID7/vingo-roll-studio/discussions)
 - 📧 [Email Support](mailto:support@vingo-roll.com)
 - 🔐 [Security](./SECURITY.md)
-

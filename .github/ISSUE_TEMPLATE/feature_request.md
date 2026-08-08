@@ -56,5 +56,3 @@ Add any screenshots, mockups, or other context about the feature request here.
 ## Related Issues
 
 - Relates to: [Link to related issues if any]
-
-

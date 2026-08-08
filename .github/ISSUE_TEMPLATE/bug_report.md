@@ -78,5 +78,3 @@ Add any other context about the problem here.
 - Did this work before?
 - When did you first notice this?
 - Is it reproducible every time?
-
-

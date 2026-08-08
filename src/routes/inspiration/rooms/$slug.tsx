@@ -29,13 +29,17 @@ function Page() {
   const { room } = Route.useRouteContext();
 
   // Get products for this room
-  const roomProducts = products.filter((p) => p.rooms?.some((r) => r.slug === room.slug)).slice(0, 12);
+  const roomProducts = products
+    .filter((p) => p.rooms?.some((r) => r.slug === room.slug))
+    .slice(0, 12);
 
   // Get inspiration posts for this room
-  const relatedPosts = products.filter((p) => p.rooms?.some((r) => r.slug === room.slug)).slice(0, 3);
+  const relatedPosts = products
+    .filter((p) => p.rooms?.some((r) => r.slug === room.slug))
+    .slice(0, 3);
 
   const categories = Array.from(
-    new Set(roomProducts.map((p) => p.category?.name).filter(Boolean))
+    new Set(roomProducts.map((p) => p.category?.name).filter(Boolean)),
   ) as string[];
 
   return (
@@ -101,22 +105,25 @@ function Page() {
 
       {/* Room Tips */}
       <Section className="bg-card">
-        <SectionHeading title={`${room.name} tips`} description="How to choose the right treatment" />
+        <SectionHeading
+          title={`${room.name} tips`}
+          description="How to choose the right treatment"
+        />
 
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
             <div>
               <h4 className="font-semibold mb-2">Light Control</h4>
               <p className="text-sm text-muted-foreground">
-                Consider how much natural light you want during different times of day. Blackout treatments work well
-                for bedrooms and media rooms.
+                Consider how much natural light you want during different times of day. Blackout
+                treatments work well for bedrooms and media rooms.
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Privacy</h4>
               <p className="text-sm text-muted-foreground">
-                Think about sightlines from the street or neighboring properties. Most rooms benefit from light-filtering
-                materials that offer privacy while letting in light.
+                Think about sightlines from the street or neighboring properties. Most rooms benefit
+                from light-filtering materials that offer privacy while letting in light.
               </p>
             </div>
           </div>
@@ -125,15 +132,15 @@ function Page() {
             <div>
               <h4 className="font-semibold mb-2">Style & Aesthetic</h4>
               <p className="text-sm text-muted-foreground">
-                Match your window treatments to your room's overall design. Our style finder can help you narrow down
-                options that fit your taste.
+                Match your window treatments to your room's overall design. Our style finder can
+                help you narrow down options that fit your taste.
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Installation</h4>
               <p className="text-sm text-muted-foreground">
-                We offer free professional measuring and installation guidance. Most treatments are easy to install, but
-                we're here to help.
+                We offer free professional measuring and installation guidance. Most treatments are
+                easy to install, but we're here to help.
               </p>
             </div>
           </div>
@@ -147,7 +154,8 @@ function Page() {
             <div>
               <h3 className="text-2xl font-bold mb-3">Still not sure?</h3>
               <p className="text-muted-foreground mb-4">
-                Take our quick style finder quiz or book a free design consultation with our specialists.
+                Take our quick style finder quiz or book a free design consultation with our
+                specialists.
               </p>
               <div className="flex gap-3">
                 <Button asChild>

@@ -6,6 +6,11 @@
 export { Crumbs, PageHeader, Section, SectionHeading, EmptyState } from "./section";
 export { TrustLayer } from "./trust-layer";
 export { Reveal } from "./reveal";
-export { Skeleton, SkeletonCard, SkeletonProductGrid, SkeletonHero, SkeletonPage } from "./skeleton";
+export {
+  Skeleton,
+  SkeletonCard,
+  SkeletonProductGrid,
+  SkeletonHero,
+  SkeletonPage,
+} from "./skeleton";
 export { LoadingOverlay } from "./loading-overlay";
-

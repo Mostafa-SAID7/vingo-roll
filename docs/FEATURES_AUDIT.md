@@ -32,13 +32,16 @@ src/features/
 ## Features Inventory
 
 ### 1. Cart
+
 **File:** `cart/`  
 **Purpose:** Shopping cart display and management
 
 **Exports:**
+
 - `CartView` - Main cart component with item management, quantity control, and checkout
 
 **Key Features:**
+
 - Uses `useCartStore` for state management
 - Displays cart items with images, options, and pricing
 - Quantity controls (increment/decrement)
@@ -48,6 +51,7 @@ src/features/
 - Hydration check for SSR safety
 
 **Components Used:**
+
 - `Crumbs`, `PageHeader`, `Section`, `EmptyState` (common section components)
 - `Button`, `ProductGrid` (UI components)
 - Store: `useCartStore`, `cartSubtotal`
@@ -58,13 +62,16 @@ src/features/
 ---
 
 ### 2. Catalog
+
 **File:** `catalog/`  
 **Purpose:** Product catalog with advanced filtering and sorting
 
 **Exports:**
+
 - `CatalogView` - Main catalog component with filters
 
 **Key Features:**
+
 - Advanced filtering (material, light control, room, collection, color)
 - Sorting options (price, rating, featured, new)
 - Uses `useProductFilters` hook for consistent filtering
@@ -73,6 +80,7 @@ src/features/
 - Empty state handling
 
 **Components Used:**
+
 - Filter components, Product grid
 - Store: `useProductFilters` hook
 - Types: `FilterState` from `@/types/common`
@@ -82,13 +90,16 @@ src/features/
 ---
 
 ### 3. Search
+
 **File:** `search/`  
 **Purpose:** Global search across products, categories, and inspiration content
 
 **Exports:**
+
 - `SearchView` - Main search component with results display
 
 **Key Features:**
+
 - Search form with suggestions
 - Multi-category search (products, categories, inspiration)
 - Uses `useSearch` hook for filtering
@@ -97,6 +108,7 @@ src/features/
 - No results state with style finder recommendation
 
 **Components Used:**
+
 - Input, Button, ProductGrid
 - Hooks: `useSearch` for generic search functionality
 
@@ -105,13 +117,16 @@ src/features/
 ---
 
 ### 4. Swatches
+
 **File:** `swatches/`  
 **Purpose:** Material swatch selection and ordering
 
 **Exports:**
+
 - `SwatchesView` - Main swatches component with filtering and tray management
 
 **Key Features:**
+
 - Filter by material, color family, light control
 - Visual swatch display with color preview
 - Swatch tray management (add/remove up to 8)
@@ -120,6 +135,7 @@ src/features/
 - Uses `useSwatchStore` for persistent state
 
 **Components Used:**
+
 - Filter buttons, Swatch grid, Form inputs
 - Store: `useSwatchStore`
 - Hooks: `useHydrated`
@@ -129,13 +145,16 @@ src/features/
 ---
 
 ### 5. Wishlist
+
 **File:** `wishlist/`  
 **Purpose:** Saved products management
 
 **Exports:**
+
 - `WishlistView` - Main wishlist component
 
 **Key Features:**
+
 - Display saved products
 - Clear wishlist functionality
 - Empty state with browse link
@@ -143,6 +162,7 @@ src/features/
 - Hydration check for SSR safety
 
 **Components Used:**
+
 - ProductGrid, EmptyState
 - Store: `useWishlistStore`
 - Hooks: `useHydrated`
@@ -154,7 +174,9 @@ src/features/
 ## Feature Categories
 
 ### Route-Based Features
+
 These features are primarily implemented as routes with no extracted components:
+
 - **product-detail** - `/product/:slug` - Product detail pages
 - **style-finder** - `/style-finder` - Interactive style questionnaire
 - **inspiration** - `/inspiration`, `/inspiration/rooms/:slug` - Content/inspiration pages
@@ -169,6 +191,7 @@ These features are primarily implemented as routes with no extracted components:
 ## Import Patterns
 
 ### From Features (Extracted Components)
+
 ```typescript
 import { CartView } from "@/features/cart";
 import { CatalogView } from "@/features/catalog";
@@ -181,6 +204,7 @@ import { CartView, CatalogView, SearchView } from "@/features";
 ```
 
 ### From Routes (Page Layout)
+
 ```typescript
 // Product detail, style finder, inspiration, account, etc.
 // Remain as route components in src/routes/
@@ -192,13 +216,13 @@ import { CartView, CatalogView, SearchView } from "@/features";
 
 ### ✅ Zero Duplication Verified
 
-| Feature | Duplication Status | Details |
-|---------|-------------------|---------|
-| **Cart Logic** | ✅ None | Single `CartView` component, uses centralized `useCartStore` |
-| **Filtering Logic** | ✅ None | Single `useProductFilters` hook used by CatalogView |
-| **Search Logic** | ✅ None | Single `useSearch` hook used by SearchView |
-| **Swatch Management** | ✅ None | Single `SwatchesView` component, uses `useSwatchStore` |
-| **Wishlist Logic** | ✅ None | Single `WishlistView` component, uses `useWishlistStore` |
+| Feature               | Duplication Status | Details                                                      |
+| --------------------- | ------------------ | ------------------------------------------------------------ |
+| **Cart Logic**        | ✅ None            | Single `CartView` component, uses centralized `useCartStore` |
+| **Filtering Logic**   | ✅ None            | Single `useProductFilters` hook used by CatalogView          |
+| **Search Logic**      | ✅ None            | Single `useSearch` hook used by SearchView                   |
+| **Swatch Management** | ✅ None            | Single `SwatchesView` component, uses `useSwatchStore`       |
+| **Wishlist Logic**    | ✅ None            | Single `WishlistView` component, uses `useWishlistStore`     |
 
 ---
 
@@ -224,7 +248,9 @@ TOTAL: 10/10 files with zero TypeScript errors
 ## Design Patterns
 
 ### 1. Feature Module Structure
+
 Each feature follows a consistent pattern:
+
 ```
 feature/
 ├── index.ts         (exports main component)
@@ -232,22 +258,28 @@ feature/
 ```
 
 ### 2. Self-Contained Features
+
 - Each feature imports only what it needs
 - No cross-feature dependencies
 - Clear responsibility boundaries
 
 ### 3. Centralized State
+
 Features use centralized stores from `@/store`:
+
 - `useCartStore` (cart)
 - `useSwatchStore` (swatches)
 - `useWishlistStore` (wishlist)
 
 ### 4. Centralized Filtering/Search
+
 Features use centralized hooks from `@/hooks`:
+
 - `useProductFilters` (catalog)
 - `useSearch` (search)
 
 ### 5. Central Export Point
+
 All features exported from `src/features/index.ts` for clean imports
 
 ---
@@ -257,19 +289,23 @@ All features exported from `src/features/index.ts` for clean imports
 ### ✅ All Features Properly Integrated
 
 **Stores Used:**
+
 - Cart feature → `useCartStore` from `@/store`
 - Swatches feature → `useSwatchStore` from `@/store`
 - Wishlist feature → `useWishlistStore` from `@/store`
 
 **Hooks Used:**
+
 - Catalog feature → `useProductFilters` from `@/hooks`
 - Search feature → `useSearch` from `@/hooks`
 - All features → `useHydrated` from `@/hooks`
 
 **Auth Integration:**
+
 - Cart feature → `useAuth` from `@/providers/auth-provider`
 
 **Types Used:**
+
 - Catalog → `FilterState` from `@/types/common`
 - All features → `Product` from `@/types`
 
@@ -296,13 +332,13 @@ All features exported from `src/features/index.ts` for clean imports
 
 ## Summary
 
-| Metric | Result |
-|--------|--------|
-| **Total Features** | 5 (cart, catalog, search, swatches, wishlist) |
-| **Extracted Components** | 5 view components |
-| **TypeScript Errors** | 0 |
-| **Duplication Issues** | 0 |
-| **Central Export Point** | Yes (`features/index.ts`) |
+| Metric                   | Result                                                               |
+| ------------------------ | -------------------------------------------------------------------- |
+| **Total Features**       | 5 (cart, catalog, search, swatches, wishlist)                        |
+| **Extracted Components** | 5 view components                                                    |
+| **TypeScript Errors**    | 0                                                                    |
+| **Duplication Issues**   | 0                                                                    |
+| **Central Export Point** | Yes (`features/index.ts`)                                            |
 | **Route-Based Features** | 5 (product-detail, style-finder, inspiration, consultation, account) |
 
 **Status:** ✅ **COMPLETE** - Features directory is now fully organized with zero duplication, proper separation of concerns, and clean import paths.

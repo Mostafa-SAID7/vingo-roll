@@ -37,26 +37,27 @@ public/images/
 
 ### Product Collection Mapping
 
-| Product Slug | Name | Material | Collection | Primary Image | Source |
-|--------------|------|----------|-----------|---------------|--------|
-| aurelle-belgian-linen-curtain | Aurelle Belgian Linen Curtain | Belgian Linen | col-natural | Material/BelgianLinen/Aurelle/Aurelle1.jpg | ✅ NEW |
-| nocturne-blackout-drape | Nocturne Blackout Drape | Brushed Cotton | col-designer | Material/BrushedCotton/Nocturne/Nocturne1.webp | ✅ NEW |
-| veil-sheer-voile-panel | Veil Sheer Voile Panel | Belgian Linen | col-minimal | (needs image) | ❌ MISSING |
-| hearth-thermal-interlined-curtain | Hearth Thermal Interlined Curtain | Wool Blend | col-classic | (needs image) | ❌ MISSING |
-| atelier-pinch-pleat-drapery | Atelier Pinch Pleat Drapery | Belgian Linen | col-designer | (needs image) | ❌ MISSING |
-| solstice-solar-roller-shade | Solstice Solar Roller Shade | Belgian Linen | col-minimal | public/images/products/woven-shade.jpg | ✅ EXISTING |
-| meridian-motorized-roller-shade | Meridian Motorized Roller Shade | Silk Velvet | col-contemporary | public/images/rooms/bedroom-blackout.jpg | ✅ EXISTING |
-| canton-flat-fold-roman-shade | Canton Flat-Fold Roman Shade | Belgian Linen | col-classic | public/images/products/woven-shade.jpg | ✅ EXISTING |
-| grove-woven-grass-shade | Grove Woven Grass Shade | Belgian Linen | col-natural | public/images/products/woven-shade.jpg | ✅ EXISTING |
-| linden-hardwood-blind | Linden Hardwood Blind | Belgian Linen | col-classic | public/images/products/woven-shade.jpg | ✅ EXISTING |
-| dune-sheer-linen-blend | Dune Sheer Linen Blend | Belgian Linen | col-seasonal | (needs image) | ❌ MISSING |
-| obsidian-blackout-roller | Obsidian Blackout Roller | Wool Blend | col-contemporary | public/images/rooms/bedroom-blackout.jpg | ✅ EXISTING |
-| marsh-velvet-drape | Marsh Silk Velvet Drape | Silk Velvet | col-designer | Material/SilkVelvet/VelvetDrape1.jpg | ✅ NEW |
-| harbor-outdoor-shade | Harbor Outdoor Shade | Belgian Linen | col-seasonal | public/images/products/woven-shade.jpg | ✅ EXISTING |
+| Product Slug                      | Name                              | Material       | Collection       | Primary Image                                  | Source      |
+| --------------------------------- | --------------------------------- | -------------- | ---------------- | ---------------------------------------------- | ----------- |
+| aurelle-belgian-linen-curtain     | Aurelle Belgian Linen Curtain     | Belgian Linen  | col-natural      | Material/BelgianLinen/Aurelle/Aurelle1.jpg     | ✅ NEW      |
+| nocturne-blackout-drape           | Nocturne Blackout Drape           | Brushed Cotton | col-designer     | Material/BrushedCotton/Nocturne/Nocturne1.webp | ✅ NEW      |
+| veil-sheer-voile-panel            | Veil Sheer Voile Panel            | Belgian Linen  | col-minimal      | (needs image)                                  | ❌ MISSING  |
+| hearth-thermal-interlined-curtain | Hearth Thermal Interlined Curtain | Wool Blend     | col-classic      | (needs image)                                  | ❌ MISSING  |
+| atelier-pinch-pleat-drapery       | Atelier Pinch Pleat Drapery       | Belgian Linen  | col-designer     | (needs image)                                  | ❌ MISSING  |
+| solstice-solar-roller-shade       | Solstice Solar Roller Shade       | Belgian Linen  | col-minimal      | public/images/products/woven-shade.jpg         | ✅ EXISTING |
+| meridian-motorized-roller-shade   | Meridian Motorized Roller Shade   | Silk Velvet    | col-contemporary | public/images/rooms/bedroom-blackout.jpg       | ✅ EXISTING |
+| canton-flat-fold-roman-shade      | Canton Flat-Fold Roman Shade      | Belgian Linen  | col-classic      | public/images/products/woven-shade.jpg         | ✅ EXISTING |
+| grove-woven-grass-shade           | Grove Woven Grass Shade           | Belgian Linen  | col-natural      | public/images/products/woven-shade.jpg         | ✅ EXISTING |
+| linden-hardwood-blind             | Linden Hardwood Blind             | Belgian Linen  | col-classic      | public/images/products/woven-shade.jpg         | ✅ EXISTING |
+| dune-sheer-linen-blend            | Dune Sheer Linen Blend            | Belgian Linen  | col-seasonal     | (needs image)                                  | ❌ MISSING  |
+| obsidian-blackout-roller          | Obsidian Blackout Roller          | Wool Blend     | col-contemporary | public/images/rooms/bedroom-blackout.jpg       | ✅ EXISTING |
+| marsh-velvet-drape                | Marsh Silk Velvet Drape           | Silk Velvet    | col-designer     | Material/SilkVelvet/VelvetDrape1.jpg           | ✅ NEW      |
+| harbor-outdoor-shade              | Harbor Outdoor Shade              | Belgian Linen  | col-seasonal     | public/images/products/woven-shade.jpg         | ✅ EXISTING |
 
 ## Material-to-Product Assignment
 
 ### Belgian Linen Products
+
 - Aurelle Belgian Linen Curtain ✅ (Material/BelgianLinen/Aurelle/)
 - Veil Sheer Voile Panel
 - Atelier Pinch Pleat Drapery
@@ -68,19 +69,23 @@ public/images/
 - Harbor Outdoor Shade
 
 ### Brushed Cotton Products
+
 - Nocturne Blackout Drape ✅ (Material/BrushedCotton/Nocturne/)
 
 ### Wool Blend Products
+
 - Hearth Thermal Interlined Curtain
 - Obsidian Blackout Roller
 
 ### Silk Velvet Products
+
 - Meridian Motorized Roller Shade (shared from Silk Velvet)
 - Marsh Silk Velvet Drape ✅ (Material/SilkVelvet/VelvetDrape/)
 
 ## Recommended Image Organization
 
 ### Option 1: Material-Based Organization (Recommended)
+
 ```
 public/images/
 ├── materials/
@@ -118,6 +123,7 @@ public/images/
 ```
 
 ### Option 2: Product-Based Organization
+
 ```
 public/images/
 ├── products/
@@ -148,6 +154,7 @@ I recommend **Option 1: Material-Based Organization** because:
 ## Image File Naming Convention
 
 ### Pattern
+
 ```
 {product-slug}-{variant}-{index}.{format}
 
@@ -158,6 +165,7 @@ aurelle-alternate-1.jpg
 ```
 
 ### Variants
+
 - `primary` - Main product image (usually first)
 - `detail` - Close-up of fabric/texture
 - `alternate` - Alternative angle/setup
@@ -167,6 +175,7 @@ aurelle-alternate-1.jpg
 ## Current Images to Use
 
 ### ✅ Ready to Use
+
 1. **Aurelle** (Material/BelgianLinen/Aurelle/)
    - Aurelle1.jpg → aurelle-primary-1.jpg
    - Aurelle2.webp → aurelle-detail-1.webp
@@ -183,6 +192,7 @@ aurelle-alternate-1.jpg
    - VelvetDrape3.jpg → velvet-drape-alternate-1.jpg
 
 ### ✅ Existing Stock Images
+
 - hero-living-room.jpg - Hero banner
 - linen-texture.jpg - Texture reference
 - woven-shade.jpg - Product generic
@@ -212,11 +222,13 @@ image: "/images/materials/belgian-linen/aurelle/aurelle-primary-1.jpg",
 ## Summary
 
 **Current Status**: ✅ 3 product image sets ready
+
 - Aurelle (3 images)
 - Nocturne (3 images)
 - Silk Velvet Drape (3 images)
 
 **Action Items**:
+
 1. Rename image files for consistency
 2. Update products.ts with new image paths
 3. Continue adding missing product images

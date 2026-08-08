@@ -91,4 +91,3 @@ If you have ideas on how to resolve this, describe them here.
 ---
 
 **Thank you for helping us keep Vingo Roll secure!**
-

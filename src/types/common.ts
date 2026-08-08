@@ -106,7 +106,8 @@ export interface Address {
   phone: string;
 }
 
-export type OrderStatus = "pending" | "confirmed" | "processing" | "shipped" | "delivered" | "cancelled";
+export type OrderStatus =
+  "pending" | "confirmed" | "processing" | "shipped" | "delivered" | "cancelled";
 
 export interface Order {
   id: string;
@@ -159,25 +160,70 @@ export const SHIPPING_METHODS: ShippingMethod[] = [
 ];
 
 export const US_STATES = [
-  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-  "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-  "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-  "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-  "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
+  "AL",
+  "AK",
+  "AZ",
+  "AR",
+  "CA",
+  "CO",
+  "CT",
+  "DE",
+  "FL",
+  "GA",
+  "HI",
+  "ID",
+  "IL",
+  "IN",
+  "IA",
+  "KS",
+  "KY",
+  "LA",
+  "ME",
+  "MD",
+  "MA",
+  "MI",
+  "MN",
+  "MS",
+  "MO",
+  "MT",
+  "NE",
+  "NV",
+  "NH",
+  "NJ",
+  "NM",
+  "NY",
+  "NC",
+  "ND",
+  "OH",
+  "OK",
+  "OR",
+  "PA",
+  "RI",
+  "SC",
+  "SD",
+  "TN",
+  "TX",
+  "UT",
+  "VT",
+  "VA",
+  "WA",
+  "WV",
+  "WI",
+  "WY",
   "DC",
 ];
 
 export const STATE_TAX_RATES: Record<string, number> = {
-  "CA": 0.0725,
-  "NY": 0.0400,
-  "TX": 0.0625,
-  "FL": 0.0600,
-  "IL": 0.0625,
-  "PA": 0.0600,
-  "OH": 0.0575,
-  "GA": 0.0400,
-  "NC": 0.0475,
-  "MI": 0.0600,
+  CA: 0.0725,
+  NY: 0.04,
+  TX: 0.0625,
+  FL: 0.06,
+  IL: 0.0625,
+  PA: 0.06,
+  OH: 0.0575,
+  GA: 0.04,
+  NC: 0.0475,
+  MI: 0.06,
 };
 
 export function calculateShipping(subtotal: number, method: string = "standard"): number {

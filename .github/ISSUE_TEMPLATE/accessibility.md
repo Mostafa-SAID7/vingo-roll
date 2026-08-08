@@ -56,12 +56,14 @@ Explain how to encounter this accessibility issue:
 ## Testing Details
 
 **Assistive Technology Used:**
+
 - [ ] Screen Reader (NVDA, JAWS, VoiceOver)
 - [ ] Keyboard Navigation
 - [ ] Browser Extensions
 - [ ] Other: [Specify]
 
 **Browser/OS Combination:**
+
 - Browser: [e.g., Chrome, Firefox, Safari]
 - OS: [e.g., Windows, macOS]
 - Version: [e.g., 20.x]
@@ -77,6 +79,7 @@ What currently happens that creates the barrier:
 ## Screenshots / Recording
 
 If possible, provide:
+
 - Screenshots highlighting the issue
 - Screen recording showing the problem
 - Browser console errors
@@ -84,11 +87,13 @@ If possible, provide:
 ## Impact
 
 **Severity:**
+
 - [ ] Critical (Blocks usage)
 - [ ] Major (Significantly impacts usage)
 - [ ] Minor (Inconvenient but manageable)
 
 **Affected Users:**
+
 - [ ] Blind users
 - [ ] Low vision users
 - [ ] Color blind users
@@ -111,4 +116,3 @@ If you have suggestions for improving accessibility:
 ---
 
 **Thank you for helping make Vingo Roll accessible to everyone!**
-

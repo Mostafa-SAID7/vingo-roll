@@ -11,8 +11,9 @@
 Dependabot validation failed with 3 schema errors:
 
 ### Error 1: Invalid `prefix-scope` Property
+
 ```
-Property '#/updates/0/commit-message' contains additional properties 
+Property '#/updates/0/commit-message' contains additional properties
 ["prefix-scope"] outside of the schema when none are allowed
 ```
 
@@ -21,8 +22,9 @@ Property '#/updates/0/commit-message' contains additional properties
 **Solution:** Combined into single `prefix` property using format `"prefix(scope):"`
 
 ### Error 2: Same Error in GitHub Actions
+
 ```
-Property '#/updates/1/commit-message' contains additional properties 
+Property '#/updates/1/commit-message' contains additional properties
 ["prefix-scope"] outside of the schema when none are allowed
 ```
 
@@ -31,8 +33,9 @@ Property '#/updates/1/commit-message' contains additional properties
 **Solution:** Applied same fix to GitHub Actions configuration
 
 ### Error 3: Invalid Empty `ignore` Block
+
 ```
-Property '#/updates/0/ignore' of type null did not match the 
+Property '#/updates/0/ignore' of type null did not match the
 following type: array
 ```
 
@@ -45,21 +48,23 @@ following type: array
 ## ✅ Changes Made
 
 ### Before (Invalid)
+
 ```yaml
 commit-message:
   prefix: "chore"
-  prefix-scope: "deps"        # ❌ Invalid property
+  prefix-scope: "deps" # ❌ Invalid property
   include: "scope"
 
-ignore:                        # ❌ Empty/null, causes error
+ignore: # ❌ Empty/null, causes error
   # - dependency-name: "..."
   #   update-types: [...]
 ```
 
 ### After (Valid)
+
 ```yaml
 commit-message:
-  prefix: "chore(deps):"       # ✅ Combined format
+  prefix: "chore(deps):" # ✅ Combined format
   include: "scope"
 
 # ✅ Removed empty ignore block entirely
@@ -70,6 +75,7 @@ commit-message:
 ## 📝 Corrected Configuration
 
 ### npm Dependencies
+
 ```yaml
 - package-ecosystem: "npm"
   directory: "/"
@@ -84,7 +90,7 @@ commit-message:
     - "dependencies"
     - "npm"
   commit-message:
-    prefix: "chore(deps):"      # ✅ Valid format
+    prefix: "chore(deps):" # ✅ Valid format
     include: "scope"
   pull-request-branch-name:
     separator: "/"
@@ -94,6 +100,7 @@ commit-message:
 ```
 
 ### GitHub Actions
+
 ```yaml
 - package-ecosystem: "github-actions"
   directory: "/"
@@ -108,7 +115,7 @@ commit-message:
     - "ci-cd"
     - "github-actions"
   commit-message:
-    prefix: "ci(actions):"      # ✅ Valid format
+    prefix: "ci(actions):" # ✅ Valid format
     include: "scope"
 ```
 
@@ -121,11 +128,13 @@ commit-message:
 With the fixes, Dependabot will now create commits like:
 
 **npm Dependencies:**
+
 ```
 chore(deps): bump react from 18.0.0 to 19.0.0
 ```
 
 **GitHub Actions:**
+
 ```
 ci(actions): bump actions/setup-node from 3.0.0 to 4.0.0
 ```
@@ -135,11 +144,13 @@ ci(actions): bump actions/setup-node from 3.0.0 to 4.0.0
 ## 🚀 What Now Works
 
 ✅ **Dependabot Validation Passes**
+
 - No schema errors
 - Configuration is valid
 - Ready for production use
 
 ✅ **Automation Enabled**
+
 - Weekly npm package updates (Monday 2:00 AM)
 - Weekly GitHub Actions updates (Monday 3:00 AM)
 - Automatic PR creation
@@ -147,6 +158,7 @@ ci(actions): bump actions/setup-node from 3.0.0 to 4.0.0
 - Labeled with "dependencies" tag
 
 ✅ **Dependency Management**
+
 - Both direct and indirect dependencies included
 - Safe updates only (respects semver)
 - Consolidated into single PR per week per ecosystem
@@ -157,6 +169,7 @@ ci(actions): bump actions/setup-node from 3.0.0 to 4.0.0
 ## 📋 Dependabot Schema Compliance
 
 ### Valid Properties
+
 ✅ `package-ecosystem` - npm, github-actions  
 ✅ `directory` - Path to package file location  
 ✅ `schedule` - Update frequency and timing  
@@ -165,17 +178,19 @@ ci(actions): bump actions/setup-node from 3.0.0 to 4.0.0
 ✅ `labels` - Tag for organization  
 ✅ `commit-message` - Format for commits  
 ✅ `pull-request-branch-name` - Branch naming  
-✅ `allow` - Filter which dependencies to update  
+✅ `allow` - Filter which dependencies to update
 
 ### Invalid Properties (Removed)
+
 ❌ `prefix-scope` - Not in schema, use combined `prefix`  
-❌ `ignore` - Empty/null value, must be array or omitted  
+❌ `ignore` - Empty/null value, must be array or omitted
 
 ---
 
 ## 🔍 Verification
 
 ### Configuration Validation
+
 ```yaml
 version: 2                          ✅ Valid
 updates:                            ✅ Valid
@@ -186,23 +201,24 @@ updates:                            ✅ Valid
 ```
 
 ### Schema Compliance
+
 ✅ All properties match Dependabot schema  
 ✅ No additional/invalid properties  
 ✅ All types are correct (string, array, etc.)  
-✅ All required fields present  
+✅ All required fields present
 
 ---
 
 ## 📊 Final Status
 
-| Item | Status | Details |
-|------|--------|---------|
-| Schema Validation | ✅ PASS | All errors fixed |
-| Configuration | ✅ VALID | Complies with Dependabot spec |
-| npm Updates | ✅ READY | Weekly automation active |
-| GitHub Actions | ✅ READY | Weekly automation active |
-| Auto-assignments | ✅ ACTIVE | Reviews assigned to Mostafa-SAID7 |
-| Commit Format | ✅ CORRECT | Semantic commit messages |
+| Item              | Status     | Details                           |
+| ----------------- | ---------- | --------------------------------- |
+| Schema Validation | ✅ PASS    | All errors fixed                  |
+| Configuration     | ✅ VALID   | Complies with Dependabot spec     |
+| npm Updates       | ✅ READY   | Weekly automation active          |
+| GitHub Actions    | ✅ READY   | Weekly automation active          |
+| Auto-assignments  | ✅ ACTIVE  | Reviews assigned to Mostafa-SAID7 |
+| Commit Format     | ✅ CORRECT | Semantic commit messages          |
 
 ---
 
@@ -245,6 +261,7 @@ updates:                            ✅ Valid
 **Message:** fix: correct dependabot.yml schema validation errors
 
 **Changes:**
+
 - Fixed `prefix-scope` property (invalid schema)
 - Combined into single `prefix` property
 - Removed empty `ignore` section
@@ -257,6 +274,7 @@ updates:                            ✅ Valid
 ✅ **PRODUCTION READY**
 
 Dependabot is now:
+
 - Configured correctly
 - Validated successfully
 - Ready to manage dependencies
@@ -264,4 +282,3 @@ Dependabot is now:
 - Assigning reviews to team
 
 No further changes needed!
-

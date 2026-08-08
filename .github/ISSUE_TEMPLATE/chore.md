@@ -63,4 +63,3 @@ How should this be tackled:
 - [ ] Small (< 1 hour)
 - [ ] Medium (1-4 hours)
 - [ ] Large (> 4 hours)
-

@@ -19,9 +19,13 @@ export function useSearch<T extends SearchableItem>(
     fields?: (keyof T)[];
     caseSensitive?: boolean;
     minChars?: number;
-  }
+  },
 ): T[] {
-  const { fields = ["name" as keyof T, "description" as keyof T], caseSensitive = false, minChars = 2 } = options || {};
+  const {
+    fields = ["name" as keyof T, "description" as keyof T],
+    caseSensitive = false,
+    minChars = 2,
+  } = options || {};
 
   return useMemo(() => {
     if (query.length < minChars) {
@@ -36,7 +40,7 @@ export function useSearch<T extends SearchableItem>(
         if (!value || typeof value !== "string") return false;
         const fieldValue = caseSensitive ? value : value.toLowerCase();
         return fieldValue.includes(searchQuery);
-      })
+      }),
     );
   }, [items, query, fields, caseSensitive, minChars]);
 }
@@ -46,7 +50,7 @@ export function useSearch<T extends SearchableItem>(
  */
 export function useProductSearch(
   products: Array<{ id: string; name: string; description?: string }>,
-  query: string
+  query: string,
 ) {
   return useSearch(products, query, {
     fields: ["name", "description"] as const,
@@ -60,7 +64,7 @@ export function useProductSearch(
  */
 export function useRoomSearch(
   rooms: Array<{ id: string; name: string; description?: string }>,
-  query: string
+  query: string,
 ) {
   return useSearch(rooms, query, {
     fields: ["name", "description"] as const,

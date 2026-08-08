@@ -65,7 +65,7 @@ export function FilterSidebar({ filters, onFiltersChange, resultsCount }: Filter
   const handleCheckboxChange = (
     filterKey: keyof Omit<FilterState, "priceRange" | "sortBy">,
     value: string,
-    checked: boolean
+    checked: boolean,
   ) => {
     const current = filters[filterKey] as string[];
     const updated = checked ? [...current, value] : current.filter((v) => v !== value);

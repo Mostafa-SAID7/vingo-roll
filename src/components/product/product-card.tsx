@@ -45,11 +45,7 @@ export function ProductCard({
   return (
     <article className="group relative">
       <div className="bg-muted relative aspect-[4/5] overflow-hidden rounded-sm">
-        <Link
-          to="/product/$slug"
-          params={{ slug: product.slug }}
-          className="absolute inset-0 z-0"
-        >
+        <Link to="/product/$slug" params={{ slug: product.slug }} className="absolute inset-0 z-0">
           <img
             src={main?.src ?? ""}
             alt={main?.alt ?? product.name}
@@ -109,8 +105,7 @@ export function ProductCard({
 
       <div className="mt-4 flex items-start justify-between gap-4">
         <div>
-          <h3 className="font-sans text-sm font-medium tracking-tight">
-            {product.name}</h3>
+          <h3 className="font-sans text-sm font-medium tracking-tight">{product.name}</h3>
           <p className="text-muted-foreground mt-1 line-clamp-2 max-w-xs text-xs leading-relaxed">
             {product.shortDescription}
           </p>

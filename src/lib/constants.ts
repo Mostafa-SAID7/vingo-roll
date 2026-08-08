@@ -37,9 +37,9 @@ export const BROWSING_HISTORY_LIMIT = 100;
 // ============================================================================
 
 export const MOTION_DURATION = {
-  FAST: 200,      // Quick interactions (200ms)
-  NORMAL: 300,    // Standard transitions (300ms)
-  SLOW: 500,      // Emphasis animations (500ms)
+  FAST: 200, // Quick interactions (200ms)
+  NORMAL: 300, // Standard transitions (300ms)
+  SLOW: 500, // Emphasis animations (500ms)
   VERY_SLOW: 1000, // Long-form transitions (1000ms)
 } as const;
 
@@ -72,7 +72,7 @@ export const BREAKPOINTS = {
 export const REGEX = {
   EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   ZIP_CODE: /^\d{5}(-\d{4})?$/,
-  PHONE: /^[0-9\s+()\-]+$/,
+  PHONE: /^[0-9\s()+-]+$/,
   CREDIT_CARD: /^\d{16}$/,
   CVC: /^\d{3}$/,
   EXPIRY: /^\d{2}\/\d{2}$/,
@@ -98,9 +98,9 @@ export const LIMITS = {
 // ============================================================================
 
 export const TIMEOUTS = {
-  SHORT: 3000,      // 3 seconds
-  MEDIUM: 5000,     // 5 seconds
-  LONG: 10000,      // 10 seconds
+  SHORT: 3000, // 3 seconds
+  MEDIUM: 5000, // 5 seconds
+  LONG: 10000, // 10 seconds
   VERY_LONG: 30000, // 30 seconds
 } as const;
 
@@ -109,9 +109,9 @@ export const TIMEOUTS = {
 // ============================================================================
 
 export const CACHE_DURATION = {
-  STALE_TIME: 5 * 60,        // 5 minutes
-  CACHE_TIME: 10 * 60,       // 10 minutes
-  LONG_CACHE: 60 * 60,       // 1 hour
+  STALE_TIME: 5 * 60, // 5 minutes
+  CACHE_TIME: 10 * 60, // 10 minutes
+  LONG_CACHE: 60 * 60, // 1 hour
 } as const;
 
 // ============================================================================
