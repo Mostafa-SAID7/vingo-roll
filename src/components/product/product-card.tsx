@@ -7,7 +7,13 @@ import { useHydrated } from "@/hooks/use-hydrated";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
-export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
+export function ProductCard({
+  product,
+  priority = false,
+}: {
+  product: Product;
+  priority?: boolean;
+}) {
   const wishlist = useWishlistStore((s) => s.slugs);
   const toggle = useWishlistStore((s) => s.toggle);
   const hydrated = useHydrated();
@@ -42,7 +48,9 @@ export function ProductCard({ product, priority = false }: { product: Product; p
           type="button"
           onClick={() => toggle(product.slug)}
           aria-pressed={saved}
-          aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
+          aria-label={
+            saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
+          }
           className="bg-background/85 text-foreground hover:bg-background absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-full backdrop-blur transition-colors"
         >
           <Heart className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
@@ -52,7 +60,11 @@ export function ProductCard({ product, priority = false }: { product: Product; p
       <div className="mt-4 flex items-start justify-between gap-4">
         <div>
           <h3 className="font-sans text-sm font-medium tracking-tight">
-            <Link to="/product/$slug" params={{ slug: product.slug }} className="after:absolute after:inset-0">
+            <Link
+              to="/product/$slug"
+              params={{ slug: product.slug }}
+              className="after:absolute after:inset-0"
+            >
               {product.name}
             </Link>
           </h3>

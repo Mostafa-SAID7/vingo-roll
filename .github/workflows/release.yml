@@ -2,8 +2,8 @@ name: Automated Release & Tagging
 
 on:
   push:
-    branches: [ main ]
-    tags: [ 'v*' ]
+    branches: [main]
+    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
@@ -27,12 +27,12 @@ jobs:
           # Get last tag
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           echo "Last tag: $LAST_TAG"
-          
+
           # Check commits since last tag
           COMMITS=$(git log $LAST_TAG..HEAD --oneline 2>/dev/null || git log --oneline)
           echo "Commits since last tag:"
           echo "$COMMITS"
-          
+
           # Determine version bump
           if echo "$COMMITS" | grep -q "^BREAKING CHANGE\|^.*!:"; then
             VERSION=$(echo $LAST_TAG | sed 's/^v//' | awk -F. '{print $1+1".0.0"}')
@@ -43,9 +43,9 @@ jobs:
           else
             VERSION=$(echo $LAST_TAG | sed 's/^v//')
           fi
-          
+
           echo "version=v$VERSION" >> $GITHUB_OUTPUT
-          
+
           # Check if should release
           if echo "$COMMITS" | grep -q "^feat:\|^fix:\|^perf:\|^BREAKING CHANGE"; then
             echo "should-release=true" >> $GITHUB_OUTPUT
@@ -94,7 +94,7 @@ jobs:
           git push origin main
 
   notify:
-    needs: [ determine-version, release ]
+    needs: [determine-version, release]
     if: always()
     runs-on: ubuntu-latest
     steps:

@@ -31,36 +31,40 @@ The new Vingo Roll favicon is a custom-designed SVG featuring an elegant curtain
 
 ### Color Palette
 
-| Element | OKLCH Color | Hex | Purpose |
-|---------|-------------|-----|---------|
-| Background | `oklch(0.977 0.008 85)` | `#F9F5F0` | Light ivory/cream |
-| Left Panel | `oklch(0.345 0.04 48)` | `#8B6F47` | Warm brown |
-| Right Panel | `oklch(0.302 0.03 50)` | `#A0826D` | Medium brown |
-| Window Reveal | `oklch(0.864 0.022 79)` | `#E8D4C8` | Sand/beige |
-| Pleats | `oklch(0.521 0.027 48)` | `#9D7E62` | Accent brown |
-| Rod | `oklch(0.521 0.027 48)` | `#9D7E62` | Accent brown |
+| Element       | OKLCH Color             | Hex       | Purpose           |
+| ------------- | ----------------------- | --------- | ----------------- |
+| Background    | `oklch(0.977 0.008 85)` | `#F9F5F0` | Light ivory/cream |
+| Left Panel    | `oklch(0.345 0.04 48)`  | `#8B6F47` | Warm brown        |
+| Right Panel   | `oklch(0.302 0.03 50)`  | `#A0826D` | Medium brown      |
+| Window Reveal | `oklch(0.864 0.022 79)` | `#E8D4C8` | Sand/beige        |
+| Pleats        | `oklch(0.521 0.027 48)` | `#9D7E62` | Accent brown      |
+| Rod           | `oklch(0.521 0.027 48)` | `#9D7E62` | Accent brown      |
 
 ### Design Features
 
 **Left Curtain Panel**
+
 - Angle: Curved pull (realistic drape)
 - Opacity: 90% - adds depth
 - Lines: 4 vertical pleats showing fabric texture
 - Height: Extends from top to 3/4 down
 
 **Right Curtain Panel**
+
 - Angle: Complementary pull
 - Opacity: 85% - slightly lighter
 - Lines: 4 vertical pleats (matching left)
 - Height: Extends from top to 3/4 down
 
 **Center Window Reveal**
+
 - Width: 12% of icon
 - Color: Light sand (shows light coming through)
 - Feature: Subtle horizontal shine at top (light reflection)
 - Opacity: 60% - creates depth effect
 
 **Decorative Elements**
+
 - Top Rod: Full width, 2px height, adds structure
 - Pleats: Vertical lines on each panel, add texture and realism
 - Shine: Horizontal highlight on window, adds polish
@@ -70,6 +74,7 @@ The new Vingo Roll favicon is a custom-designed SVG featuring an elegant curtain
 ## 📁 File Structure
 
 ### Location
+
 ```
 vingo-roll-studio/
 ├── public/
@@ -90,7 +95,7 @@ links: [
   // ... other links
   { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
   { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-]
+];
 ```
 
 ---
@@ -98,20 +103,22 @@ links: [
 ## 🎯 Why SVG?
 
 ### Advantages
+
 ✅ **Scalability** - Crisp at any size (16px, 32px, 64px, 128px, etc.)  
 ✅ **File Size** - Smaller than raster formats (~1KB vs 5KB+ for ICO)  
 ✅ **Modern** - Native browser support on 99%+ of users  
 ✅ **Editable** - Easy to modify colors or shapes in the future  
-✅ **Fallback** - ICO backup for older browsers  
+✅ **Fallback** - ICO backup for older browsers
 
 ### Browser Support
-| Browser | Support | Note |
-|---------|---------|------|
-| Chrome 90+ | ✅ Full | Native SVG favicon support |
-| Firefox 87+ | ✅ Full | Native SVG favicon support |
-| Safari 14+ | ✅ Full | Native SVG favicon support |
-| Edge 90+ | ✅ Full | Native SVG favicon support |
-| Older Browsers | ✅ Fallback | Uses favicon.ico |
+
+| Browser        | Support     | Note                       |
+| -------------- | ----------- | -------------------------- |
+| Chrome 90+     | ✅ Full     | Native SVG favicon support |
+| Firefox 87+    | ✅ Full     | Native SVG favicon support |
+| Safari 14+     | ✅ Full     | Native SVG favicon support |
+| Edge 90+       | ✅ Full     | Native SVG favicon support |
+| Older Browsers | ✅ Fallback | Uses favicon.ico           |
 
 ---
 
@@ -120,6 +127,7 @@ links: [
 ### How It Appears
 
 **Browser Tab (16px):**
+
 ```
  ┌─────────────┐
  │ [V] Page    │  ← Shows curtains pattern in miniature
@@ -127,6 +135,7 @@ links: [
 ```
 
 **Bookmark Icon (32px):**
+
 ```
 Shows full curtain design with clear pleat detail
 
@@ -138,6 +147,7 @@ Shows full curtain design with clear pleat detail
 ```
 
 **Desktop Icon (64px+):**
+
 ```
 Full detail visible:
 - Distinct left and right panels
@@ -156,6 +166,7 @@ Full detail visible:
 Edit `public/favicon.svg` directly:
 
 **Change Colors:**
+
 ```xml
 <!-- Find these and modify the fill colors -->
 <path d="..." fill="#8B6F47" />      <!-- Left panel -->
@@ -164,12 +175,14 @@ Edit `public/favicon.svg` directly:
 ```
 
 **Change Opacity:**
+
 ```xml
 <!-- Modify opacity attribute (0-1) -->
 <path d="..." fill="#8B6F47" opacity="0.9" />  <!-- Change 0.9 -->
 ```
 
 **Add Effects:**
+
 ```xml
 <!-- Add shadows, gradients, or filters -->
 <defs>
@@ -184,12 +197,14 @@ Edit `public/favicon.svg` directly:
 ## 📊 Design Specifications
 
 ### Canvas
+
 - **Size**: 64×64px (viewBox)
 - **Format**: SVG (Scalable Vector Graphics)
 - **Color Space**: OKLCH (modern, perceptually uniform)
 - **Background**: Light cream (#F9F5F0)
 
 ### Elements
+
 - **Curtain Panels**: Curved paths with opacity variations
 - **Pleats**: 4 vertical lines per panel (texture)
 - **Window Reveal**: Semi-transparent center strip
@@ -197,6 +212,7 @@ Edit `public/favicon.svg` directly:
 - **Shine**: Subtle light reflection
 
 ### Technical Specs
+
 - **File Size**: ~1KB
 - **Rendering**: Immediate (no processing needed)
 - **Performance**: Negligible load impact
@@ -208,14 +224,14 @@ Edit `public/favicon.svg` directly:
 
 ### How It Reflects Vingo Roll
 
-| Design Element | Brand Meaning |
-|---|---|
-| **Curtains** | Core product offering |
-| **Elegant curves** | Premium, luxury positioning |
-| **Brown/beige palette** | Warm, sophisticated aesthetic |
-| **Window reveal** | Light and elegance |
-| **Pleated texture** | Attention to detail and craftsmanship |
-| **Symmetrical design** | Balance and harmony |
+| Design Element          | Brand Meaning                         |
+| ----------------------- | ------------------------------------- |
+| **Curtains**            | Core product offering                 |
+| **Elegant curves**      | Premium, luxury positioning           |
+| **Brown/beige palette** | Warm, sophisticated aesthetic         |
+| **Window reveal**       | Light and elegance                    |
+| **Pleated texture**     | Attention to detail and craftsmanship |
+| **Symmetrical design**  | Balance and harmony                   |
 
 ---
 
@@ -254,17 +270,20 @@ To update the favicon:
 ### How the Favicon Appears Across Devices
 
 **Desktop**
+
 - Browser tab: 16×16px, 32×32px
 - Bookmarks bar: 16×16px, 32×32px
 - Desktop shortcut: 64×64px, 128×128px
 - Search suggestions: 16×16px, 32×32px
 
 **Mobile**
+
 - Home screen icon: 180×180px (iOS), 192×192px (Android)
 - Browser tab: 32×32px
 - Address bar: 16×16px
 
 **Fallback**
+
 - If SVG not supported: favicon.ico used
 - Ensures 100% browser compatibility
 - No visual difference to users
@@ -274,6 +293,7 @@ To update the favicon:
 ## 🎯 Best Practices
 
 ✅ **DO:**
+
 - Keep the SVG well-formed and valid
 - Test on different browsers
 - Maintain consistent brand colors
@@ -281,6 +301,7 @@ To update the favicon:
 - Document any changes
 
 ❌ **DON'T:**
+
 - Make the design too complex (harder to scale down)
 - Use too many colors (gets muddy in small sizes)
 - Add gradients with many stops (performance)
@@ -304,14 +325,17 @@ To update the favicon:
 ## 📚 Resources
 
 ### SVG Tutorials
+
 - [MDN SVG Guide](https://developer.mozilla.org/en-US/docs/Web/SVG)
 - [W3C SVG Specification](https://www.w3.org/TR/SVG2/)
 
 ### Favicon Best Practices
+
 - [Web.dev Favicon Guide](https://web.dev/add-manifest/)
 - [Favicon Generator](https://www.favicon-generator.org/)
 
 ### Color Reference
+
 - [OKLCH Color Space](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch)
 - [Brand Colors](../docs/STYLING_CHANGES.md#color-palette)
 
@@ -320,6 +344,7 @@ To update the favicon:
 ## ✅ Verification Checklist
 
 After deploying, verify:
+
 - [ ] Favicon appears in browser tab
 - [ ] Favicon appears in bookmarks
 - [ ] Favicon appears in search results
@@ -334,6 +359,7 @@ After deploying, verify:
 ## 🎉 Summary
 
 The Vingo Roll favicon is a carefully designed SVG that:
+
 - ✅ Reflects the brand's premium window treatment focus
 - ✅ Works perfectly on all modern devices
 - ✅ Falls back gracefully on legacy browsers
@@ -342,4 +368,3 @@ The Vingo Roll favicon is a carefully designed SVG that:
 - ✅ Is easy to maintain and update
 
 It's a small but significant branding touchpoint that enhances the professional appearance of Vingo Roll Studio across the web! 🎨
-

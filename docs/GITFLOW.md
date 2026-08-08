@@ -47,14 +47,14 @@ develop (integration)
 
 ### Branch Naming Convention
 
-| Branch Type | Naming | Example | Purpose |
-|------------|--------|---------|---------|
-| **Feature** | `feature/description` | `feature/style-finder` | New features |
-| **Bugfix** | `bugfix/description` | `bugfix/cart-calculation` | Bug fixes (non-urgent) |
-| **Hotfix** | `hotfix/description` | `hotfix/payment-error` | Production fixes (urgent) |
-| **Release** | `release/v*` | `release/v1.2.0` | Release preparation |
-| **Main** | `main` | - | Production releases |
-| **Develop** | `develop` | - | Integration branch |
+| Branch Type | Naming                | Example                   | Purpose                   |
+| ----------- | --------------------- | ------------------------- | ------------------------- |
+| **Feature** | `feature/description` | `feature/style-finder`    | New features              |
+| **Bugfix**  | `bugfix/description`  | `bugfix/cart-calculation` | Bug fixes (non-urgent)    |
+| **Hotfix**  | `hotfix/description`  | `hotfix/payment-error`    | Production fixes (urgent) |
+| **Release** | `release/v*`          | `release/v1.2.0`          | Release preparation       |
+| **Main**    | `main`                | -                         | Production releases       |
+| **Develop** | `develop`             | -                         | Integration branch        |
 
 ---
 
@@ -258,21 +258,22 @@ Follow **Conventional Commits** for automatic versioning.
 
 ### Types
 
-| Type | Semver | Description |
-|------|--------|-------------|
-| **feat** | Minor | New feature |
-| **fix** | Patch | Bug fix |
-| **perf** | Patch | Performance improvement |
-| **refactor** | Patch | Code refactoring (no functional change) |
-| **style** | Patch | Code style changes (formatting, etc) |
-| **docs** | No release | Documentation updates |
-| **test** | No release | Test additions/modifications |
-| **chore** | No release | Build, dependency updates, etc |
-| **BREAKING CHANGE** | Major | Breaking API change |
+| Type                | Semver     | Description                             |
+| ------------------- | ---------- | --------------------------------------- |
+| **feat**            | Minor      | New feature                             |
+| **fix**             | Patch      | Bug fix                                 |
+| **perf**            | Patch      | Performance improvement                 |
+| **refactor**        | Patch      | Code refactoring (no functional change) |
+| **style**           | Patch      | Code style changes (formatting, etc)    |
+| **docs**            | No release | Documentation updates                   |
+| **test**            | No release | Test additions/modifications            |
+| **chore**           | No release | Build, dependency updates, etc          |
+| **BREAKING CHANGE** | Major      | Breaking API change                     |
 
 ### Examples
 
 **Feature**
+
 ```
 feat: add style finder quiz
 
@@ -284,6 +285,7 @@ Closes #456
 ```
 
 **Bug Fix**
+
 ```
 fix: correct cart total calculation
 
@@ -295,6 +297,7 @@ Fixes #789
 ```
 
 **Breaking Change**
+
 ```
 feat!: redesign product API
 
@@ -365,6 +368,7 @@ vMAJOR.MINOR.PATCH
 ```
 
 **Examples:**
+
 - `v1.0.0` - Initial release
 - `v1.2.0` - New feature release
 - `v1.2.3` - Patch/bugfix release
@@ -374,18 +378,19 @@ vMAJOR.MINOR.PATCH
 
 Based on commits since last tag:
 
-| Commits | Result |
-|---------|--------|
-| `feat:` commits | Minor bump (e.g., 1.1.0 → 1.2.0) |
-| `fix:`, `perf:` commits | Patch bump (e.g., 1.2.0 → 1.2.1) |
-| `BREAKING CHANGE` | Major bump (e.g., 1.2.0 → 2.0.0) |
-| Only `docs:`, `chore:`, etc | No release |
+| Commits                     | Result                           |
+| --------------------------- | -------------------------------- |
+| `feat:` commits             | Minor bump (e.g., 1.1.0 → 1.2.0) |
+| `fix:`, `perf:` commits     | Patch bump (e.g., 1.2.0 → 1.2.1) |
+| `BREAKING CHANGE`           | Major bump (e.g., 1.2.0 → 2.0.0) |
+| Only `docs:`, `chore:`, etc | No release                       |
 
 ### Creating Tags
 
 #### Automatic (via CI)
 
 When you merge to main, CI automatically:
+
 1. Detects version from commits
 2. Creates and pushes tag
 3. Creates GitHub release
@@ -428,19 +433,19 @@ name: Automated Release
 
 on:
   push:
-    branches: [ main ]
-    tags: [ 'v*' ]
+    branches: [main]
+    tags: ["v*"]
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Detect version
         id: version
         run: echo "version=$(git describe --tags --always)" >> $GITHUB_OUTPUT
-      
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -456,7 +461,7 @@ jobs:
 ✅ Auto-generates changelog from commits  
 ✅ Creates GitHub release  
 ✅ Publishes release artifacts  
-✅ Sends notifications  
+✅ Sends notifications
 
 ---
 
@@ -678,6 +683,7 @@ git push -f origin feature/name
 ## 💡 Best Practices
 
 ✅ **DO:**
+
 - Keep feature branches small and focused
 - Commit frequently with clear messages
 - Use semantic versioning
@@ -686,6 +692,7 @@ git push -f origin feature/name
 - Keep develop and main in sync
 
 ❌ **DON'T:**
+
 - Commit directly to main or develop
 - Use vague commit messages ("fix bugs")
 - Force push to main or develop
@@ -706,4 +713,3 @@ git push -f origin feature/name
 **Version:** 1.0  
 **Last Updated:** August 2026  
 **Status:** ✅ Active & Applied
-

@@ -8,7 +8,7 @@ Your Vingo Roll Studio has been modernized with **premium styling enhancements**
 ✅ **Custom Scrollbars** - Themed scrollbars with light/dark mode support  
 ✅ **Smooth Animations** - 8 new subtle, polished animations  
 ✅ **Enhanced Interactions** - Hover effects, lift, scale, and depth  
-✅ **Premium Polish** - Glassmorphism, backdrops, and refined transitions  
+✅ **Premium Polish** - Glassmorphism, backdrops, and refined transitions
 
 ---
 
@@ -17,9 +17,10 @@ Your Vingo Roll Studio has been modernized with **premium styling enhancements**
 ### Core Styling System (`src/styles.css`)
 
 **1. Radius System** (Modern Rounded Corners)
+
 ```css
 Before: Fixed 0.25rem
-After:  
+After:
   - --radius-sm: 0.375rem   (6px)
   - --radius-md: 0.5rem     (8px)
   - --radius-lg: 0.75rem    (12px)
@@ -29,31 +30,34 @@ After:
 
 **2. Scrollbar Styling** (Custom, Themed)
 
-*Light Mode:*
+_Light Mode:_
+
 - Thumb color: Warm bronze `oklch(0.78 0.04 62)`
 - Track color: Light card background
 - Size: 10px width
 - Rounded: 100px border-radius
 
-*Dark Mode:*
+_Dark Mode:_
+
 - Thumb color: Bright gold `oklch(0.685 0.076 65)`
 - Track color: Dark card background
 - Hover: Brightens to `oklch(0.72 0.08 65)`
 
 **3. Animations** (8 Total)
 
-| Animation | Duration | Purpose |
-|-----------|----------|---------|
-| `vr-fade-up` | 0.7s | Entrance with upward motion |
-| `vr-fade-in` | 0.8s | Gradual appearance |
-| `vr-image-reveal` | 1s | Scale + fade for images |
-| `vr-slide-in-right` | 0.6s | Right to left entry |
-| `vr-slide-in-left` | 0.6s | Left to right entry |
-| `vr-scale-in` | 0.5s | Zoom in entrance |
-| `vr-bounce-subtle` | 2s | Gentle floating motion |
-| `vr-glow-pulse` | 2s | Pulsing shadow effect |
+| Animation           | Duration | Purpose                     |
+| ------------------- | -------- | --------------------------- |
+| `vr-fade-up`        | 0.7s     | Entrance with upward motion |
+| `vr-fade-in`        | 0.8s     | Gradual appearance          |
+| `vr-image-reveal`   | 1s       | Scale + fade for images     |
+| `vr-slide-in-right` | 0.6s     | Right to left entry         |
+| `vr-slide-in-left`  | 0.6s     | Left to right entry         |
+| `vr-scale-in`       | 0.5s     | Zoom in entrance            |
+| `vr-bounce-subtle`  | 2s       | Gentle floating motion      |
+| `vr-glow-pulse`     | 2s       | Pulsing shadow effect       |
 
 **4. Transitions** (Utility Classes)
+
 ```css
 .transition-smooth  → 300ms ease-in-out
 .transition-fast    → 150ms ease-in-out
@@ -61,6 +65,7 @@ After:
 ```
 
 **5. Component Classes** (New Utilities)
+
 ```css
 .card-modern        → Modern card with hover effects
 .card-elevated      → Elevated card with depth
@@ -76,17 +81,18 @@ After:
 
 #### Button Component (`src/components/ui/button.tsx`)
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| **Corner radius** | `rounded-md` | `rounded-lg` |
-| **Transitions** | Colors only | All properties (200ms) |
-| **Default variant** | Basic color | Lifted shadow, hover effects |
-| **Outline variant** | Flat border | Semi-transparent + backdrop blur |
-| **Focus ring** | `ring-1` | `ring-2` (more visible) |
-| **Active state** | None | `scale-95` (press feedback) |
-| **Hover effect** | Color change | Color + lift (`-2px`) + shadow |
+| Aspect              | Before       | After                            |
+| ------------------- | ------------ | -------------------------------- |
+| **Corner radius**   | `rounded-md` | `rounded-lg`                     |
+| **Transitions**     | Colors only  | All properties (200ms)           |
+| **Default variant** | Basic color  | Lifted shadow, hover effects     |
+| **Outline variant** | Flat border  | Semi-transparent + backdrop blur |
+| **Focus ring**      | `ring-1`     | `ring-2` (more visible)          |
+| **Active state**    | None         | `scale-95` (press feedback)      |
+| **Hover effect**    | Color change | Color + lift (`-2px`) + shadow   |
 
 **Example Visual Change:**
+
 ```
 Before: Flat button with basic hover
 After:  Lifted button, shadow deepens, slight upward motion on hover
@@ -96,17 +102,18 @@ After:  Lifted button, shadow deepens, slight upward motion on hover
 
 #### Card Component (`src/components/ui/card.tsx`)
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| **Corner radius** | `rounded-xl` | `rounded-2xl` |
-| **Border** | Solid | Semi-transparent (`border/50`) |
-| **Background** | Solid | Semi-transparent (`bg/80`) + backdrop blur |
-| **Shadow** | Basic | `shadow-md` with hover upgrade to `shadow-lg` |
-| **Hover effect** | None | Border brightens, BG opaque, shadow lifts |
-| **Padding** | `p-6` | `p-7` (more spacious) |
-| **Spacing** | Minimal | Enhanced with gaps |
+| Aspect            | Before       | After                                         |
+| ----------------- | ------------ | --------------------------------------------- |
+| **Corner radius** | `rounded-xl` | `rounded-2xl`                                 |
+| **Border**        | Solid        | Semi-transparent (`border/50`)                |
+| **Background**    | Solid        | Semi-transparent (`bg/80`) + backdrop blur    |
+| **Shadow**        | Basic        | `shadow-md` with hover upgrade to `shadow-lg` |
+| **Hover effect**  | None         | Border brightens, BG opaque, shadow lifts     |
+| **Padding**       | `p-6`        | `p-7` (more spacious)                         |
+| **Spacing**       | Minimal      | Enhanced with gaps                            |
 
 **Example Visual Change:**
+
 ```
 Before: Flat card with subtle border
 After:  Elevated card with glassmorphism, lifts on hover with depth
@@ -116,18 +123,19 @@ After:  Elevated card with glassmorphism, lifts on hover with depth
 
 #### Input Component (`src/components/ui/input.tsx`)
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| **Corner radius** | `rounded-md` | `rounded-lg` |
-| **Background** | Transparent | Semi-transparent (`bg/50`) + backdrop blur |
-| **Border** | Solid | Semi-transparent (`border/50`) |
-| **Height** | `h-9` | `h-10` |
-| **Padding** | `px-3 py-1` | `px-4 py-2.5` |
-| **Focus ring** | `ring-1` | `ring-2` |
-| **Focus background** | Transparent | Brightens to `bg/80` |
-| **Hover effect** | None | Border and BG brighten |
+| Aspect               | Before       | After                                      |
+| -------------------- | ------------ | ------------------------------------------ |
+| **Corner radius**    | `rounded-md` | `rounded-lg`                               |
+| **Background**       | Transparent  | Semi-transparent (`bg/50`) + backdrop blur |
+| **Border**           | Solid        | Semi-transparent (`border/50`)             |
+| **Height**           | `h-9`        | `h-10`                                     |
+| **Padding**          | `px-3 py-1`  | `px-4 py-2.5`                              |
+| **Focus ring**       | `ring-1`     | `ring-2`                                   |
+| **Focus background** | Transparent  | Brightens to `bg/80`                       |
+| **Hover effect**     | None         | Border and BG brighten                     |
 
 **Example Visual Change:**
+
 ```
 Before: Minimal bordered transparent box
 After:  Modern semi-transparent field with backdrop blur, enhanced on focus
@@ -137,29 +145,30 @@ After:  Modern semi-transparent field with backdrop blur, enhanced on focus
 
 #### Textarea Component (`src/components/ui/textarea.tsx`)
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| **Corner radius** | `rounded-md` | `rounded-lg` |
-| **Background** | Transparent | Semi-transparent + backdrop blur |
-| **Min-height** | `60px` | `80px` |
-| **Padding** | `px-3 py-2` | `px-4 py-3` |
-| **Resize** | Default | Fixed (`resize-none`) |
+| Aspect              | Before                  | After                            |
+| ------------------- | ----------------------- | -------------------------------- |
+| **Corner radius**   | `rounded-md`            | `rounded-lg`                     |
+| **Background**      | Transparent             | Semi-transparent + backdrop blur |
+| **Min-height**      | `60px`                  | `80px`                           |
+| **Padding**         | `px-3 py-2`             | `px-4 py-3`                      |
+| **Resize**          | Default                 | Fixed (`resize-none`)            |
 | **All transitions** | Matches input component |
 
 ---
 
 #### Badge Component (`src/components/ui/badge.tsx`)
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| **Shape** | Rectangular | Pill-shaped (`rounded-full`) |
-| **Padding** | `px-2.5 py-0.5` | `px-3 py-1` |
-| **Transitions** | Colors only | All properties (200ms) |
-| **Default hover** | Color change | Shadow + scale (`1.05`) |
-| **Outline variant** | Text only | NEW: Semi-transparent background |
-| **Outline style** | - | Border + `backdrop-blur-sm` + hover |
+| Aspect              | Before          | After                               |
+| ------------------- | --------------- | ----------------------------------- |
+| **Shape**           | Rectangular     | Pill-shaped (`rounded-full`)        |
+| **Padding**         | `px-2.5 py-0.5` | `px-3 py-1`                         |
+| **Transitions**     | Colors only     | All properties (200ms)              |
+| **Default hover**   | Color change    | Shadow + scale (`1.05`)             |
+| **Outline variant** | Text only       | NEW: Semi-transparent background    |
+| **Outline style**   | -               | Border + `backdrop-blur-sm` + hover |
 
 **Example Visual Change:**
+
 ```
 Before: Rectangular tag
 After:  Modern pill badge, interactive scale on hover
@@ -170,6 +179,7 @@ After:  Modern pill badge, interactive scale on hover
 ## 🎯 Visual Effects Showcase
 
 ### Buttons
+
 ```
 Hover Effect:
   ↗ Slight upward movement (-2px)
@@ -182,6 +192,7 @@ Press Effect:
 ```
 
 ### Cards
+
 ```
 Hover Effect:
   ↗ Border becomes more visible
@@ -191,6 +202,7 @@ Hover Effect:
 ```
 
 ### Inputs
+
 ```
 Focus Effect:
   ↗ Ring becomes more prominent (ring-2)
@@ -200,6 +212,7 @@ Focus Effect:
 ```
 
 ### Badges
+
 ```
 Hover Effect:
   ↗ Scale up (1.05)
@@ -212,6 +225,7 @@ Hover Effect:
 ## 🌈 Color Palette (OKLCH)
 
 ### Light Mode Theme
+
 ```
 Primary:    oklch(0.345 0.04 48)  - Warm Brown
 Accent:     oklch(0.585 0.068 62) - Bronze/Gold
@@ -221,6 +235,7 @@ Card:       oklch(0.962 0.011 82) - Off-white
 ```
 
 ### Dark Mode Theme
+
 ```
 Primary:    oklch(0.79 0.055 71)   - Bright Gold
 Accent:     oklch(0.685 0.076 65)  - Vibrant Gold
@@ -230,6 +245,7 @@ Card:       oklch(0.216 0.018 47)  - Charcoal
 ```
 
 ### Scrollbars
+
 ```
 Light: Warm bronze (accent-derived)
 Dark:  Bright gold (accent-derived)
@@ -241,21 +257,31 @@ Hover: Brighter version of thumb color
 ## 🚀 How to Use New Features
 
 ### Apply Animations
+
 ```jsx
-{/* Fade in from bottom */}
-<div className="animate-fade-up">Content</div>
+{
+  /* Fade in from bottom */
+}
+<div className="animate-fade-up">Content</div>;
 
-{/* Slide from right */}
-<div className="animate-slide-in-right">Content</div>
+{
+  /* Slide from right */
+}
+<div className="animate-slide-in-right">Content</div>;
 
-{/* Bounce subtly */}
-<div className="animate-bounce-subtle">Content</div>
+{
+  /* Bounce subtly */
+}
+<div className="animate-bounce-subtle">Content</div>;
 
-{/* Scale up */}
-<div className="animate-scale-in">Content</div>
+{
+  /* Scale up */
+}
+<div className="animate-scale-in">Content</div>;
 ```
 
 ### Use New Utilities
+
 ```jsx
 {/* Modern card with hover effects */}
 <div className="card-modern">Modern card</div>
@@ -272,6 +298,7 @@ Hover: Brighter version of thumb color
 ```
 
 ### Component Styling
+
 ```jsx
 {/* Buttons now have improved styling */}
 <Button>Default lift effect</Button>
@@ -293,15 +320,18 @@ Hover: Brighter version of thumb color
 ## 📱 Responsive & Accessible
 
 ✅ **All animations respect `prefers-reduced-motion`**
+
 - Automatically disables for accessibility-focused users
 - Transitions remain smooth but instant
 
 ✅ **Enhanced focus states**
+
 - Better visual feedback for keyboard navigation
 - Larger focus rings for visibility
 - Ring offset for clarity
 
 ✅ **Cross-browser support**
+
 - Chromium: Full support
 - Safari: Full support with `-webkit-` prefixes
 - Firefox: Standard support
@@ -312,6 +342,7 @@ Hover: Brighter version of thumb color
 ## 🔄 Theme Switching
 
 ✨ **Smooth transitions between light and dark mode**
+
 ```css
 Body color transitions: 0.3s ease
 Scrollbar adapts automatically
@@ -375,7 +406,6 @@ The app automatically uses the new modern styling across all components. The des
 **Status**: ✅ Complete and Running  
 **Dev Server**: 🚀 http://localhost:8081/  
 **Theme System**: 🎨 Light/Dark mode with custom scrollbars  
-**Performance**: ⚡ Optimized for 60fps smooth interactions  
+**Performance**: ⚡ Optimized for 60fps smooth interactions
 
 Enjoy your modernized Vingo Roll Studio! 🎉
-

@@ -9,7 +9,7 @@ Premium made-to-measure curtains, blinds, shades & window treatments ecommerce p
 ## ✨ Features
 
 - 🛍️ **Shop** - Browse collections by category, room, or style
-- 🎨 **Style Finder** - AI-style quiz to discover perfect treatments  
+- 🎨 **Style Finder** - AI-style quiz to discover perfect treatments
 - 📏 **Measuring Guide** - Comprehensive measurement instructions & tools
 - 🎁 **Swatch Builder** - Request free material samples
 - 💬 **Consultation** - Schedule design consultations (frontend flow)
@@ -41,16 +41,16 @@ npm run dev
 
 ## 📚 Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| **Framework** | React 19 + TanStack Start |
-| **Routing** | TanStack Router |
-| **Styling** | Tailwind CSS v4 |
-| **Components** | Radix UI |
-| **Forms** | React Hook Form + Zod |
-| **State** | Zustand + TanStack Query |
-| **Build** | Vite |
-| **Dev** | TypeScript, ESLint, Prettier |
+| Layer          | Technology                   |
+| -------------- | ---------------------------- |
+| **Framework**  | React 19 + TanStack Start    |
+| **Routing**    | TanStack Router              |
+| **Styling**    | Tailwind CSS v4              |
+| **Components** | Radix UI                     |
+| **Forms**      | React Hook Form + Zod        |
+| **State**      | Zustand + TanStack Query     |
+| **Build**      | Vite                         |
+| **Dev**        | TypeScript, ESLint, Prettier |
 
 ---
 
@@ -115,6 +115,7 @@ See [docs/STYLING_CHANGES.md](./docs/STYLING_CHANGES.md) for full details.
 ## 🎯 Core Routes
 
 ### Customer Experience
+
 - `/` - Homepage
 - `/shop` - Product catalog
 - `/shop/[category]` - Category view
@@ -123,12 +124,14 @@ See [docs/STYLING_CHANGES.md](./docs/STYLING_CHANGES.md) for full details.
 - `/inspiration` - Design inspiration gallery
 
 ### Services
+
 - `/swatches` - Swatch request tool
 - `/guides/measuring` - Measurement guide
 - `/services/design-consultation` - Book consultation
 - `/quote` - Get quote estimate
 
 ### Account
+
 - `/wishlist` - Saved items
 - `/cart` - Shopping cart
 - `/account` - User account (mock)
@@ -138,12 +141,14 @@ See [docs/STYLING_CHANGES.md](./docs/STYLING_CHANGES.md) for full details.
 ## 🔄 Data & State
 
 **Frontend Only:**
+
 - All data is mock/static
 - localStorage for client-side state (cart, wishlist, preferences)
 - Zustand for global state management
 - TanStack Query for data fetching patterns
 
 **No Backend:**
+
 - No database
 - No real API
 - No user authentication
@@ -154,21 +159,24 @@ See [docs/STYLING_CHANGES.md](./docs/STYLING_CHANGES.md) for full details.
 ## 🎨 Customization
 
 ### Theme Colors
+
 Edit variables in `src/styles.css`:
 
 ```css
 :root {
-  --primary: oklch(0.345 0.04 48);      /* Warm brown */
-  --accent: oklch(0.585 0.068 62);      /* Bronze/gold */
-  --background: oklch(0.977 0.008 85);  /* Ivory */
-  --card: oklch(0.962 0.011 82);        /* Off-white */
+  --primary: oklch(0.345 0.04 48); /* Warm brown */
+  --accent: oklch(0.585 0.068 62); /* Bronze/gold */
+  --background: oklch(0.977 0.008 85); /* Ivory */
+  --card: oklch(0.962 0.011 82); /* Off-white */
 }
 ```
 
 ### Brand Favicon
+
 Custom SVG favicon in `public/favicon.svg`. Edit directly or replace with your design.
 
 ### Component Styling
+
 All components use utility-first Tailwind + custom modifiers. See [STYLING_CHANGES.md](./docs/STYLING_CHANGES.md).
 
 ---
@@ -186,12 +194,12 @@ All components use utility-first Tailwind + custom modifiers. See [STYLING_CHANG
 
 ## 📱 Browser Support
 
-| Browser | Support |
-|---------|---------|
-| Chrome 90+ | ✅ Full |
-| Firefox 87+ | ✅ Full |
-| Safari 14+ | ✅ Full |
-| Edge 90+ | ✅ Full |
+| Browser         | Support |
+| --------------- | ------- |
+| Chrome 90+      | ✅ Full |
+| Firefox 87+     | ✅ Full |
+| Safari 14+      | ✅ Full |
+| Edge 90+        | ✅ Full |
 | Mobile browsers | ✅ Full |
 
 ---

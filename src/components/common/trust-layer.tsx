@@ -35,11 +35,7 @@ const items = [
 export function TrustLayer({ compact = false }: { compact?: boolean }) {
   return (
     <ul
-      className={
-        compact
-          ? "grid gap-4 sm:grid-cols-2"
-          : "grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-      }
+      className={compact ? "grid gap-4 sm:grid-cols-2" : "grid gap-6 sm:grid-cols-2 lg:grid-cols-4"}
     >
       {items.map(({ icon: Icon, ...item }) => (
         <li key={item.title} className="border-border bg-card/60 rounded-sm border p-5">

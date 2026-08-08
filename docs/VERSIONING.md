@@ -19,13 +19,13 @@ v  1  .  2  .  0
 
 ### Examples
 
-| Version | Type | Reason |
-|---------|------|--------|
-| v1.0.0 | Release | Initial release |
-| v1.1.0 | Minor | New feature added |
-| v1.1.1 | Patch | Bug fix |
-| v2.0.0 | Major | Breaking API change |
-| v1.2.3 | Patch | Security fix |
+| Version | Type    | Reason              |
+| ------- | ------- | ------------------- |
+| v1.0.0  | Release | Initial release     |
+| v1.1.0  | Minor   | New feature added   |
+| v1.1.1  | Patch   | Bug fix             |
+| v2.0.0  | Major   | Breaking API change |
+| v1.2.3  | Patch   | Security fix        |
 
 ---
 
@@ -41,35 +41,41 @@ v  1  .  2  .  0
 
 ### Commit Type → Version Bump
 
-| Commit Type | Version Impact | Example |
-|------------|--------|---------|
-| `feat:` | Minor bump | `1.0.0` → `1.1.0` |
-| `fix:` | Patch bump | `1.1.0` → `1.1.1` |
-| `perf:` | Patch bump | `1.0.5` → `1.0.6` |
-| `refactor:` | Patch bump | `1.0.0` → `1.0.1` |
-| `BREAKING CHANGE` | Major bump | `1.5.0` → `2.0.0` |
-| `docs:`, `test:`, `chore:` | No release | (no version bump) |
+| Commit Type                | Version Impact | Example           |
+| -------------------------- | -------------- | ----------------- |
+| `feat:`                    | Minor bump     | `1.0.0` → `1.1.0` |
+| `fix:`                     | Patch bump     | `1.1.0` → `1.1.1` |
+| `perf:`                    | Patch bump     | `1.0.5` → `1.0.6` |
+| `refactor:`                | Patch bump     | `1.0.0` → `1.0.1` |
+| `BREAKING CHANGE`          | Major bump     | `1.5.0` → `2.0.0` |
+| `docs:`, `test:`, `chore:` | No release     | (no version bump) |
 
 ### Examples
 
 **Minor Release (new feature)**
+
 ```
 feat: add new dashboard widget
 ```
+
 Result: `1.0.0` → `1.1.0`
 
 **Patch Release (bug fix)**
+
 ```
 fix: resolve chart rendering issue
 ```
+
 Result: `1.1.0` → `1.1.1`
 
 **Major Release (breaking change)**
+
 ```
 feat!: redesign API endpoints
 
 BREAKING CHANGE: Product endpoints now return arrays
 ```
+
 Result: `1.5.3` → `2.0.0`
 
 ---
@@ -173,48 +179,58 @@ All notable changes to this project are documented in this file.
 ## [1.2.0] - 2026-08-08
 
 ### Added
+
 - New dashboard component
 - Real-time data updates
 - Analytics reports
 
 ### Fixed
+
 - Chart rendering bug
 - Cart calculation error
 - Mobile layout issues
 
 ### Changed
+
 - Improved performance
 - Updated documentation
 
 ### Deprecated
+
 - Old API endpoints (use v2 instead)
 
 ### Removed
+
 - Legacy components
 
 ### Security
+
 - Fixed XSS vulnerability
 - Updated dependencies
 
 ## [1.1.0] - 2026-07-15
 
 ### Added
+
 - Style Finder quiz
 
 ## [1.0.0] - 2026-06-01
 
 ### Added
+
 - Initial release
 ```
 
 ### Auto-Generated vs Manual
 
 **Automatic Generation (on Release)**
+
 - GitHub auto-generates from commit messages
 - Uses conventional commit types
 - Organized by type (Added, Fixed, Changed, etc)
 
 **Manual Updates**
+
 - Add human-readable summaries
 - Include migration guides for breaking changes
 - Highlight important changes
@@ -232,6 +248,7 @@ v1.2.0-beta.2  # Second beta
 ```
 
 **When to use:**
+
 - Major features ready for testing
 - Not production-ready
 - Need user feedback
@@ -250,6 +267,7 @@ v1.2.0-rc.2   # Release candidate 2
 ```
 
 **When to use:**
+
 - Almost ready for production
 - Final testing phase
 - Collecting feedback
@@ -456,4 +474,3 @@ git push -u origin release/v1.2.2
 **Version:** 1.0  
 **Last Updated:** August 2026  
 **Status:** ✅ Active
-

@@ -25,4 +25,3 @@ This is a modern React + TanStack Start ecommerce application for Vingo Roll, a 
 ### Development Workflow
 
 All commits are automatically tracked and the project is ready for continuous development.
-

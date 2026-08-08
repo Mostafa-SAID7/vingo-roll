@@ -36,9 +36,17 @@ function CategoryPage() {
   return (
     <>
       <Crumbs
-        items={[{ label: "Home", to: "/" }, { label: "Shop", to: "/shop" }, { label: category.name }]}
+        items={[
+          { label: "Home", to: "/" },
+          { label: "Shop", to: "/shop" },
+          { label: category.name },
+        ]}
       />
-      <PageHeader eyebrow={category.tagline} title={category.name} description={category.description} />
+      <PageHeader
+        eyebrow={category.tagline}
+        title={category.name}
+        description={category.description}
+      />
       <CatalogView
         products={scoped}
         {...(category.slug === "sale" || category.slug === "smart-motorized"

@@ -85,11 +85,7 @@ function Home() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {heroCategories.map((cat, i) => (
             <Reveal key={cat.id} delay={i * 80}>
-              <Link
-                to="/shop/$category"
-                params={{ category: cat.slug }}
-                className="group block"
-              >
+              <Link to="/shop/$category" params={{ category: cat.slug }} className="group block">
                 <div className="bg-muted relative aspect-[3/4] overflow-hidden rounded-sm">
                   <img
                     src={cat.image}
@@ -166,11 +162,7 @@ function Home() {
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {rooms.slice(0, 4).map((room, i) => (
             <Reveal as="li" key={room.id} delay={i * 70}>
-              <Link
-                to="/inspiration/rooms"
-                search={{ room: room.slug }}
-                className="group block"
-              >
+              <Link to="/inspiration/rooms" search={{ room: room.slug }} className="group block">
                 <div className="bg-muted aspect-[4/3] overflow-hidden rounded-sm">
                   <img
                     src={room.image}
@@ -250,7 +242,12 @@ function Home() {
         />
         <ul className="-mx-5 flex snap-x gap-5 overflow-x-auto px-5 pb-4 lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0">
           {inspiration.slice(0, 3).map((post, i) => (
-            <Reveal as="li" key={post.id} delay={i * 80} className="w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-auto">
+            <Reveal
+              as="li"
+              key={post.id}
+              delay={i * 80}
+              className="w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-auto"
+            >
               <Link to="/inspiration/$slug" params={{ slug: post.slug }} className="group block">
                 <div className="bg-muted aspect-[5/6] overflow-hidden rounded-sm">
                   <img

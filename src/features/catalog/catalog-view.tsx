@@ -113,7 +113,8 @@ export function CatalogView({
       if (lockedCategory && p.categoryId !== lockedCategory) return false;
       if (filters.categories.length && !filters.categories.includes(p.categoryId)) return false;
       if (filters.light.length && !filters.light.includes(p.lightControl ?? "")) return false;
-      if (filters.rooms.length && !filters.rooms.some((r) => p.roomTypes?.includes(r))) return false;
+      if (filters.rooms.length && !filters.rooms.some((r) => p.roomTypes?.includes(r)))
+        return false;
       if (filters.needs.length && !filters.needs.some((n) => p.needs?.includes(n))) return false;
       if (filters.colors.length && !filters.colors.some((c) => p.colors.some((pc) => pc.id === c)))
         return false;

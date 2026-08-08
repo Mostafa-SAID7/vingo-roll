@@ -115,6 +115,7 @@ npm run build
 - Reference issues and pull requests liberally after the first line
 
 **Format:**
+
 ```
 Type: Brief description (72 chars max)
 
@@ -126,6 +127,7 @@ Related to #456
 ```
 
 **Types:**
+
 - `feat:` - A new feature
 - `fix:` - A bug fix
 - `docs:` - Documentation only changes
@@ -146,6 +148,7 @@ Related to #456
 - Add JSDoc comments for functions
 
 **Example:**
+
 ```typescript
 /**
  * Calculates the total price including tax
@@ -167,6 +170,7 @@ const calculateTotal = (price: number, taxRate: number): number => {
 - Use meaningful names
 
 **Example:**
+
 ```typescript
 import React from 'react';
 

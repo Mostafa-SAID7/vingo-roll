@@ -93,7 +93,9 @@ export function SiteFooter() {
         </div>
 
         <div className="text-muted-foreground flex flex-col gap-4 pt-8 text-xs sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Vingo Roll. All prices indicative and for demonstration.</p>
+          <p>
+            © {new Date().getFullYear()} Vingo Roll. All prices indicative and for demonstration.
+          </p>
           <ul className="flex gap-5">
             <li>Instagram</li>
             <li>Pinterest</li>

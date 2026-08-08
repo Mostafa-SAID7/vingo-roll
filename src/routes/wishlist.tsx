@@ -8,7 +8,12 @@ import { useHydrated } from "@/hooks/use-hydrated";
 import { products } from "@/data/products";
 
 export const Route = createFileRoute("/wishlist")({
-  head: () => pageHead({ title: "Wishlist | Vingo Roll", description: "Saved curtains, shades and blinds, kept in your browser.", path: "/wishlist" }),
+  head: () =>
+    pageHead({
+      title: "Wishlist | Vingo Roll",
+      description: "Saved curtains, shades and blinds, kept in your browser.",
+      path: "/wishlist",
+    }),
   component: Page,
 });
 
@@ -21,14 +26,30 @@ function Page() {
   return (
     <>
       <Crumbs items={[{ label: "Home", to: "/" }, { label: "Wishlist" }]} />
-      <PageHeader eyebrow="Saved" title="Your wishlist" description="Saved to this browser so you can come back to it." />
+      <PageHeader
+        eyebrow="Saved"
+        title="Your wishlist"
+        description="Saved to this browser so you can come back to it."
+      />
       <Section>
-        {!hydrated ? <div className="bg-muted h-64 animate-pulse rounded-sm" /> : saved.length === 0 ? (
-          <EmptyState title="Nothing saved yet" description="Tap the heart on any piece to keep it here." action={<Button asChild><Link to="/shop">Browse treatments</Link></Button>} />
+        {!hydrated ? (
+          <div className="bg-muted h-64 animate-pulse rounded-sm" />
+        ) : saved.length === 0 ? (
+          <EmptyState
+            title="Nothing saved yet"
+            description="Tap the heart on any piece to keep it here."
+            action={
+              <Button asChild>
+                <Link to="/shop">Browse treatments</Link>
+              </Button>
+            }
+          />
         ) : (
           <>
             <ProductGrid products={saved} density="dense" />
-            <Button variant="ghost" className="mt-10" onClick={clear}>Clear wishlist</Button>
+            <Button variant="ghost" className="mt-10" onClick={clear}>
+              Clear wishlist
+            </Button>
           </>
         )}
       </Section>
