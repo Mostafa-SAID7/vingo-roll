@@ -1,7 +1,7 @@
-import type { Faq } from "@/types";
+import type { FAQ } from "@/types";
 import { SWATCH_LIMIT } from "./swatches";
 
-export const faqs: Faq[] = [
+export const faqs: FAQ[] = [
   {
     topic: "Measuring",
     question: "Should I choose an inside or an outside mount?",

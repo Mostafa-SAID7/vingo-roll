@@ -15,12 +15,11 @@ export const Route = createFileRoute("/inspiration/rooms/$slug")({
     }
     return { room };
   },
-  head: ({ context }) => {
-    const room = context.room;
+  head: () => {
     return pageHead({
-      title: `${room.name} Window Treatments | Vingo Roll`,
-      description: room.description,
-      path: `/inspiration/rooms/${room.slug}`,
+      title: `Room Window Treatments | Vingo Roll`,
+      description: "Find the perfect window treatments for any room",
+      path: `/inspiration/rooms`,
     });
   },
   component: Page,
@@ -92,7 +91,7 @@ function Page() {
           description="Best-selling treatments that work beautifully in this space"
         />
         {roomProducts.length > 0 ? (
-          <ProductGrid products={roomProducts} density="compact" />
+          <ProductGrid products={roomProducts} density="comfortable" />
         ) : (
           <div className="rounded-lg border border-border p-12 text-center">
             <p className="text-muted-foreground">No products available for this room yet.</p>

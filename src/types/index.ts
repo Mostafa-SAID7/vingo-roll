@@ -61,6 +61,7 @@ export {
   STYLES,
   ROOM_TYPES,
   COLLECTIONS_LIST,
-  SERVICE_TOPICS,
 } from "./common";
+
+export { SERVICE_TOPICS } from "./service";
 

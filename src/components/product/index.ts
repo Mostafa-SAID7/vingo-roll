@@ -4,4 +4,4 @@
  */
 
 export { ProductGrid, ProductCard } from "./product-card";
-export { ProductQuickView } from "./product-quick-view";
+export { ProductQuickViewModal, QuickViewButton } from "./product-quick-view";

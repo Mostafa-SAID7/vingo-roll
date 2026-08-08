@@ -20,7 +20,8 @@ export const Route = createFileRoute("/order-confirmation")({
 });
 
 function Page() {
-  const { orderId } = useSearch({ from: Route.id });
+  const search = useSearch({ from: Route.id });
+  const orderId = search['orderId'] ?? "";
   const { user } = useAuth();
   const getOrderById = useOrderStore((s) => s.getOrderById);
 

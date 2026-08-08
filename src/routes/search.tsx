@@ -36,7 +36,7 @@ function Page() {
         products.map((p) => ({
           id: p.id,
           name: p.name,
-          description: `${p.shortDescription} ${p.styleTags?.join(" ")} ${p.needs?.join(" ")}`,
+          description: `${p.shortDescription} ${p.styles?.join(" ")} ${p.needs?.join(" ")}`,
         })),
         q,
         { minChars: 1 }

@@ -3,7 +3,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
 import { Crumbs, PageHeader, Section } from "@/components/common/section";
 import { Button } from "@/components/ui/button";
-import { useCartStore } from "@/store/cart-store";
+import { cartSubtotal, useCartStore } from "@/store/cart-store";
 import { useAuth } from "@/providers/auth-provider";
 import { useOrderStore } from "@/store/order-store";
 import { toast } from "sonner";
@@ -24,7 +24,7 @@ function Page() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const items = useCartStore((s) => s.items);
-  const cartTotal = useCartStore((s) => s.getTotalPrice());
+  const cartTotal = cartSubtotal(items);
   const clearCart = useCartStore((s) => s.clear);
   const createOrder = useOrderStore((s) => s.createOrder);
 

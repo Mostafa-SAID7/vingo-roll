@@ -162,7 +162,7 @@ export function FilterSidebar({ filters, onFiltersChange, resultsCount }: Filter
       <FilterSection title="Price Range" section="price">
         <div className="space-y-4">
           <Slider
-            value={[filters.priceRange[0], filters.priceRange[1]]}
+            value={[filters.priceRange[0] ?? 0, filters.priceRange[1] ?? 5000]}
             onValueChange={handlePriceChange}
             min={0}
             max={5000}

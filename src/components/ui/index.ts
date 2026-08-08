@@ -52,7 +52,7 @@ export { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter
 export { Sidebar, SidebarProvider, SidebarTrigger, SidebarInset, SidebarRail, SidebarContent, SidebarFooter, SidebarHeader, SidebarGroup, SidebarGroupLabel, SidebarGroupAction, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuAction, SidebarMenuBadge, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton, SidebarSeparator, SidebarInput, useSidebar } from "./sidebar";
 export { Skeleton } from "./skeleton";
 export { Slider } from "./slider";
-export { Sonner } from "./sonner";
+export { Toaster as Sonner } from "./sonner";
 export { Switch } from "./switch";
 
 // Data Display

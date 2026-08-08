@@ -7,4 +7,4 @@ export { ErrorBoundary } from "./error-boundary";
 export { RouteErrorBoundary } from "./route-error-boundary";
 export { ErrorPage } from "./error-page";
 export { NotFoundPage } from "./not-found-page";
-export { ErrorAnimations } from "./error-animations";
+export { AnimatedWovenBackground } from "./error-animations";

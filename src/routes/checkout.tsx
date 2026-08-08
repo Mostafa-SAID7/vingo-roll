@@ -5,6 +5,7 @@ import { Crumbs, PageHeader, Section } from "@/components/common/section";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cartSubtotal, useCartStore } from "@/store/cart-store";
 import {
   Select,
   SelectContent,
@@ -12,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCartStore } from "@/store/cart-store";
 import { useAuth } from "@/providers/auth-provider";
 import { toast } from "sonner";
 import { US_STATES } from "@/types/common";
@@ -32,7 +32,7 @@ function Page() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const items = useCartStore((s) => s.items);
-  const cartTotal = useCartStore((s) => s.getTotalPrice());
+  const cartTotal = cartSubtotal(items);
 
   const [formData, setFormData] = useState({
     firstName: user?.name?.split(" ")[0] || "",
@@ -53,14 +53,14 @@ function Page() {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.firstName.trim()) newErrors.firstName = "First name required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name required";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Valid email required";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number required";
-    if (!formData.street1.trim()) newErrors.street1 = "Address required";
-    if (!formData.city.trim()) newErrors.city = "City required";
-    if (!formData.state) newErrors.state = "State required";
-    if (!/^\d{5}(-\d{4})?$/.test(formData.postalCode)) newErrors.postalCode = "Valid ZIP code required";
+    if (!formData.firstName.trim()) newErrors['firstName'] = "First name required";
+    if (!formData.lastName.trim()) newErrors['lastName'] = "Last name required";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors['email'] = "Valid email required";
+    if (!formData.phone.trim()) newErrors['phone'] = "Phone number required";
+    if (!formData.street1.trim()) newErrors['street1'] = "Address required";
+    if (!formData.city.trim()) newErrors['city'] = "City required";
+    if (!formData.state) newErrors['state'] = "State required";
+    if (!/^\d{5}(-\d{4})?$/.test(formData.postalCode)) newErrors['postalCode'] = "Valid ZIP code required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

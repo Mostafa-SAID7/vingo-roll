@@ -47,7 +47,7 @@ const emptyFilters: Filters = {
   motorized: false,
   inStock: false,
   price: [priceBounds.min, priceBounds.max],
-  sortBy: "featured",
+  sortBy: "relevance",
 };
 
 const lightOptions = [

@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Order, CartItem } from "@/types/common";
+import type { Order, Address } from "@/types/common";
 import { generateOrderId, calculateShipping, calculateTax, getEstimatedDelivery } from "@/types/common";
-import type { Address } from "@/types/common";
+import type { CartItem } from "@/store/cart-store";
 
 interface OrderState {
   orders: Order[];

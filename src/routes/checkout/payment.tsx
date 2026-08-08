@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useCartStore } from "@/store/cart-store";
+import { cartSubtotal, useCartStore } from "@/store/cart-store";
 import { useAuth } from "@/providers/auth-provider";
 import { toast } from "sonner";
 import { SHIPPING_METHODS, calculateShipping, calculateTax } from "@/types/common";
@@ -27,7 +27,7 @@ function Page() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const items = useCartStore((s) => s.items);
-  const cartTotal = useCartStore((s) => s.getTotalPrice());
+  const cartTotal = cartSubtotal(items);
 
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [shippingMethod, setShippingMethod] = useState("standard");
@@ -48,11 +48,11 @@ function Page() {
 
     if (paymentMethod === "credit-card") {
       if (!/^\d{16}$/.test(cardData.cardNumber.replace(/\s/g, ""))) {
-        newErrors.cardNumber = "Invalid card number";
+        newErrors['cardNumber'] = "Invalid card number";
       }
-      if (!cardData.cardName.trim()) newErrors.cardName = "Cardholder name required";
-      if (!/^\d{2}\/\d{2}$/.test(cardData.expiry)) newErrors.expiry = "Use MM/YY format";
-      if (!/^\d{3}$/.test(cardData.cvc)) newErrors.cvc = "Invalid CVC";
+      if (!cardData.cardName.trim()) newErrors['cardName'] = "Cardholder name required";
+      if (!/^\d{2}\/\d{2}$/.test(cardData.expiry)) newErrors['expiry'] = "Use MM/YY format";
+      if (!/^\d{3}$/.test(cardData.cvc)) newErrors['cvc'] = "Invalid CVC";
     }
 
     setErrors(newErrors);
