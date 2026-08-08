@@ -10,14 +10,88 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CollectionsIndexRouteImport } from './routes/collections/index'
+import { Route as CollectionsSlugRouteImport } from './routes/collections/$slug'
+import { Route as GuidesIndexRouteImport } from './routes/guides/index'
+import { Route as GuidesCareRouteImport } from './routes/guides/care'
+import { Route as GuidesMeasuringRouteImport } from './routes/guides/measuring'
+import { Route as GuidesReturnsRouteImport } from './routes/guides/returns'
+import { Route as GuidesShippingRouteImport } from './routes/guides/shipping'
+import { Route as InspirationIndexRouteImport } from './routes/inspiration/index'
+import { Route as InspirationSlugRouteImport } from './routes/inspiration/$slug'
+import { Route as InspirationRoomsRouteImport } from './routes/inspiration/rooms'
+import { Route as ServicesIndexRouteImport } from './routes/services/index'
+import { Route as ServicesMeasuringInstallationRouteImport } from './routes/services/measuring-installation'
 import { Route as ShopIndexRouteImport } from './routes/shop/index'
 import { Route as ShopCategoryRouteImport } from './routes/shop/$category'
+import { Route as ShopNeedsIndexRouteImport } from './routes/shop/needs/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
+  id: '/collections/',
+  path: '/collections/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
+  id: '/collections/$slug',
+  path: '/collections/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesCareRoute = GuidesCareRouteImport.update({
+  id: '/guides/care',
+  path: '/guides/care',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesMeasuringRoute = GuidesMeasuringRouteImport.update({
+  id: '/guides/measuring',
+  path: '/guides/measuring',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesReturnsRoute = GuidesReturnsRouteImport.update({
+  id: '/guides/returns',
+  path: '/guides/returns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesShippingRoute = GuidesShippingRouteImport.update({
+  id: '/guides/shipping',
+  path: '/guides/shipping',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspirationIndexRoute = InspirationIndexRouteImport.update({
+  id: '/inspiration/',
+  path: '/inspiration/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspirationSlugRoute = InspirationSlugRouteImport.update({
+  id: '/inspiration/$slug',
+  path: '/inspiration/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspirationRoomsRoute = InspirationRoomsRouteImport.update({
+  id: '/inspiration/rooms',
+  path: '/inspiration/rooms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesMeasuringInstallationRoute =
+  ServicesMeasuringInstallationRouteImport.update({
+    id: '/services/measuring-installation',
+    path: '/services/measuring-installation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ShopIndexRoute = ShopIndexRouteImport.update({
   id: '/shop/',
   path: '/shop/',
@@ -28,35 +102,141 @@ const ShopCategoryRoute = ShopCategoryRouteImport.update({
   path: '/shop/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShopNeedsIndexRoute = ShopNeedsIndexRouteImport.update({
+  id: '/shop/needs/',
+  path: '/shop/needs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
+  '/guides/care': typeof GuidesCareRoute
+  '/guides/measuring': typeof GuidesMeasuringRoute
+  '/guides/returns': typeof GuidesReturnsRoute
+  '/guides/shipping': typeof GuidesShippingRoute
+  '/inspiration/$slug': typeof InspirationSlugRoute
+  '/inspiration/rooms': typeof InspirationRoomsRoute
+  '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
+  '/collections/': typeof CollectionsIndexRoute
+  '/guides/': typeof GuidesIndexRoute
+  '/inspiration/': typeof InspirationIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/shop/': typeof ShopIndexRoute
+  '/shop/needs/': typeof ShopNeedsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
+  '/guides/care': typeof GuidesCareRoute
+  '/guides/measuring': typeof GuidesMeasuringRoute
+  '/guides/returns': typeof GuidesReturnsRoute
+  '/guides/shipping': typeof GuidesShippingRoute
+  '/inspiration/$slug': typeof InspirationSlugRoute
+  '/inspiration/rooms': typeof InspirationRoomsRoute
+  '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
+  '/collections': typeof CollectionsIndexRoute
+  '/guides': typeof GuidesIndexRoute
+  '/inspiration': typeof InspirationIndexRoute
+  '/services': typeof ServicesIndexRoute
   '/shop': typeof ShopIndexRoute
+  '/shop/needs': typeof ShopNeedsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
+  '/guides/care': typeof GuidesCareRoute
+  '/guides/measuring': typeof GuidesMeasuringRoute
+  '/guides/returns': typeof GuidesReturnsRoute
+  '/guides/shipping': typeof GuidesShippingRoute
+  '/inspiration/$slug': typeof InspirationSlugRoute
+  '/inspiration/rooms': typeof InspirationRoomsRoute
+  '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
+  '/collections/': typeof CollectionsIndexRoute
+  '/guides/': typeof GuidesIndexRoute
+  '/inspiration/': typeof InspirationIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/shop/': typeof ShopIndexRoute
+  '/shop/needs/': typeof ShopNeedsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/shop/$category' | '/shop/'
+  fullPaths:
+    | '/'
+    | '/collections/$slug'
+    | '/guides/care'
+    | '/guides/measuring'
+    | '/guides/returns'
+    | '/guides/shipping'
+    | '/inspiration/$slug'
+    | '/inspiration/rooms'
+    | '/services/measuring-installation'
+    | '/shop/$category'
+    | '/collections/'
+    | '/guides/'
+    | '/inspiration/'
+    | '/services/'
+    | '/shop/'
+    | '/shop/needs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/shop/$category' | '/shop'
-  id: '__root__' | '/' | '/shop/$category' | '/shop/'
+  to:
+    | '/'
+    | '/collections/$slug'
+    | '/guides/care'
+    | '/guides/measuring'
+    | '/guides/returns'
+    | '/guides/shipping'
+    | '/inspiration/$slug'
+    | '/inspiration/rooms'
+    | '/services/measuring-installation'
+    | '/shop/$category'
+    | '/collections'
+    | '/guides'
+    | '/inspiration'
+    | '/services'
+    | '/shop'
+    | '/shop/needs'
+  id:
+    | '__root__'
+    | '/'
+    | '/collections/$slug'
+    | '/guides/care'
+    | '/guides/measuring'
+    | '/guides/returns'
+    | '/guides/shipping'
+    | '/inspiration/$slug'
+    | '/inspiration/rooms'
+    | '/services/measuring-installation'
+    | '/shop/$category'
+    | '/collections/'
+    | '/guides/'
+    | '/inspiration/'
+    | '/services/'
+    | '/shop/'
+    | '/shop/needs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CollectionsSlugRoute: typeof CollectionsSlugRoute
+  GuidesCareRoute: typeof GuidesCareRoute
+  GuidesMeasuringRoute: typeof GuidesMeasuringRoute
+  GuidesReturnsRoute: typeof GuidesReturnsRoute
+  GuidesShippingRoute: typeof GuidesShippingRoute
+  InspirationSlugRoute: typeof InspirationSlugRoute
+  InspirationRoomsRoute: typeof InspirationRoomsRoute
+  ServicesMeasuringInstallationRoute: typeof ServicesMeasuringInstallationRoute
   ShopCategoryRoute: typeof ShopCategoryRoute
+  CollectionsIndexRoute: typeof CollectionsIndexRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
+  InspirationIndexRoute: typeof InspirationIndexRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
   ShopIndexRoute: typeof ShopIndexRoute
+  ShopNeedsIndexRoute: typeof ShopNeedsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +246,90 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/': {
+      id: '/collections/'
+      path: '/collections'
+      fullPath: '/collections/'
+      preLoaderRoute: typeof CollectionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/$slug': {
+      id: '/collections/$slug'
+      path: '/collections/$slug'
+      fullPath: '/collections/$slug'
+      preLoaderRoute: typeof CollectionsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/care': {
+      id: '/guides/care'
+      path: '/guides/care'
+      fullPath: '/guides/care'
+      preLoaderRoute: typeof GuidesCareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/measuring': {
+      id: '/guides/measuring'
+      path: '/guides/measuring'
+      fullPath: '/guides/measuring'
+      preLoaderRoute: typeof GuidesMeasuringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/returns': {
+      id: '/guides/returns'
+      path: '/guides/returns'
+      fullPath: '/guides/returns'
+      preLoaderRoute: typeof GuidesReturnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/shipping': {
+      id: '/guides/shipping'
+      path: '/guides/shipping'
+      fullPath: '/guides/shipping'
+      preLoaderRoute: typeof GuidesShippingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspiration/': {
+      id: '/inspiration/'
+      path: '/inspiration'
+      fullPath: '/inspiration/'
+      preLoaderRoute: typeof InspirationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspiration/$slug': {
+      id: '/inspiration/$slug'
+      path: '/inspiration/$slug'
+      fullPath: '/inspiration/$slug'
+      preLoaderRoute: typeof InspirationSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspiration/rooms': {
+      id: '/inspiration/rooms'
+      path: '/inspiration/rooms'
+      fullPath: '/inspiration/rooms'
+      preLoaderRoute: typeof InspirationRoomsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/measuring-installation': {
+      id: '/services/measuring-installation'
+      path: '/services/measuring-installation'
+      fullPath: '/services/measuring-installation'
+      preLoaderRoute: typeof ServicesMeasuringInstallationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop/': {
@@ -82,13 +346,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shop/needs/': {
+      id: '/shop/needs/'
+      path: '/shop/needs'
+      fullPath: '/shop/needs/'
+      preLoaderRoute: typeof ShopNeedsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CollectionsSlugRoute: CollectionsSlugRoute,
+  GuidesCareRoute: GuidesCareRoute,
+  GuidesMeasuringRoute: GuidesMeasuringRoute,
+  GuidesReturnsRoute: GuidesReturnsRoute,
+  GuidesShippingRoute: GuidesShippingRoute,
+  InspirationSlugRoute: InspirationSlugRoute,
+  InspirationRoomsRoute: InspirationRoomsRoute,
+  ServicesMeasuringInstallationRoute: ServicesMeasuringInstallationRoute,
   ShopCategoryRoute: ShopCategoryRoute,
+  CollectionsIndexRoute: CollectionsIndexRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
+  InspirationIndexRoute: InspirationIndexRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
   ShopIndexRoute: ShopIndexRoute,
+  ShopNeedsIndexRoute: ShopNeedsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
