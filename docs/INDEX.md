@@ -11,6 +11,12 @@ Complete guide to Vingo Roll Studio development and customization.
 - **[README.md](../README.md)** - Project overview & quick start
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** - Contribution guidelines
 
+### Workflow & Releases
+
+- **[GITFLOW.md](./GITFLOW.md)** - Git branching strategy & workflow
+- **[RELEASES.md](./RELEASES.md)** - Release management & semantic versioning
+- **[ERROR_HANDLING.md](./ERROR_HANDLING.md)** - Error boundaries & error pages
+
 ### Development Guides
 
 - **[IMPLEMENTATION_GUIDE.md](./IMPLEMENTATION_GUIDE.md)** - How to use modern components & animations
@@ -25,6 +31,7 @@ Complete guide to Vingo Roll Studio development and customization.
 
 - **[MODERNIZATION_SUMMARY.md](./MODERNIZATION_SUMMARY.md)** - Technical modernization details
 - **[BEFORE_AFTER.md](./BEFORE_AFTER.md)** - Visual design improvements
+- **[PROJECT_STATUS.md](./PROJECT_STATUS.md)** - Current project status & metrics
 
 ---
 
@@ -70,6 +77,48 @@ Project development notes and structure:
 - Key features
 
 **Best for:** Project team coordination
+
+---
+
+### GITFLOW.md
+
+Complete Git branching strategy guide:
+
+- Branch structure
+- Feature development workflow
+- Release process
+- Hotfix procedures
+- Troubleshooting
+
+**Best for:** Team collaboration & release management
+
+---
+
+### RELEASES.md
+
+Release management and versioning guide:
+
+- Semantic versioning
+- Automated tagging workflow
+- CI/CD pipeline
+- Creating releases
+- Version history
+
+**Best for:** Maintainers managing releases & versioning
+
+---
+
+### ERROR_HANDLING.md
+
+Error boundary and error page documentation:
+
+- React error boundaries
+- Route error handling
+- 404 page design
+- Error animations
+- Best practices
+
+**Best for:** Understanding error UI and error recovery
 
 ---
 
@@ -155,6 +204,10 @@ Visual comparison of styling improvements:
 docs/
 ├── INDEX.md                      ← You are here
 ├── AGENTS.md                     # Development notes
+├── PROJECT_STATUS.md             # Project status & metrics
+├── GITFLOW.md                    # Git workflow strategy
+├── RELEASES.md                   # Release management
+├── ERROR_HANDLING.md             # Error handling guide
 ├── IMPLEMENTATION_GUIDE.md       # How to use features
 ├── STYLING_CHANGES.md            # Complete styling reference
 ├── FAVICON_GUIDE.md              # Favicon customization
@@ -165,6 +218,30 @@ docs/
 ---
 
 ## 🎯 Common Tasks
+
+### Setup Git Workflow
+
+1. Read [GITFLOW.md](./GITFLOW.md) - Git strategy
+2. Create feature branch: `git checkout -b feature/your-feature`
+3. Follow conventional commits: `feat:`, `fix:`, etc
+4. Create PR to develop branch
+5. Follow [RELEASES.md](./RELEASES.md) for release process
+
+### Create a Release
+
+1. Merge features to develop
+2. Create release branch: `git checkout -b release/vX.Y.Z`
+3. Update CHANGELOG.md
+4. Follow [RELEASES.md](./RELEASES.md) - Automated tagging process
+5. Tag triggers automated release workflow
+
+### Handle Errors Properly
+
+1. Read [ERROR_HANDLING.md](./ERROR_HANDLING.md) - Strategy overview
+2. Use Error Boundary component in routes
+3. Throw errors in loaders for 404/errors
+4. Test error pages in development
+5. Check error animations and messaging
 
 ### Add a New Animation
 
