@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
@@ -126,12 +127,10 @@ function Page() {
             </div>
             <div>
               <Label htmlFor="c-date">Preferred date & time</Label>
-              <Input
-                id="c-date"
-                type="datetime-local"
-                className="mt-2"
+              <DateTimePicker
                 value={form.date}
-                onChange={(e) => setForm({ ...form, date: e.target.value })}
+                onChange={(date) => setForm({ ...form, date })}
+                placeholder="Select date & time"
               />
             </div>
             <div>
