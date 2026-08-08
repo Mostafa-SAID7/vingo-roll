@@ -359,6 +359,20 @@
   animation: vr-glow-pulse 2s ease-in-out infinite;
 }
 
+/* Shimmer loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@utility animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
 /* Subtle hover effects */
 @layer components {
   .subtle-lift:hover {
