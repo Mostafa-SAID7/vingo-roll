@@ -1,259 +1,181 @@
-# Vingo Roll Studio
+# 🪟 Vingo Roll Studio
 
-Premium made-to-measure curtains, blinds, shades & window treatments ecommerce platform built with modern web technologies.
+Premium made-to-measure curtains & window treatments platform built with React 19 & TanStack.
 
-> **Note:** This is a frontend-only demo with mock data. No backend, database, or real API integration.
+> **Frontend-only demo** • Mock data • No backend required
 
 ---
 
 ## ✨ Features
 
-- 🛍️ **Shop** - Browse collections by category, room, or style
-- 🎨 **Style Finder** - AI-style quiz to discover perfect treatments
-- 📏 **Measuring Guide** - Comprehensive measurement instructions & tools
-- 🎁 **Swatch Builder** - Request free material samples
-- 💬 **Consultation** - Schedule design consultations (frontend flow)
-- 📊 **Quote Builder** - Get instant quote estimates
-- 🎨 **Inspiration Gallery** - Room-based design inspiration
-- 🌙 **Dark Mode** - Full light/dark theme support
-- ♿ **Accessible** - WCAG AA compliant components
-- 📱 **Responsive** - Mobile-first design
+- 🛍️ **Shop** - Browse by category, room, or style
+- 🎨 **Style Finder** - Interactive style quiz
+- 📏 **Measuring Guide** - DIY measurement tools
+- 🎁 **Swatch Builder** - Request material samples
+- 💰 **Quote Builder** - Instant pricing
+- 📸 **Inspiration Gallery** - Design ideas
+- 🌙 **Dark Mode** - Full theme support
+- ♿ **Accessible** - WCAG AA compliant
+- 📱 **Responsive** - Mobile-optimized
 
 ---
 
 ## 🚀 Quick Start
 
-**Prerequisites:** Node.js 18+ & npm
+**Requirements:** Node.js 20+
 
 ```bash
-# Clone & setup
 git clone https://github.com/Mostafa-SAID7/vingo-roll-studio.git
 cd vingo-roll-studio
-npm install
-
-# Start development
-npm run dev
-
-# Visit http://localhost:5173
+npm install && npm run dev
+# → http://localhost:5173
 ```
 
 ---
 
-## 📚 Tech Stack
+## 🛠️ Commands
 
-| Layer          | Technology                   |
-| -------------- | ---------------------------- |
-| **Framework**  | React 19 + TanStack Start    |
-| **Routing**    | TanStack Router              |
-| **Styling**    | Tailwind CSS v4              |
-| **Components** | Radix UI                     |
-| **Forms**      | React Hook Form + Zod        |
-| **State**      | Zustand + TanStack Query     |
-| **Build**      | Vite                         |
-| **Dev**        | TypeScript, ESLint, Prettier |
+```bash
+npm run dev       # Start dev server with hot reload
+npm run build     # Production build
+npm run preview   # Preview production build locally
+npm run lint      # Check code quality
+npm run format    # Auto-format code
+```
+
+---
+
+## 📦 Tech Stack
+
+```
+React 19           Frontend framework
+TanStack Start     Fullstack framework
+TanStack Router    Advanced routing
+Tailwind CSS       Utility-first styling
+Radix UI           Accessible components
+Zustand            State management
+TypeScript         Type safety
+Vite               Fast bundling
+```
+
+---
+
+## 🐳 Docker Deployment
+
+### Pull & Run
+
+```bash
+# From Docker Hub
+docker pull mohammedhossam/vingo-roll-studio:v1.9.4
+docker run -p 3000:3000 mohammedhossam/vingo-roll-studio:v1.9.4
+
+# From GHCR
+docker pull ghcr.io/Mostafa-SAID7/vingo-roll-studio:v1.9.4
+docker run -p 3000:3000 ghcr.io/Mostafa-SAID7/vingo-roll-studio:v1.9.4
+```
+
+### Docker Compose
+
+```yaml
+version: '3.8'
+services:
+  vingo-app:
+    image: mohammedhossam/vingo-roll-studio:v1.9.4
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+```
+
+---
+
+## 📚 Tech Stack Details
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 19 |
+| **Framework** | TanStack Start |
+| **Routing** | TanStack Router |
+| **Styling** | Tailwind CSS v4 |
+| **UI** | Radix UI Components |
+| **Forms** | React Hook Form + Zod |
+| **State** | Zustand + TanStack Query |
+| **Build** | Vite |
+| **Language** | TypeScript |
+| **Linting** | ESLint |
+| **Formatting** | Prettier |
 
 ---
 
 ## 📂 Project Structure
 
 ```
-vingo-roll-studio/
-├── .github/              # GitHub Actions & configs
-├── docs/                 # Detailed documentation
-├── public/               # Static assets & favicon
-├── src/
-│   ├── components/       # React components
-│   ├── routes/           # Page routes
-│   ├── styles.css        # Global theme & animations
-│   ├── store/            # Zustand state
-│   └── lib/              # Utilities & helpers
-├── package.json
-├── vite.config.ts        # Vite configuration
-└── README.md
+src/
+├── components/       React components
+├── routes/          Page routes & layouts
+├── store/           Zustand state management
+├── lib/             Utilities & helpers
+└── styles.css       Global theme
 ```
-
----
-
-## 🛠️ Available Commands
-
-```bash
-npm run dev          # Start dev server (hot reload)
-npm run build        # Build for production
-npm run build:dev    # Build with dev settings
-npm run preview      # Preview production build
-npm run lint         # Run ESLint
-npm run format       # Format code with Prettier
-```
-
----
-
-## 📖 Documentation
-
-- **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Contributing guidelines
-- **[docs/](./docs)** - Detailed guides & documentation
-- **[docs/STYLING_CHANGES.md](./docs/STYLING_CHANGES.md)** - Modern styling system
-- **[docs/IMPLEMENTATION_GUIDE.md](./docs/IMPLEMENTATION_GUIDE.md)** - Component usage
-- **[docs/FAVICON_GUIDE.md](./docs/FAVICON_GUIDE.md)** - Favicon design
 
 ---
 
 ## 🎨 Design System
 
-Modern, premium aesthetic featuring:
+Modern, premium aesthetic:
+- Rounded corners (6-24px) for contemporary look
+- Glassmorphism with semi-transparent surfaces
+- Smooth animations (60fps GPU accelerated)
+- Custom themed scrollbars
+- Rich shadows for visual hierarchy
 
-- **Rounded corners** (6px - 24px) for contemporary look
-- **Glassmorphism** with semi-transparent surfaces & backdrop blur
-- **Smooth animations** (8 keyframe animations available)
-- **Custom scrollbars** themed for light/dark modes
-- **Rich shadows & depth** for visual hierarchy
-- **Micro-interactions** on all interactive elements
-
-See [docs/STYLING_CHANGES.md](./docs/STYLING_CHANGES.md) for full details.
+See [docs/STYLING_CHANGES.md](./docs/STYLING_CHANGES.md)
 
 ---
 
 ## 🎯 Core Routes
 
-### Customer Experience
-
-- `/` - Homepage
-- `/shop` - Product catalog
-- `/shop/[category]` - Category view
-- `/product/[id]` - Product detail
-- `/style-finder` - Interactive style quiz
-- `/inspiration` - Design inspiration gallery
-
-### Services
-
-- `/swatches` - Swatch request tool
-- `/guides/measuring` - Measurement guide
-- `/services/design-consultation` - Book consultation
-- `/quote` - Get quote estimate
-
-### Account
-
-- `/wishlist` - Saved items
-- `/cart` - Shopping cart
-- `/account` - User account (mock)
-
----
-
-## 🔄 Data & State
-
-**Frontend Only:**
-
-- All data is mock/static
-- localStorage for client-side state (cart, wishlist, preferences)
-- Zustand for global state management
-- TanStack Query for data fetching patterns
-
-**No Backend:**
-
-- No database
-- No real API
-- No user authentication
-- No payment processing
-
----
-
-## 🎨 Customization
-
-### Theme Colors
-
-Edit variables in `src/styles.css`:
-
-```css
-:root {
-  --primary: oklch(0.345 0.04 48); /* Warm brown */
-  --accent: oklch(0.585 0.068 62); /* Bronze/gold */
-  --background: oklch(0.977 0.008 85); /* Ivory */
-  --card: oklch(0.962 0.011 82); /* Off-white */
-}
 ```
-
-### Brand Favicon
-
-Custom SVG favicon in `public/favicon.svg`. Edit directly or replace with your design.
-
-### Component Styling
-
-All components use utility-first Tailwind + custom modifiers. See [STYLING_CHANGES.md](./docs/STYLING_CHANGES.md).
-
----
-
-## ♿ Accessibility
-
-- WCAG AA compliant
-- Keyboard navigation throughout
-- Screen reader support
-- High contrast focus states
-- Respects `prefers-reduced-motion`
-- Semantic HTML structure
-
----
-
-## 📱 Browser Support
-
-| Browser         | Support |
-| --------------- | ------- |
-| Chrome 90+      | ✅ Full |
-| Firefox 87+     | ✅ Full |
-| Safari 14+      | ✅ Full |
-| Edge 90+        | ✅ Full |
-| Mobile browsers | ✅ Full |
-
----
-
-## 🚀 Deployment
-
-### Build for Production
-
-```bash
-npm run build
-# Output: dist/
-```
-
-### Deploy Options
-
-- **Vercel** - Zero config deployment
-- **Netlify** - Drop-in deploy
-- **GitHub Pages** - Static hosting
-- **Docker** - Container deployment
-- **Any static host** - Just serve `dist/`
-
-### Environment Setup
-
-No environment variables needed for demo. For production:
-
-```bash
-# .env.local (example)
-VITE_API_URL=https://api.example.com
-VITE_ANALYTICS_ID=your-id
+/                          Homepage
+/shop                      Product catalog
+/product/[id]              Product details
+/style-finder              Interactive quiz
+/inspiration               Design gallery
+/swatches                  Request samples
+/guides/measuring          Measurement help
+/cart                      Shopping cart
 ```
 
 ---
 
-## 📊 Performance
+## ♿ Accessibility & Performance
 
-- ⚡ **Vite** - Instant HMR and fast builds
-- 📦 **Tree shaking** - Only ship used code
-- 🎯 **Code splitting** - Route-based chunking
-- 🖼️ **Image optimization** - Lazy loading ready
-- 🚀 **GPU accelerated** - Smooth 60fps animations
+- ✅ WCAG AA compliant
+- ✅ Keyboard navigation
+- ✅ Screen reader support
+- ✅ Respects reduced motion
+- ⚡ ~60fps animations
+- 📦 Code splitting by route
+- 🎯 Tree-shaking enabled
 
 ---
 
-## 🤝 Contributing
+## 🔄 State Management
 
-We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+- **Zustand** - Lightweight global state
+- **TanStack Query** - Data fetching patterns
+- **localStorage** - Client-side persistence
+- **No backend** - All data is mock
 
-```bash
-# 1. Fork the repository
-# 2. Create feature branch (git checkout -b feature/amazing-feature)
-# 3. Commit changes (git commit -m 'Add amazing feature')
-# 4. Push branch (git push origin feature/amazing-feature)
-# 5. Open Pull Request
-```
+---
+
+## 📖 Docs
+
+- [Contributing](./CONTRIBUTING.md)
+- [Styling System](./docs/STYLING_CHANGES.md)
+- [Component Guide](./docs/IMPLEMENTATION_GUIDE.md)
+- [Favicon Design](./docs/FAVICON_GUIDE.md)
 
 ---
 
