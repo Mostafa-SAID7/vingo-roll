@@ -1,0 +1,111 @@
+name: Automated Release & Tagging
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  determine-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.determine.outputs.version }}
+      should-release: ${{ steps.determine.outputs.should-release }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version
+        id: determine
+        run: |
+          # Get last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Last tag: $LAST_TAG"
+          
+          # Check commits since last tag
+          COMMITS=$(git log $LAST_TAG..HEAD --oneline 2>/dev/null || git log --oneline)
+          echo "Commits since last tag:"
+          echo "$COMMITS"
+          
+          # Determine version bump
+          if echo "$COMMITS" | grep -q "^BREAKING CHANGE\|^.*!:"; then
+            VERSION=$(echo $LAST_TAG | sed 's/^v//' | awk -F. '{print $1+1".0.0"}')
+          elif echo "$COMMITS" | grep -q "^feat:"; then
+            VERSION=$(echo $LAST_TAG | sed 's/^v//' | awk -F. '{print $1"."$2+1".0"}')
+          elif echo "$COMMITS" | grep -q "^fix:\|^perf:"; then
+            VERSION=$(echo $LAST_TAG | sed 's/^v//' | awk -F. '{print $1"."$2"."$3+1}')
+          else
+            VERSION=$(echo $LAST_TAG | sed 's/^v//')
+          fi
+          
+          echo "version=v$VERSION" >> $GITHUB_OUTPUT
+          
+          # Check if should release
+          if echo "$COMMITS" | grep -q "^feat:\|^fix:\|^perf:\|^BREAKING CHANGE"; then
+            echo "should-release=true" >> $GITHUB_OUTPUT
+          else
+            echo "should-release=false" >> $GITHUB_OUTPUT
+          fi
+
+  release:
+    needs: determine-version
+    if: needs.determine-version.outputs.should-release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create tag
+        run: |
+          VERSION=${{ needs.determine-version.outputs.version }}
+          echo "Creating tag: $VERSION"
+          git tag -a $VERSION -m "Release $VERSION"
+          git push origin $VERSION
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.determine-version.outputs.version }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update package.json version
+        run: |
+          VERSION=${{ needs.determine-version.outputs.version }}
+          CLEAN_VERSION=$(echo $VERSION | sed 's/^v//')
+          npm version $CLEAN_VERSION --no-git-tag-version
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to $VERSION"
+          git push origin main
+
+  notify:
+    needs: [ determine-version, release ]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify success
+        if: success()
+        run: |
+          echo "✅ Release ${{ needs.determine-version.outputs.version }} created successfully!"
+          echo "📦 Package is ready for deployment"
+
+      - name: Notify failure
+        if: failure()
+        run: |
+          echo "❌ Release workflow failed"
+          exit 1
