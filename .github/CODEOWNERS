@@ -1,0 +1,52 @@
+# Vingo Roll Studio - Code Owners
+# This file defines who should review code in specific areas
+
+# Global owners - review all pull requests
+* @Mostafa-SAID7
+
+# Source code owners
+/src/**/*.tsx @Mostafa-SAID7
+/src/**/*.ts @Mostafa-SAID7
+
+# Component owners
+/src/components/**/* @Mostafa-SAID7
+
+# Store/State management owners
+/src/store/**/* @Mostafa-SAID7
+
+# Routes/Pages owners
+/src/routes/**/* @Mostafa-SAID7
+
+# Styling and CSS owners
+/src/styles.css @Mostafa-SAID7
+/src/**/*.css @Mostafa-SAID7
+
+# Configuration owners
+/tsconfig.json @Mostafa-SAID7
+/vite.config.ts @Mostafa-SAID7
+/eslint.config.js @Mostafa-SAID7
+/.prettierrc @Mostafa-SAID7
+
+# GitHub configuration owners
+/.github/**/* @Mostafa-SAID7
+
+# Workflow automation owners
+/.github/workflows/**/* @Mostafa-SAID7
+
+# Documentation owners
+/docs/**/* @Mostafa-SAID7
+/README.md @Mostafa-SAID7
+/CONTRIBUTING.md @Mostafa-SAID7
+
+# Docker configuration owners
+/Dockerfile @Mostafa-SAID7
+/docker-compose.yml @Mostafa-SAID7
+
+# Package/dependency files
+/package.json @Mostafa-SAID7
+/package-lock.json @Mostafa-SAID7
+
+# Build artifacts - no review needed
+/dist/** @Mostafa-SAID7
+/node_modules/** @Mostafa-SAID7
+

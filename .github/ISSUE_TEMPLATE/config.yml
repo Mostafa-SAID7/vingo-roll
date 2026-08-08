@@ -1,0 +1,19 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 📚 Documentation
+    url: https://github.com/Mostafa-SAID7/vingo-roll-studio/wiki
+    about: "Browse our documentation and guides"
+  
+  - name: 💬 Discussions
+    url: https://github.com/Mostafa-SAID7/vingo-roll-studio/discussions
+    about: "Ask questions and discuss ideas with the community"
+  
+  - name: 🔐 Security Policy
+    url: https://github.com/Mostafa-SAID7/vingo-roll-studio/blob/main/SECURITY.md
+    about: "Report security vulnerabilities responsibly"
+  
+  - name: 📧 Email Support
+    url: mailto:support@vingo-roll.com
+    about: "Contact our support team for assistance"
+
