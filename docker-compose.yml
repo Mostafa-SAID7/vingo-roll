@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  vingo-roll:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vingo-roll-studio
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    networks:
+      - vingo-network
+
+networks:
+  vingo-network:
+    driver: bridge
