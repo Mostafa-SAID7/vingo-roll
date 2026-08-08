@@ -71,12 +71,13 @@ export function ProductQuickViewModal({ product, open, onOpenChange }: QuickView
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[95vw] max-w-4xl max-h-[95vh] overflow-y-auto p-0">
-        <DialogHeader className="sticky top-0 bg-background border-b border-border/30 p-6">
+      <DialogContent className="w-[95vw] max-w-4xl max-h-[95vh] p-0 overflow-hidden flex flex-col">
+        <DialogHeader className="border-b border-border/30 px-6 py-4 flex-shrink-0">
           <DialogTitle className="text-xl font-bold">{product.name}</DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 p-6">
+        <div className="overflow-y-auto flex-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 p-6">
           {/* Product Image */}
           <div className="flex items-center justify-center bg-muted rounded-lg p-4">
             <img
@@ -237,6 +238,7 @@ export function ProductQuickViewModal({ product, open, onOpenChange }: QuickView
             </Button>
           </div>
         </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
@@ -267,9 +269,11 @@ export function QuickViewButton({ product }: { product: Product }) {
         product={product} 
         open={open} 
         onOpenChange={(newOpen) => {
-          // Prevent navigation when closing
+          // Prevent any event propagation when closing
           if (!newOpen) {
             setOpen(false);
+          } else {
+            setOpen(newOpen);
           }
         }} 
       />
