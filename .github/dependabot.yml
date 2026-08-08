@@ -14,18 +14,13 @@ updates:
       - "dependencies"
       - "npm"
     commit-message:
-      prefix: "chore"
-      prefix-scope: "deps"
+      prefix: "chore(deps):"
       include: "scope"
     pull-request-branch-name:
       separator: "/"
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
-    ignore:
-      # Ignore major version updates for stable projects
-      # - dependency-name: "package-name"
-      #   update-types: ["version-update:semver-major"]
 
   # GitHub Actions
   - package-ecosystem: "github-actions"
@@ -41,7 +36,6 @@ updates:
       - "ci-cd"
       - "github-actions"
     commit-message:
-      prefix: "ci"
-      prefix-scope: "actions"
+      prefix: "ci(actions):"
       include: "scope"
 
