@@ -1,12 +1,15 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, Star } from "lucide-react";
+import { Heart, Star, ShoppingBag } from "lucide-react";
 import type { Product } from "@/types";
 import { formatPrice } from "@/lib/formatters";
 import { useWishlistStore } from "@/store/wishlist-store";
+import { useCartStore } from "@/store/cart-store";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { QuickViewButton } from "@/components/product/product-quick-view";
+import { toast } from "sonner";
 
 export function ProductCard({
   product,
@@ -17,19 +20,36 @@ export function ProductCard({
 }) {
   const wishlist = useWishlistStore((s) => s.slugs);
   const toggle = useWishlistStore((s) => s.toggle);
+  const addToCart = useCartStore((s) => s.add);
   const hydrated = useHydrated();
   const saved = hydrated && wishlist.includes(product.slug);
   const main = product.images[0];
   const hover = product.images[1] ?? main;
 
+  const handleAddToCart = () => {
+    addToCart({
+      slug: product.slug,
+      name: product.name,
+      image: product.images[0]?.src || "",
+      unitPrice: product.price,
+      quantity: 1,
+      options: {
+        Material: product.materials[0]?.name || "",
+        Color: product.colors[0]?.name || "",
+        Size: product.sizes[0]?.label || "",
+      },
+    });
+    toast.success(`${product.name} added to cart`);
+  };
+
   return (
     <article className="group relative">
-      <Link
-        to="/product/$slug"
-        params={{ slug: product.slug }}
-        className="block relative"
-      >
-        <div className="bg-muted relative aspect-[4/5] overflow-hidden rounded-sm">
+      <div className="bg-muted relative aspect-[4/5] overflow-hidden rounded-sm">
+        <Link
+          to="/product/$slug"
+          params={{ slug: product.slug }}
+          className="absolute inset-0 z-0"
+        >
           <img
             src={main?.src ?? ""}
             alt={main?.alt ?? product.name}
@@ -45,29 +65,44 @@ export function ProductCard({
             loading="lazy"
             className="absolute inset-0 h-full w-full scale-[1.04] object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
           />
-          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-            {product.sale ? <Badge variant="destructive">Sale</Badge> : null}
-            {product.newArrival ? <Badge>New</Badge> : null}
-            {product.bestseller ? <Badge variant="secondary">Bestseller</Badge> : null}
-          </div>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggle(product.slug);
-            }}
-            aria-pressed={saved}
-            aria-label={
-              saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
-            }
-            className="bg-background/85 text-foreground hover:bg-background absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-full backdrop-blur transition-colors z-10"
-          >
-            <Heart className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
-          </button>
-          <QuickViewButton product={product} />
+        </Link>
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-20">
+          {product.sale ? <Badge variant="destructive">Sale</Badge> : null}
+          {product.newArrival ? <Badge>New</Badge> : null}
+          {product.bestseller ? <Badge variant="secondary">Bestseller</Badge> : null}
         </div>
-      </Link>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggle(product.slug);
+          }}
+          aria-pressed={saved}
+          aria-label={
+            saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
+          }
+          className="bg-background/85 text-foreground hover:bg-background absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-full backdrop-blur transition-colors z-30"
+        >
+          <Heart className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
+        </button>
+
+        {/* Add to Cart Button - Visible on Hover */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleAddToCart();
+          }}
+          className="absolute bottom-3 left-3 right-3 flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground px-3 py-2 rounded-sm font-medium text-sm transition-all opacity-0 group-hover:opacity-100 z-30"
+          aria-label={`Add ${product.name} to cart`}
+        >
+          <ShoppingBag className="h-4 w-4" />
+          Add to Cart
+        </button>
+
+        <QuickViewButton product={product} />
+      </div>
 
       <div className="mt-4 flex items-start justify-between gap-4">
         <div>
