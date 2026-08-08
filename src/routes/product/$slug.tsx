@@ -32,13 +32,14 @@ export const Route = createFileRoute("/product/$slug")({
   head: ({ loaderData }) => {
     if (!loaderData) return {};
     const p = loaderData.product;
+    const imageUrl = p.images[0]?.src;
     return {
       ...pageHead({
         title: `${p.name} | Vingo Roll`,
         description: p.shortDescription,
         path: `/product/${p.slug}`,
         type: "product",
-        image: p.images[0]?.src,
+        ...(imageUrl ? { image: imageUrl } : {}),
       }),
       scripts: [
         jsonLd({
@@ -67,8 +68,8 @@ function Page() {
   const saved = useWishlistStore((s) => s.slugs).includes(product.slug);
   const hydrated = useHydrated();
 
-  const mat = product.materials.find((m) => m.id === material)!;
-  const sz = product.sizes.find((s) => s.id === size)!;
+  const mat = product.materials.find((m: (typeof product.materials)[0]) => m.id === material)!;
+  const sz = product.sizes.find((s: (typeof product.sizes)[0]) => s.id === size)!;
   const unitPrice = product.price + mat.priceDelta + sz.priceDelta;
   const reviews = getReviews(product.slug);
   const related = products
@@ -96,7 +97,7 @@ function Page() {
             />
           </div>
           <ul className="mt-4 grid grid-cols-4 gap-3">
-            {product.images.map((img, i) => (
+            {product.images.map((img: (typeof product.images)[0], i: number) => (
               <li key={img.kind}>
                 <button
                   type="button"
@@ -146,7 +147,7 @@ function Page() {
             <fieldset>
               <legend className="eyebrow mb-3">1. Fabric</legend>
               <div className="flex flex-wrap gap-2">
-                {product.materials.map((m) => (
+                {product.materials.map((m: (typeof product.materials)[0]) => (
                   <button
                     key={m.id}
                     type="button"
@@ -168,7 +169,7 @@ function Page() {
             <fieldset>
               <legend className="eyebrow mb-3">2. Colour</legend>
               <div className="flex flex-wrap gap-3">
-                {product.colors.map((c) => (
+                {product.colors.map((c: (typeof product.colors)[0]) => (
                   <button
                     key={c.id}
                     type="button"
@@ -185,13 +186,13 @@ function Page() {
                 ))}
               </div>
               <p className="text-muted-foreground mt-2 text-xs">
-                {product.colors.find((c) => c.id === color)?.name}
+                {product.colors.find((c: (typeof product.colors)[0]) => c.id === color)?.name}
               </p>
             </fieldset>
             <fieldset>
               <legend className="eyebrow mb-3">3. Size</legend>
               <div className="flex flex-wrap gap-2">
-                {product.sizes.map((s) => (
+                {product.sizes.map((s: (typeof product.sizes)[0]) => (
                   <button
                     key={s.id}
                     type="button"
@@ -210,7 +211,7 @@ function Page() {
             <fieldset>
               <legend className="eyebrow mb-3">4. Mount</legend>
               <div className="flex gap-2">
-                {["inside", "outside"].map((m) => (
+                {["inside", "outside"].map((m: string) => (
                   <button
                     key={m}
                     type="button"
@@ -306,17 +307,17 @@ function Page() {
           <TabsContent value="description" className="max-w-3xl pt-8">
             <p className="text-muted-foreground leading-relaxed">{product.description}</p>
             <ul className="text-muted-foreground mt-5 space-y-2 text-sm">
-              {product.features.map((f) => (
+              {product.features.map((f: string) => (
                 <li key={f}>— {f}</li>
               ))}
             </ul>
           </TabsContent>
           <TabsContent value="specs" className="pt-8">
             <dl className="max-w-2xl">
-              {Object.entries(product.specifications).map(([k, v]) => (
+              {Object.entries(product.specifications).map(([k, v]: [string, unknown]) => (
                 <div key={k} className="border-border flex justify-between border-b py-3 text-sm">
                   <dt className="text-muted-foreground">{k}</dt>
-                  <dd>{v}</dd>
+                  <dd>{v as React.ReactNode}</dd>
                 </div>
               ))}
             </dl>
@@ -324,7 +325,7 @@ function Page() {
           <TabsContent value="reviews" className="pt-8">
             {reviews.length ? (
               <ul className="grid max-w-3xl gap-6">
-                {reviews.map((r) => (
+                {reviews.map((r: (typeof reviews)[0]) => (
                   <li key={r.id} className="border-border rounded-sm border p-5">
                     <p className="text-accent text-xs" aria-label={`${r.rating} out of 5`}>
                       {"★".repeat(r.rating)}
@@ -344,7 +345,7 @@ function Page() {
           </TabsContent>
           <TabsContent value="faq" className="pt-8">
             <Accordion type="single" collapsible className="max-w-3xl">
-              {faqs.slice(0, 5).map((f) => (
+              {faqs.slice(0, 5).map((f: (typeof faqs)[0]) => (
                 <AccordionItem key={f.question} value={f.question}>
                   <AccordionTrigger className="text-left">{f.question}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">

@@ -38,7 +38,7 @@ export const Route = createFileRoute("/inspiration/$slug")({
 
 function Page() {
   const { post } = Route.useLoaderData();
-  const used = products.filter((p) => post.productSlugs.includes(p.slug));
+  const used = products.filter((p: (typeof products)[0]) => post.productSlugs.includes(p.slug));
 
   return (
     <>
@@ -69,7 +69,7 @@ function Page() {
       />
       <Section>
         <div className="max-w-2xl space-y-5">
-          {post.body.map((p) => (
+          {post.body.map((p: string) => (
             <p key={p} className="text-muted-foreground text-lg leading-relaxed">
               {p}
             </p>

@@ -29,7 +29,7 @@ async function hydrate() {
     console.log("=== App Rendered Successfully ===");
   } catch (err: unknown) {
     console.error("Failed to hydrate app:", err);
-    const msg = err?.message || String(err);
+    const msg = (err instanceof Error ? err.message : String(err)) || "Unknown error";
     const rootElement = document.getElementById("root");
     if (rootElement) {
       rootElement.innerHTML = `<div style="color: red; padding: 20px; font-family: monospace; white-space: pre-wrap;">Error initializing app: ${msg}</div>`;
