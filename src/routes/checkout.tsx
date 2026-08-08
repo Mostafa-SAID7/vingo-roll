@@ -113,9 +113,9 @@ function Page() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
-                      className={errors.email ? "border-destructive" : ""}
+                      className={errors['email'] ? "border-destructive" : ""}
                     />
-                    {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
+                    {errors['email'] && <p className="text-destructive text-xs mt-1">{errors['email']}</p>}
                   </div>
                   <div>
                     <Label htmlFor="phone">Phone</Label>
@@ -124,9 +124,9 @@ function Page() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData((p) => ({ ...p, phone: e.target.value }))}
-                      className={errors.phone ? "border-destructive" : ""}
+                      className={errors['phone'] ? "border-destructive" : ""}
                     />
-                    {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
+                    {errors['phone'] && <p className="text-destructive text-xs mt-1">{errors['phone']}</p>}
                   </div>
                 </div>
               </div>
@@ -142,9 +142,9 @@ function Page() {
                         id="firstName"
                         value={formData.firstName}
                         onChange={(e) => setFormData((p) => ({ ...p, firstName: e.target.value }))}
-                        className={errors.firstName ? "border-destructive" : ""}
+                        className={errors['firstName'] ? "border-destructive" : ""}
                       />
-                      {errors.firstName && <p className="text-destructive text-xs mt-1">{errors.firstName}</p>}
+                      {errors['firstName'] && <p className="text-destructive text-xs mt-1">{errors['firstName']}</p>}
                     </div>
                     <div>
                       <Label htmlFor="lastName">Last Name</Label>
@@ -152,9 +152,9 @@ function Page() {
                         id="lastName"
                         value={formData.lastName}
                         onChange={(e) => setFormData((p) => ({ ...p, lastName: e.target.value }))}
-                        className={errors.lastName ? "border-destructive" : ""}
+                        className={errors['lastName'] ? "border-destructive" : ""}
                       />
-                      {errors.lastName && <p className="text-destructive text-xs mt-1">{errors.lastName}</p>}
+                      {errors['lastName'] && <p className="text-destructive text-xs mt-1">{errors['lastName']}</p>}
                     </div>
                   </div>
 
@@ -165,9 +165,9 @@ function Page() {
                       value={formData.street1}
                       onChange={(e) => setFormData((p) => ({ ...p, street1: e.target.value }))}
                       placeholder="123 Main St"
-                      className={errors.street1 ? "border-destructive" : ""}
+                      className={errors['street1'] ? "border-destructive" : ""}
                     />
-                    {errors.street1 && <p className="text-destructive text-xs mt-1">{errors.street1}</p>}
+                    {errors['street1'] && <p className="text-destructive text-xs mt-1">{errors['street1']}</p>}
                   </div>
 
                   <div>
@@ -187,9 +187,9 @@ function Page() {
                         id="city"
                         value={formData.city}
                         onChange={(e) => setFormData((p) => ({ ...p, city: e.target.value }))}
-                        className={errors.city ? "border-destructive" : ""}
+                        className={errors['city'] ? "border-destructive" : ""}
                       />
-                      {errors.city && <p className="text-destructive text-xs mt-1">{errors.city}</p>}
+                      {errors['city'] && <p className="text-destructive text-xs mt-1">{errors['city']}</p>}
                     </div>
                     <div>
                       <Label htmlFor="state">State</Label>
@@ -197,7 +197,7 @@ function Page() {
                         value={formData.state}
                         onValueChange={(value) => setFormData((p) => ({ ...p, state: value }))}
                       >
-                        <SelectTrigger id="state" className={errors.state ? "border-destructive" : ""}>
+                        <SelectTrigger id="state" className={errors['state'] ? "border-destructive" : ""}>
                           <SelectValue placeholder="Select state" />
                         </SelectTrigger>
                         <SelectContent>
@@ -208,7 +208,7 @@ function Page() {
                           ))}
                         </SelectContent>
                       </Select>
-                      {errors.state && <p className="text-destructive text-xs mt-1">{errors.state}</p>}
+                      {errors['state'] && <p className="text-destructive text-xs mt-1">{errors['state']}</p>}
                     </div>
                   </div>
 
@@ -219,9 +219,9 @@ function Page() {
                       value={formData.postalCode}
                       onChange={(e) => setFormData((p) => ({ ...p, postalCode: e.target.value }))}
                       placeholder="12345"
-                      className={errors.postalCode ? "border-destructive" : ""}
+                      className={errors['postalCode'] ? "border-destructive" : ""}
                     />
-                    {errors.postalCode && <p className="text-destructive text-xs mt-1">{errors.postalCode}</p>}
+                    {errors['postalCode'] && <p className="text-destructive text-xs mt-1">{errors['postalCode']}</p>}
                   </div>
                 </div>
               </div>

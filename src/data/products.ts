@@ -276,7 +276,7 @@ function buildProduct(seed: Seed): Product {
     shortDescription: seed.short,
     description: `${seed.short} Every ${seed.name} is cut to order in our workroom, pressed, and inspected before it ships. Choose your fabric, colour and drop — or send us your measurements and we will confirm them with you before cutting.`,
     categoryId: seed.categoryId,
-    collectionId: seed.collectionId,
+    collectionId: seed.collectionId || undefined,
     price: seed.price,
     compareAtPrice: seed.compareAtPrice,
     currency: "USD",

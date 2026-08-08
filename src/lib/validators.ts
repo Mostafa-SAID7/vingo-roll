@@ -222,10 +222,10 @@ export function validateLoginForm(data: {
 }): { valid: boolean; errors: Record<string, string> } {
   const errors: Record<string, string> = {};
 
-  const emailValidation = validateEmail(data.email || "");
+  const emailValidation = validateEmail(data.email ?? "");
   if (!emailValidation.valid) errors['email'] = emailValidation.error!;
 
-  const passwordValidation = validatePassword(data.password || "");
+  const passwordValidation = validatePassword(data.password ?? "");
   if (!passwordValidation.valid) errors['password'] = passwordValidation.error!;
 
   return { valid: Object.keys(errors).length === 0, errors };

@@ -38,7 +38,7 @@ export function LoadingProvider({ children }: { children: React.ReactNode }) {
       
       for (let i = 0; i < stylesheets.length; i++) {
         try {
-          if (!stylesheets[i].cssRules) {
+          if (!(stylesheets[i] as CSSStyleSheet).cssRules) {
             allLoaded = false;
             break;
           }

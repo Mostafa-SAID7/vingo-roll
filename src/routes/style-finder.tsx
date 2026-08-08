@@ -80,7 +80,7 @@ function Page() {
 
   const recommended = products
     .filter((p) => !answers["light"] || p.lightControl === answers["light"])
-    .filter((p) => !answers["room"] || p.rooms?.includes(answers["room"]!))
+    .filter((p) => !answers["room"] || p.rooms?.some(r => typeof r === 'string' && r === answers["room"]))
     .filter((p) => !answers["mood"] || p.styles?.includes(answers["mood"]!));
   const results = (recommended.length ? recommended : products.filter((p) => p.featured)).slice(
     0,

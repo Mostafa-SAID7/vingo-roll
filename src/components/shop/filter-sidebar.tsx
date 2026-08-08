@@ -170,9 +170,9 @@ export function FilterSidebar({ filters, onFiltersChange, resultsCount }: Filter
             className="w-full"
           />
           <div className="flex justify-between text-sm">
-            <span>{formatPrice(filters.priceRange[0])}</span>
+            <span>{formatPrice(filters.priceRange[0] ?? 0)}</span>
             <span>—</span>
-            <span>{formatPrice(filters.priceRange[1])}</span>
+            <span>{formatPrice(filters.priceRange[1] ?? 5000)}</span>
           </div>
         </div>
       </FilterSection>

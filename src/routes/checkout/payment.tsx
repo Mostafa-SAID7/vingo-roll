@@ -169,9 +169,9 @@ function Page() {
                     placeholder="1234 5678 9012 3456"
                     value={cardData.cardNumber}
                     onChange={(e) => handleCardNumberChange(e.target.value)}
-                    className={errors.cardNumber ? "border-destructive" : ""}
+                    className={errors['cardNumber'] ? "border-destructive" : ""}
                   />
-                  {errors.cardNumber && <p className="text-destructive text-xs mt-1">{errors.cardNumber}</p>}
+                  {errors['cardNumber'] && <p className="text-destructive text-xs mt-1">{errors['cardNumber']}</p>}
                   <p className="text-xs text-muted-foreground mt-2">Demo: Use any 16-digit number</p>
                 </div>
 
@@ -182,9 +182,9 @@ function Page() {
                     placeholder="Jane Doe"
                     value={cardData.cardName}
                     onChange={(e) => setCardData((p) => ({ ...p, cardName: e.target.value }))}
-                    className={errors.cardName ? "border-destructive" : ""}
+                    className={errors['cardName'] ? "border-destructive" : ""}
                   />
-                  {errors.cardName && <p className="text-destructive text-xs mt-1">{errors.cardName}</p>}
+                  {errors['cardName'] && <p className="text-destructive text-xs mt-1">{errors['cardName']}</p>}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -195,9 +195,9 @@ function Page() {
                       placeholder="MM/YY"
                       value={cardData.expiry}
                       onChange={(e) => handleExpiryChange(e.target.value)}
-                      className={errors.expiry ? "border-destructive" : ""}
+                      className={errors['expiry'] ? "border-destructive" : ""}
                     />
-                    {errors.expiry && <p className="text-destructive text-xs mt-1">{errors.expiry}</p>}
+                    {errors['expiry'] && <p className="text-destructive text-xs mt-1">{errors['expiry']}</p>}
                   </div>
                   <div>
                     <Label htmlFor="cvc">CVC</Label>
@@ -207,9 +207,9 @@ function Page() {
                       value={cardData.cvc}
                       onChange={(e) => handleCvcChange(e.target.value)}
                       maxLength={3}
-                      className={errors.cvc ? "border-destructive" : ""}
+                      className={errors['cvc'] ? "border-destructive" : ""}
                     />
-                    {errors.cvc && <p className="text-destructive text-xs mt-1">{errors.cvc}</p>}
+                    {errors['cvc'] && <p className="text-destructive text-xs mt-1">{errors['cvc']}</p>}
                   </div>
                 </div>
               </div>

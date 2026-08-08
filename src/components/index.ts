@@ -21,7 +21,7 @@ export { Crumbs, PageHeader, Section, SectionHeading, EmptyState, TrustLayer, Re
 // ============================================================================
 // PRODUCT COMPONENTS
 // ============================================================================
-export { ProductGrid, ProductCard, ProductQuickView } from "./product";
+export { ProductGrid, ProductCard, ProductQuickViewModal, QuickViewButton } from "./product";
 
 // ============================================================================
 // SHOP COMPONENTS
@@ -36,4 +36,4 @@ export { CartDrawer } from "./cart";
 // ============================================================================
 // ERROR COMPONENTS
 // ============================================================================
-export { ErrorBoundary, RouteErrorBoundary, ErrorPage, NotFoundPage, ErrorAnimations } from "./error-pages";
+export { ErrorBoundary, RouteErrorBoundary, ErrorPage, NotFoundPage, AnimatedWovenBackground } from "./error-pages";

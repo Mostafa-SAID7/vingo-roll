@@ -29,7 +29,7 @@ interface OrderState {
   clearCurrentOrder: () => void;
 }
 
-export const useOrderStore = create<OrderState>(
+export const useOrderStore = create<OrderState>()(
   persist(
     (set, get) => ({
       orders: [],
@@ -51,7 +51,7 @@ export const useOrderStore = create<OrderState>(
           total: Math.round(total * 100) / 100,
           status: "confirmed",
           shippingAddress,
-          billingAddress,
+          billingAddress: billingAddress || undefined,
           paymentMethod,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
