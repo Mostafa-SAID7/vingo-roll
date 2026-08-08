@@ -54,35 +54,69 @@ export function MegaMenu({
       {isOpen && (
         <div
           className={cn(
-            "bg-background/95 border-border animate-fade-in shadow-lg",
-            "absolute top-full left-1/2 z-50 -translate-x-1/2 border",
-            "rounded-2xl p-6 backdrop-blur-sm",
-            "w-[95vw] max-w-6xl",
-            "md:w-max",
+            "animate-fade-in",
+            "absolute top-full left-1/2 z-50 -translate-x-1/2",
+            "w-[98vw] max-w-7xl",
+            "md:w-[96vw] md:max-w-[1200px]",
+            "lg:w-max lg:min-w-[1100px]",
+            /* Background with better visibility in both modes */
+            "bg-card border border-border/50",
+            "dark:bg-card/90 dark:border-border",
+            /* Rounded corners and shadow */
+            "rounded-2xl p-8 shadow-lg",
+            /* Backdrop blur for depth */
+            "backdrop-blur-md",
+            /* Better transition */
+            "transition-all duration-200 ease-out",
           )}
         >
-          {/* Desktop Grid Layout (3+ columns with images) */}
-          <div className="hidden md:grid grid-cols-1 gap-8">
+          {/* Desktop Grid Layout (Multiple columns with images) */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-10">
             {columns.map((column) => (
-              <div key={column.title} className="flex gap-8">
-                {/* Left: Links */}
-                <div className="flex-shrink-0">
+              <div key={column.title} className="flex flex-col gap-6">
+                {/* Image: Positioned at top */}
+                {column.image && (
+                  <div className="relative group overflow-hidden rounded-xl shadow-md">
+                    <img
+                      src={column.image}
+                      alt={column.imageAlt || column.title}
+                      className={cn(
+                        "h-56 w-full object-cover",
+                        "transition-transform duration-300 ease-out",
+                        "group-hover:scale-110",
+                      )}
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+                  </div>
+                )}
+
+                {/* Links: Below image */}
+                <div>
                   <h3 className="eyebrow mb-4 text-xs uppercase tracking-wider">{column.title}</h3>
-                  <ul className="space-y-2.5">
+                  <ul className="space-y-3">
                     {column.links.map((link) => (
                       <li key={link.label}>
                         {"slug" in link && link.slug ? (
                           <Link
                             to="/shop/$category"
                             params={{ category: link.slug }}
-                            className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                            className={cn(
+                              "text-muted-foreground hover:text-foreground",
+                              "transition-colors duration-200 text-sm",
+                              "hover:translate-x-1 transform ease-out",
+                            )}
                           >
                             {link.label}
                           </Link>
                         ) : (
                           <Link
                             to={link.to}
-                            className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                            className={cn(
+                              "text-muted-foreground hover:text-foreground",
+                              "transition-colors duration-200 text-sm",
+                              "hover:translate-x-1 transform ease-out",
+                            )}
                           >
                             {link.label}
                           </Link>
@@ -91,54 +125,56 @@ export function MegaMenu({
                     ))}
                   </ul>
                 </div>
-
-                {/* Right: Image */}
-                {column.image && (
-                  <div className="flex-shrink-0 w-48 h-48">
-                    <img
-                      src={column.image}
-                      alt={column.imageAlt || column.title}
-                      className="h-full w-full object-cover rounded-xl shadow-md transition-transform duration-300 hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
               </div>
             ))}
           </div>
 
           {/* Mobile/Tablet Layout (Stacked) */}
-          <div className="md:hidden space-y-6">
-            {columns.map((column) => (
+          <div className="md:hidden space-y-8">
+            {columns.map((column, index) => (
               <div key={column.title}>
-                <h3 className="eyebrow mb-3 text-xs uppercase tracking-wider">{column.title}</h3>
-
                 {/* Image first on mobile */}
                 {column.image && (
-                  <img
-                    src={column.image}
-                    alt={column.imageAlt || column.title}
-                    className="h-40 w-full object-cover rounded-lg mb-4 shadow-md"
-                    loading="lazy"
-                  />
+                  <div className="relative group overflow-hidden rounded-xl mb-4 shadow-md">
+                    <img
+                      src={column.image}
+                      alt={column.imageAlt || column.title}
+                      className={cn(
+                        "h-48 w-full object-cover",
+                        "transition-transform duration-300 ease-out",
+                        "group-hover:scale-105",
+                      )}
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+                  </div>
                 )}
 
-                {/* Links below image */}
-                <ul className="grid grid-cols-2 gap-3 gap-y-2">
+                {/* Title */}
+                <h3 className="eyebrow mb-4 text-xs uppercase tracking-wider">{column.title}</h3>
+
+                {/* Links below image - Two columns on mobile */}
+                <ul className="grid grid-cols-2 gap-4 gap-y-3">
                   {column.links.map((link) => (
                     <li key={link.label}>
                       {"slug" in link && link.slug ? (
                         <Link
                           to="/shop/$category"
                           params={{ category: link.slug }}
-                          className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                          className={cn(
+                            "text-muted-foreground hover:text-foreground",
+                            "transition-colors duration-200 text-sm",
+                          )}
                         >
                           {link.label}
                         </Link>
                       ) : (
                         <Link
                           to={link.to}
-                          className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                          className={cn(
+                            "text-muted-foreground hover:text-foreground",
+                            "transition-colors duration-200 text-sm",
+                          )}
                         >
                           {link.label}
                         </Link>
@@ -147,9 +183,8 @@ export function MegaMenu({
                   ))}
                 </ul>
 
-                {column !== columns[columns.length - 1] && (
-                  <div className="border-b border-border mt-4" />
-                )}
+                {/* Divider between sections on mobile */}
+                {index !== columns.length - 1 && <div className="border-b border-border/30 mt-8" />}
               </div>
             ))}
           </div>

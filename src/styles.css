@@ -143,7 +143,7 @@
     scrollbar-width: thin;
   }
 
-  /* Webkit scrollbar styling (Chrome, Safari, Edge) */
+  /* Webkit scrollbar styling (Chrome, Safari, Edge) - Light mode */
   html::-webkit-scrollbar {
     width: 10px;
   }
@@ -170,11 +170,13 @@
 
   .dark::-webkit-scrollbar-track {
     background: oklch(0.216 0.018 47);
+    border-radius: 100px;
   }
 
   .dark::-webkit-scrollbar-thumb {
     background: oklch(0.685 0.076 65);
-    border-color: oklch(0.216 0.018 47);
+    border: 2px solid oklch(0.216 0.018 47);
+    border-radius: 100px;
   }
 
   .dark::-webkit-scrollbar-thumb:hover {
