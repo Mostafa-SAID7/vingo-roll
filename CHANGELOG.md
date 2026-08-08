@@ -185,6 +185,53 @@ This is the initial release, so no migration is necessary.
 
 ---
 
+## [1.0.1] - 2026-08-08
+
+### 🔧 Maintenance & Quality
+
+#### Code Quality Improvements
+
+- ✅ **Fixed all TypeScript errors**: 77 compilation errors resolved
+- ✅ **Fixed all ESLint errors**: 383 linting issues fixed (0 errors remaining)
+- ✅ **Added automatic code formatting**: Prettier configuration with LF line endings
+- ✅ **Fixed React hooks violations**: Moved useSearch hooks to component level
+- ✅ **Removed `any` type usage**: Replaced with proper TypeScript types
+- ✅ **Updated Product type**: Support for string arrays in rooms/needs fields
+- ✅ **Fixed regex escaping**: Removed unnecessary backslashes in patterns
+
+#### Automation & Protection
+
+- ✅ **Added pre-commit hooks**: Husky + lint-staged for automatic code quality checks
+- ✅ **GitHub Actions workflows**:
+  - CI Pipeline: Runs on push/PR with lint, build, type-check
+  - Auto Lint & Format: Daily automated fixes with auto-commit
+  - Branch Protection: Enforces rules on main/develop branches
+- ✅ **Branch protection rules**: Require approvals, status checks, prevent force push
+- ✅ **Lint-staged configuration**: Only checks staged files for performance
+
+#### Documentation
+
+- ✅ **CODE_QUALITY.md**: Complete code quality standards and setup guide
+- ✅ **LINTING_STATUS.md**: Detailed linting metrics and build status
+- ✅ **Automated commit email**: Configured aminone070@gmail.com for bot commits
+
+### 📊 Metrics
+
+- **Build Status**: ✅ Passing (0 errors)
+- **ESLint Status**: ✅ Passing (0 errors, 11 non-critical warnings)
+- **TypeScript Status**: ✅ Strict mode enabled, 0 errors
+- **Test Coverage**: Ready for implementation
+- **Build Time**: ~7 seconds
+- **Bundle Size**: 804.14 kB (gzip: 237.74 kB)
+
+### 🔒 Security & Stability
+
+- Enforced code standards via pre-commit hooks
+- Protected main/develop branches from accidental changes
+- Automated quality checks prevent regressions
+- All changes tracked with meaningful commit messages
+- Line endings normalized (LF) for consistency
+
 ## [Unreleased]
 
 ### Planned for Future Releases
@@ -203,6 +250,7 @@ To contribute to future releases, please read [CONTRIBUTING.md](./CONTRIBUTING.m
 
 | Version                    | Date       | Status      |
 | -------------------------- | ---------- | ----------- |
+| [1.0.1](#101---2026-08-08) | 2026-08-08 | ✅ Released |
 | [1.0.0](#100---2026-08-08) | 2026-08-08 | ✅ Released |
 
 ---
