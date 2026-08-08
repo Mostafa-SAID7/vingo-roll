@@ -4,7 +4,7 @@ import { pageHead } from "@/lib/seo";
 import { Crumbs, PageHeader, Section, EmptyState } from "@/components/common/section";
 import { Button } from "@/components/ui/button";
 import { inspiration } from "@/data/content";
-import { rooms } from "@/data/collections";
+import { rooms } from "@/data/rooms";
 
 export const Route = createFileRoute("/inspiration/")({
   head: () =>

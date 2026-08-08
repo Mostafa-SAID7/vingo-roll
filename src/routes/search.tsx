@@ -6,6 +6,7 @@ import { Crumbs, PageHeader, Section, EmptyState } from "@/components/common/sec
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ProductGrid } from "@/components/product/product-card";
+import { useSearch } from "@/hooks";
 import { products } from "@/data/products";
 import { categories } from "@/data/categories";
 import { inspiration } from "@/data/content";
@@ -23,15 +24,6 @@ export const Route = createFileRoute("/search")({
   component: Page,
 });
 
-const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9 ]/g, "");
-const fuzzy = (haystack: string, q: string) => {
-  const h = norm(haystack);
-  return norm(q)
-    .split(" ")
-    .filter(Boolean)
-    .every((t) => h.includes(t) || h.includes(t.slice(0, Math.max(3, t.length - 1))));
-};
-
 function Page() {
   const { q } = Route.useSearch();
   const navigate = useNavigate();
@@ -40,11 +32,33 @@ function Page() {
   const results = useMemo(() => {
     if (!q.trim()) return { products: [], categories: [], posts: [] };
     return {
-      products: products.filter((p) =>
-        fuzzy(`${p.name} ${p.shortDescription} ${p.styleTags?.join(" ")} ${p.needs?.join(" ")}`, q),
-      ),
-      categories: categories.filter((c) => fuzzy(`${c.name} ${c.description}`, q)),
-      posts: inspiration.filter((i) => fuzzy(`${i.title} ${i.excerpt} ${i.room}`, q)),
+      products: useSearch(
+        products.map((p) => ({
+          id: p.id,
+          name: p.name,
+          description: `${p.shortDescription} ${p.styleTags?.join(" ")} ${p.needs?.join(" ")}`,
+        })),
+        q,
+        { minChars: 1 }
+      ).map((item) => products.find((p) => p.id === item.id)!),
+      categories: useSearch(
+        categories.map((c) => ({
+          id: c.id,
+          name: c.name,
+          description: c.description,
+        })),
+        q,
+        { minChars: 1 }
+      ).map((item) => categories.find((c) => c.id === item.id)!),
+      posts: useSearch(
+        inspiration.map((i) => ({
+          id: i.id,
+          name: i.title,
+          description: `${i.excerpt} ${i.room}`,
+        })),
+        q,
+        { minChars: 1 }
+      ).map((item) => inspiration.find((i) => i.id === item.id)!),
     };
   }, [q]);
 

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ProductGrid } from "@/components/product/product-card";
 import { products } from "@/data/products";
-import { rooms } from "@/data/collections";
+import { rooms } from "@/data/rooms";
 
 export const Route = createFileRoute("/style-finder")({
   head: () =>

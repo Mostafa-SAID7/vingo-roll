@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
 import { Crumbs, PageHeader, Section } from "@/components/common/section";
 import { Reveal } from "@/components/common/reveal";
-import { rooms } from "@/data/collections";
+import { rooms } from "@/data/rooms";
 
 export const Route = createFileRoute("/inspiration/rooms")({
   validateSearch: (search: Record<string, unknown>) => ({

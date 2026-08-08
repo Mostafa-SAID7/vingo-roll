@@ -8,7 +8,8 @@ import { ProductGrid } from "@/components/product/product-card";
 import { TrustLayer } from "@/components/common/trust-layer";
 import { categories, IMG } from "@/data/categories";
 import { products } from "@/data/products";
-import { collections, rooms } from "@/data/collections";
+import { collections } from "@/data/collections";
+import { rooms } from "@/data/rooms";
 import { inspiration, testimonials } from "@/data/content";
 
 export const Route = createFileRoute("/")({

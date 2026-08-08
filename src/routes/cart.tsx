@@ -4,9 +4,11 @@ import { Crumbs, PageHeader, Section, EmptyState } from "@/components/common/sec
 import { Button } from "@/components/ui/button";
 import { ProductGrid } from "@/components/product/product-card";
 import { useCartStore, cartSubtotal } from "@/store/cart-store";
+import { useAuth } from "@/providers/auth-provider";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { formatPrice } from "@/lib/formatters";
 import { products } from "@/data/products";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/cart")({
   head: () =>
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/cart")({
 });
 
 function Page() {
+  const { isAuthenticated } = useAuth();
   const items = useCartStore((s) => s.items);
   const setQuantity = useCartStore((s) => s.setQuantity);
   const remove = useCartStore((s) => s.remove);
@@ -27,6 +30,17 @@ function Page() {
   const hydrated = useHydrated();
   const subtotal = cartSubtotal(items);
   const shipping = subtotal > 500 || subtotal === 0 ? 0 : 45;
+
+  const handleCheckout = () => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to checkout");
+      return;
+    }
+    if (items.length === 0) {
+      toast.error("Your cart is empty");
+      return;
+    }
+  };
 
   return (
     <>
@@ -128,9 +142,12 @@ function Page() {
                 Free shipping on orders over {formatPrice(500)}.
               </p>
               <Button asChild className="mt-6 w-full" size="lg">
-                <Link to="/quote">Request a quote</Link>
+                <Link to="/checkout" onClick={handleCheckout}>Proceed to Checkout</Link>
               </Button>
               <Button asChild className="mt-3 w-full" variant="outline">
+                <Link to="/quote">Request a quote instead</Link>
+              </Button>
+              <Button asChild className="mt-3 w-full" variant="ghost">
                 <Link to="/swatches">Add free swatches</Link>
               </Button>
             </aside>

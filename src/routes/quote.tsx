@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categories } from "@/data/categories";
-import { rooms } from "@/data/collections";
+import { rooms } from "@/data/rooms";
 import { formatRange } from "@/lib/formatters";
 
 export const Route = createFileRoute("/quote")({

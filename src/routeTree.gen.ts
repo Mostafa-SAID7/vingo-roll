@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CartRouteImport } from './routes/cart'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as OrderConfirmationRouteImport } from './routes/order-confirmation'
 import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SmartHomeRouteImport } from './routes/smart-home'
@@ -22,6 +24,8 @@ import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as AboutOurStoryRouteImport } from './routes/about/our-story'
 import { Route as AccountIndexRouteImport } from './routes/account/index'
+import { Route as CheckoutPaymentRouteImport } from './routes/checkout/payment'
+import { Route as CheckoutReviewRouteImport } from './routes/checkout/review'
 import { Route as CollectionsIndexRouteImport } from './routes/collections/index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections/$slug'
 import { Route as GuidesIndexRouteImport } from './routes/guides/index'
@@ -42,6 +46,8 @@ import { Route as ServicesDesignConsultationRouteImport } from './routes/service
 import { Route as ServicesMeasuringInstallationRouteImport } from './routes/services/measuring-installation'
 import { Route as ShopIndexRouteImport } from './routes/shop/index'
 import { Route as ShopCategoryRouteImport } from './routes/shop/$category'
+import { Route as InspirationRoomsIndexRouteImport } from './routes/inspiration/rooms/index'
+import { Route as InspirationRoomsSlugRouteImport } from './routes/inspiration/rooms/$slug'
 import { Route as ShopNeedsIndexRouteImport } from './routes/shop/needs/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -54,9 +60,19 @@ const CartRoute = CartRouteImport.update({
   path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderConfirmationRoute = OrderConfirmationRouteImport.update({
+  id: '/order-confirmation',
+  path: '/order-confirmation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuoteRoute = QuoteRouteImport.update({
@@ -108,6 +124,16 @@ const AccountIndexRoute = AccountIndexRouteImport.update({
   id: '/account/',
   path: '/account/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutPaymentRoute = CheckoutPaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => CheckoutRoute,
+} as any)
+const CheckoutReviewRoute = CheckoutReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => CheckoutRoute,
 } as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
   id: '/collections/',
@@ -211,6 +237,16 @@ const ShopCategoryRoute = ShopCategoryRouteImport.update({
   path: '/shop/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InspirationRoomsIndexRoute = InspirationRoomsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InspirationRoomsRoute,
+} as any)
+const InspirationRoomsSlugRoute = InspirationRoomsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => InspirationRoomsRoute,
+} as any)
 const ShopNeedsIndexRoute = ShopNeedsIndexRouteImport.update({
   id: '/shop/needs/',
   path: '/shop/needs/',
@@ -220,7 +256,9 @@ const ShopNeedsIndexRoute = ShopNeedsIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/contact': typeof ContactRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
   '/quote': typeof QuoteRoute
   '/search': typeof SearchRoute
   '/smart-home': typeof SmartHomeRoute
@@ -229,13 +267,15 @@ export interface FileRoutesByFullPath {
   '/trade': typeof TradeRoute
   '/wishlist': typeof WishlistRoute
   '/about/our-story': typeof AboutOurStoryRoute
+  '/checkout/payment': typeof CheckoutPaymentRoute
+  '/checkout/review': typeof CheckoutReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
   '/guides/measuring': typeof GuidesMeasuringRoute
   '/guides/returns': typeof GuidesReturnsRoute
   '/guides/shipping': typeof GuidesShippingRoute
   '/inspiration/$slug': typeof InspirationSlugRoute
-  '/inspiration/rooms': typeof InspirationRoomsRoute
+  '/inspiration/rooms': typeof InspirationRoomsRouteWithChildren
   '/legal/accessibility': typeof LegalAccessibilityRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
@@ -251,12 +291,16 @@ export interface FileRoutesByFullPath {
   '/inspiration/': typeof InspirationIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/shop/': typeof ShopIndexRoute
+  '/inspiration/rooms/$slug': typeof InspirationRoomsSlugRoute
+  '/inspiration/rooms/': typeof InspirationRoomsIndexRoute
   '/shop/needs/': typeof ShopNeedsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/contact': typeof ContactRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
   '/quote': typeof QuoteRoute
   '/search': typeof SearchRoute
   '/smart-home': typeof SmartHomeRoute
@@ -265,13 +309,14 @@ export interface FileRoutesByTo {
   '/trade': typeof TradeRoute
   '/wishlist': typeof WishlistRoute
   '/about/our-story': typeof AboutOurStoryRoute
+  '/checkout/payment': typeof CheckoutPaymentRoute
+  '/checkout/review': typeof CheckoutReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
   '/guides/measuring': typeof GuidesMeasuringRoute
   '/guides/returns': typeof GuidesReturnsRoute
   '/guides/shipping': typeof GuidesShippingRoute
   '/inspiration/$slug': typeof InspirationSlugRoute
-  '/inspiration/rooms': typeof InspirationRoomsRoute
   '/legal/accessibility': typeof LegalAccessibilityRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
@@ -287,13 +332,17 @@ export interface FileRoutesByTo {
   '/inspiration': typeof InspirationIndexRoute
   '/services': typeof ServicesIndexRoute
   '/shop': typeof ShopIndexRoute
+  '/inspiration/rooms/$slug': typeof InspirationRoomsSlugRoute
+  '/inspiration/rooms': typeof InspirationRoomsIndexRoute
   '/shop/needs': typeof ShopNeedsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/contact': typeof ContactRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
   '/quote': typeof QuoteRoute
   '/search': typeof SearchRoute
   '/smart-home': typeof SmartHomeRoute
@@ -302,13 +351,15 @@ export interface FileRoutesById {
   '/trade': typeof TradeRoute
   '/wishlist': typeof WishlistRoute
   '/about/our-story': typeof AboutOurStoryRoute
+  '/checkout/payment': typeof CheckoutPaymentRoute
+  '/checkout/review': typeof CheckoutReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
   '/guides/measuring': typeof GuidesMeasuringRoute
   '/guides/returns': typeof GuidesReturnsRoute
   '/guides/shipping': typeof GuidesShippingRoute
   '/inspiration/$slug': typeof InspirationSlugRoute
-  '/inspiration/rooms': typeof InspirationRoomsRoute
+  '/inspiration/rooms': typeof InspirationRoomsRouteWithChildren
   '/legal/accessibility': typeof LegalAccessibilityRoute
   '/legal/cookies': typeof LegalCookiesRoute
   '/legal/privacy': typeof LegalPrivacyRoute
@@ -324,6 +375,8 @@ export interface FileRoutesById {
   '/inspiration/': typeof InspirationIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/shop/': typeof ShopIndexRoute
+  '/inspiration/rooms/$slug': typeof InspirationRoomsSlugRoute
+  '/inspiration/rooms/': typeof InspirationRoomsIndexRoute
   '/shop/needs/': typeof ShopNeedsIndexRoute
 }
 export interface FileRouteTypes {
@@ -331,7 +384,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cart'
+    | '/checkout'
     | '/contact'
+    | '/order-confirmation'
     | '/quote'
     | '/search'
     | '/smart-home'
@@ -340,6 +395,8 @@ export interface FileRouteTypes {
     | '/trade'
     | '/wishlist'
     | '/about/our-story'
+    | '/checkout/payment'
+    | '/checkout/review'
     | '/collections/$slug'
     | '/guides/care'
     | '/guides/measuring'
@@ -362,12 +419,16 @@ export interface FileRouteTypes {
     | '/inspiration/'
     | '/services/'
     | '/shop/'
+    | '/inspiration/rooms/$slug'
+    | '/inspiration/rooms/'
     | '/shop/needs/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/cart'
+    | '/checkout'
     | '/contact'
+    | '/order-confirmation'
     | '/quote'
     | '/search'
     | '/smart-home'
@@ -376,13 +437,14 @@ export interface FileRouteTypes {
     | '/trade'
     | '/wishlist'
     | '/about/our-story'
+    | '/checkout/payment'
+    | '/checkout/review'
     | '/collections/$slug'
     | '/guides/care'
     | '/guides/measuring'
     | '/guides/returns'
     | '/guides/shipping'
     | '/inspiration/$slug'
-    | '/inspiration/rooms'
     | '/legal/accessibility'
     | '/legal/cookies'
     | '/legal/privacy'
@@ -398,12 +460,16 @@ export interface FileRouteTypes {
     | '/inspiration'
     | '/services'
     | '/shop'
+    | '/inspiration/rooms/$slug'
+    | '/inspiration/rooms'
     | '/shop/needs'
   id:
     | '__root__'
     | '/'
     | '/cart'
+    | '/checkout'
     | '/contact'
+    | '/order-confirmation'
     | '/quote'
     | '/search'
     | '/smart-home'
@@ -412,6 +478,8 @@ export interface FileRouteTypes {
     | '/trade'
     | '/wishlist'
     | '/about/our-story'
+    | '/checkout/payment'
+    | '/checkout/review'
     | '/collections/$slug'
     | '/guides/care'
     | '/guides/measuring'
@@ -434,13 +502,17 @@ export interface FileRouteTypes {
     | '/inspiration/'
     | '/services/'
     | '/shop/'
+    | '/inspiration/rooms/$slug'
+    | '/inspiration/rooms/'
     | '/shop/needs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRouteWithChildren
   ContactRoute: typeof ContactRoute
+  OrderConfirmationRoute: typeof OrderConfirmationRoute
   QuoteRoute: typeof QuoteRoute
   SearchRoute: typeof SearchRoute
   SmartHomeRoute: typeof SmartHomeRoute
@@ -455,7 +527,7 @@ export interface RootRouteChildren {
   GuidesReturnsRoute: typeof GuidesReturnsRoute
   GuidesShippingRoute: typeof GuidesShippingRoute
   InspirationSlugRoute: typeof InspirationSlugRoute
-  InspirationRoomsRoute: typeof InspirationRoomsRoute
+  InspirationRoomsRoute: typeof InspirationRoomsRouteWithChildren
   LegalAccessibilityRoute: typeof LegalAccessibilityRoute
   LegalCookiesRoute: typeof LegalCookiesRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
@@ -490,11 +562,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order-confirmation': {
+      id: '/order-confirmation'
+      path: '/order-confirmation'
+      fullPath: '/order-confirmation'
+      preLoaderRoute: typeof OrderConfirmationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quote': {
@@ -566,6 +652,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/account/'
       preLoaderRoute: typeof AccountIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/checkout/payment': {
+      id: '/checkout/payment'
+      path: '/payment'
+      fullPath: '/checkout/payment'
+      preLoaderRoute: typeof CheckoutPaymentRouteImport
+      parentRoute: typeof CheckoutRoute
+    }
+    '/checkout/review': {
+      id: '/checkout/review'
+      path: '/review'
+      fullPath: '/checkout/review'
+      preLoaderRoute: typeof CheckoutReviewRouteImport
+      parentRoute: typeof CheckoutRoute
     }
     '/collections/': {
       id: '/collections/'
@@ -707,6 +807,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inspiration/rooms/': {
+      id: '/inspiration/rooms/'
+      path: '/'
+      fullPath: '/inspiration/rooms/'
+      preLoaderRoute: typeof InspirationRoomsIndexRouteImport
+      parentRoute: typeof InspirationRoomsRoute
+    }
+    '/inspiration/rooms/$slug': {
+      id: '/inspiration/rooms/$slug'
+      path: '/$slug'
+      fullPath: '/inspiration/rooms/$slug'
+      preLoaderRoute: typeof InspirationRoomsSlugRouteImport
+      parentRoute: typeof InspirationRoomsRoute
+    }
     '/shop/needs/': {
       id: '/shop/needs/'
       path: '/shop/needs'
@@ -717,10 +831,39 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface CheckoutRouteChildren {
+  CheckoutPaymentRoute: typeof CheckoutPaymentRoute
+  CheckoutReviewRoute: typeof CheckoutReviewRoute
+}
+
+const CheckoutRouteChildren: CheckoutRouteChildren = {
+  CheckoutPaymentRoute: CheckoutPaymentRoute,
+  CheckoutReviewRoute: CheckoutReviewRoute,
+}
+
+const CheckoutRouteWithChildren = CheckoutRoute._addFileChildren(
+  CheckoutRouteChildren,
+)
+
+interface InspirationRoomsRouteChildren {
+  InspirationRoomsSlugRoute: typeof InspirationRoomsSlugRoute
+  InspirationRoomsIndexRoute: typeof InspirationRoomsIndexRoute
+}
+
+const InspirationRoomsRouteChildren: InspirationRoomsRouteChildren = {
+  InspirationRoomsSlugRoute: InspirationRoomsSlugRoute,
+  InspirationRoomsIndexRoute: InspirationRoomsIndexRoute,
+}
+
+const InspirationRoomsRouteWithChildren =
+  InspirationRoomsRoute._addFileChildren(InspirationRoomsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRouteWithChildren,
   ContactRoute: ContactRoute,
+  OrderConfirmationRoute: OrderConfirmationRoute,
   QuoteRoute: QuoteRoute,
   SearchRoute: SearchRoute,
   SmartHomeRoute: SmartHomeRoute,
@@ -735,7 +878,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuidesReturnsRoute: GuidesReturnsRoute,
   GuidesShippingRoute: GuidesShippingRoute,
   InspirationSlugRoute: InspirationSlugRoute,
-  InspirationRoomsRoute: InspirationRoomsRoute,
+  InspirationRoomsRoute: InspirationRoomsRouteWithChildren,
   LegalAccessibilityRoute: LegalAccessibilityRoute,
   LegalCookiesRoute: LegalCookiesRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,

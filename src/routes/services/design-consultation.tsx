@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { rooms } from "@/data/collections";
+import { rooms } from "@/data/rooms";
 import { categories } from "@/data/categories";
 
 export const Route = createFileRoute("/services/design-consultation")({

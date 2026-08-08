@@ -20,9 +20,9 @@ interface QuickViewModalProps {
  */
 export function ProductQuickViewModal({ product, open, onOpenChange }: QuickViewModalProps) {
   const [quantity, setQuantity] = useState(1);
-  const [selectedMaterial, setSelectedMaterial] = useState<MaterialOption>(product.materials[0]);
-  const [selectedColor, setSelectedColor] = useState<ColorOption>(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState<SizeOption>(product.sizes[0]);
+  const [selectedMaterial, setSelectedMaterial] = useState<MaterialOption | undefined>(product.materials[0]);
+  const [selectedColor, setSelectedColor] = useState<ColorOption | undefined>(product.colors[0]);
+  const [selectedSize, setSelectedSize] = useState<SizeOption | undefined>(product.sizes[0]);
 
   const addToCart = useCartStore((s) => s.add);
 

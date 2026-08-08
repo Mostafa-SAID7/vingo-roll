@@ -4,7 +4,7 @@ import { pageHead } from "@/lib/seo";
 import { Crumbs, PageHeader, Section, EmptyState } from "@/components/common/section";
 import { Button } from "@/components/ui/button";
 import { ProductGrid } from "@/components/product/product-card";
-import { needs } from "@/data/collections";
+import { needs } from "@/data/needs";
 import { products } from "@/data/products";
 
 export const Route = createFileRoute("/shop/needs/")({

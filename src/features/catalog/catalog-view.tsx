@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { SlidersHorizontal, LayoutGrid, Rows3 } from "lucide-react";
 import type { Product } from "@/types";
+import { useProductFilters } from "@/hooks";
 import { ProductGrid } from "@/components/product/product-card";
 import { EmptyState } from "@/components/common/section";
 import { Button } from "@/components/ui/button";
@@ -16,9 +17,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categories } from "@/data/categories";
-import { needs as allNeeds, rooms as allRooms } from "@/data/collections";
+import { needs as allNeeds } from "@/data/needs";
+import { rooms as allRooms } from "@/data/rooms";
 import { productColors, productMaterials, priceBounds } from "@/data/products";
 import { formatPrice } from "@/lib/formatters";
+import type { FilterState } from "@/types/common";
+import { FILTER_DEFAULTS, SORT_OPTIONS } from "@/types/common";
 
 type Filters = {
   categories: string[];
@@ -30,6 +34,7 @@ type Filters = {
   motorized: boolean;
   inStock: boolean;
   price: [number, number];
+  sortBy: FilterState["sortBy"];
 };
 
 const emptyFilters: Filters = {
@@ -42,6 +47,7 @@ const emptyFilters: Filters = {
   motorized: false,
   inStock: false,
   price: [priceBounds.min, priceBounds.max],
+  sortBy: "featured",
 };
 
 const lightOptions = [
@@ -95,11 +101,10 @@ export function CatalogView({
   showCategoryFilter?: boolean;
 }) {
   const [filters, setFilters] = useState<Filters>(emptyFilters);
-  const [sort, setSort] = useState("featured");
   const [dense, setDense] = useState(false);
   const [visible, setVisible] = useState(9);
 
-  const toggle = (key: keyof Filters, value: string) =>
+  const toggle = (key: keyof Omit<Filters, "sortBy">, value: string) =>
     setFilters((f) => {
       const list = f[key] as string[];
       return {
@@ -108,35 +113,27 @@ export function CatalogView({
       };
     });
 
-  const filtered = useMemo(() => {
-    const result = products.filter((p) => {
-      if (lockedCategory && p.categoryId !== lockedCategory) return false;
-      if (filters.categories.length && !filters.categories.includes(p.categoryId)) return false;
-      if (filters.light.length && !filters.light.includes(p.lightControl ?? "")) return false;
-      if (filters.rooms.length && !filters.rooms.some((r) => p.roomTypes?.includes(r)))
-        return false;
-      if (filters.needs.length && !filters.needs.some((n) => p.needs?.includes(n))) return false;
-      if (filters.colors.length && !filters.colors.some((c) => p.colors.some((pc) => pc.id === c)))
-        return false;
-      if (
-        filters.materials.length &&
-        !filters.materials.some((m) => p.materials.some((pm) => pm.id === m))
-      )
-        return false;
-      if (filters.motorized && !p.motorized) return false;
-      if (filters.inStock && p.stockStatus !== "in-stock") return false;
-      if (p.price < filters.price[0] || p.price > filters.price[1]) return false;
-      return true;
-    });
+  // Convert Filters to FilterState for useProductFilters hook
+  const filterState: FilterState = {
+    priceRange: filters.price,
+    materialTiers: filters.materials,
+    lightControl: filters.light,
+    rooms: filters.rooms,
+    collections: filters.categories,
+    styles: filters.colors,
+    sortBy: filters.sortBy,
+  };
 
-    const sorted = [...result];
-    if (sort === "price-asc") sorted.sort((a, b) => a.price - b.price);
-    if (sort === "price-desc") sorted.sort((a, b) => b.price - a.price);
-    if (sort === "rating") sorted.sort((a, b) => b.rating - a.rating);
-    if (sort === "new") sorted.sort((a, b) => Number(!!b.newArrival) - Number(!!a.newArrival));
-    if (sort === "featured") sorted.sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
-    return sorted;
-  }, [products, filters, sort, lockedCategory]);
+  // Use the hook for consistent filtering logic
+  let filtered = useProductFilters(products, filterState);
+
+  // Apply additional category and stock filters
+  filtered = filtered.filter((p) => {
+    if (lockedCategory && p.categoryId !== lockedCategory) return false;
+    if (filters.motorized && !p.motorized) return false;
+    if (filters.inStock && p.stockStatus !== "in-stock") return false;
+    return true;
+  });
 
   const panel = (
     <div>
@@ -261,18 +258,18 @@ export function CatalogView({
                 <LayoutGrid className="h-4 w-4" aria-hidden="true" />
               )}
             </Button>
-            <Select value={sort} onValueChange={setSort}>
-              <SelectTrigger className="w-[10.5rem]" aria-label="Sort products">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="featured">Featured</SelectItem>
-                <SelectItem value="new">Newest</SelectItem>
-                <SelectItem value="price-asc">Price: low to high</SelectItem>
-                <SelectItem value="price-desc">Price: high to low</SelectItem>
-                <SelectItem value="rating">Top rated</SelectItem>
-              </SelectContent>
-            </Select>
+          <Select value={filters.sortBy} onValueChange={(value) => setFilters((f) => ({ ...f, sortBy: value as FilterState["sortBy"] }))}>
+            <SelectTrigger className="w-[10.5rem]" aria-label="Sort products">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="featured">Featured</SelectItem>
+              <SelectItem value="newest">Newest</SelectItem>
+              <SelectItem value="price-asc">Price: low to high</SelectItem>
+              <SelectItem value="price-desc">Price: high to low</SelectItem>
+              <SelectItem value="bestseller">Top rated</SelectItem>
+            </SelectContent>
+          </Select>
           </div>
         </div>
 

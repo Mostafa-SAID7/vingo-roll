@@ -1,147 +1,66 @@
-export type StockStatus = "in-stock" | "made-to-order" | "low-stock" | "sold-out";
-export type LightControl = "sheer" | "light-filtering" | "blackout";
-export type Installation = "diy" | "professional" | "both";
+/**
+ * Vingo Roll Type Exports
+ * Central export point for all types (re-exports from organized files)
+ */
 
-export type ProductImage = {
-  src: string;
-  alt: string;
-  kind: "main" | "room" | "texture" | "detail";
-};
+// Product types
+export type {
+  StockStatus,
+  LightControl,
+  Installation,
+  ProductImage,
+  MaterialOption,
+  ColorOption,
+  SizeOption,
+  Product,
+  Review,
+} from "./product";
 
-export type MaterialOption = {
-  id: string;
-  name: string;
-  priceDelta: number;
-  tier: "essential" | "signature" | "couture";
-};
+// Category & Collection types
+export type { Category, Collection, Room, Need } from "./category";
 
-export type ColorOption = {
-  id: string;
-  name: string;
-  hex: string;
-  family: string;
-};
+// Cart types
+export type { CartItem, CartState } from "./cart";
 
-export type SizeOption = {
-  id: string;
-  label: string;
-  widthIn: number;
-  heightIn: number;
-  priceDelta: number;
-};
+// Swatch types
+export type { Swatch, SwatchState } from "./swatch";
 
-export type Product = {
-  id: string;
-  slug: string;
-  name: string;
-  shortDescription: string;
-  description: string;
-  categoryId: string;
-  collectionId?: string | undefined;
-  price: number;
-  compareAtPrice?: number | undefined;
-  currency: string;
-  rating: number;
-  reviewCount: number;
-  images: ProductImage[];
-  materials: MaterialOption[];
-  colors: ColorOption[];
-  sizes: SizeOption[];
-  features: string[];
-  specifications: Record<string, string>;
-  lightControl?: LightControl | undefined;
-  roomTypes?: string[] | undefined;
-  needs?: string[] | undefined;
-  styleTags?: string[] | undefined;
-  installation?: Installation | undefined;
-  motorized?: boolean | undefined;
-  stockStatus: StockStatus;
-  featured?: boolean | undefined;
-  bestseller?: boolean | undefined;
-  newArrival?: boolean | undefined;
-  sale?: boolean | undefined;
-};
+// Inspiration & Wishlist types
+export type { InspirationPost, WishlistItem, WishlistState } from "./inspiration";
 
-export type Category = {
-  id: string;
-  slug: string;
-  name: string;
-  tagline: string;
-  description: string;
-  image: string;
-  group: "curtains" | "shades" | "blinds" | "specialty";
-};
+// Service types
+export type { Service, ConsultationBooking, FAQ } from "./service";
 
-export type Collection = {
-  id: string;
-  slug: string;
-  name: string;
-  story: string;
-  description: string;
-  image: string;
-  mood: string;
-};
+// Common types (Auth, Order, Filters)
+export type {
+  User,
+  UserPreferences,
+  SignupData,
+  LoginData,
+  AuthContextValue,
+  Address,
+  Order,
+  OrderStatus,
+  ShippingMethod,
+  FilterState,
+} from "./common";
 
-export type Room = {
-  id: string;
-  slug: string;
-  name: string;
-  description: string;
-  image: string;
-  recommended: string[];
-};
+export {
+  MOCK_USERS,
+  SHIPPING_METHODS,
+  US_STATES,
+  STATE_TAX_RATES,
+  calculateShipping,
+  calculateTax,
+  generateOrderId,
+  getEstimatedDelivery,
+  FILTER_DEFAULTS,
+  SORT_OPTIONS,
+  MATERIAL_TIERS,
+  LIGHT_CONTROLS,
+  STYLES,
+  ROOM_TYPES,
+  COLLECTIONS_LIST,
+  SERVICE_TOPICS,
+} from "./common";
 
-export type Need = {
-  id: string;
-  slug: string;
-  name: string;
-  description: string;
-  icon: string;
-};
-
-export type Swatch = {
-  id: string;
-  name: string;
-  material: string;
-  colorFamily: string;
-  hex: string;
-  lightControl: LightControl;
-  rooms: string[];
-  style: string;
-  image?: string | undefined;
-};
-
-export type InspirationPost = {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  body: string[];
-  room: string;
-  style: string;
-  treatment: string;
-  image: string;
-  productSlugs: string[];
-};
-
-export type Review = {
-  id: string;
-  productSlug: string;
-  author: string;
-  rating: number;
-  title: string;
-  body: string;
-  date: string;
-  verified: boolean;
-};
-
-export type Faq = { question: string; answer: string; topic: string };
-
-export type Service = {
-  id: string;
-  slug: string;
-  name: string;
-  summary: string;
-  details: string[];
-  price: string;
-};
