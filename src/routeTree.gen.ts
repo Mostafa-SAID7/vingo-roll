@@ -10,6 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as SmartHomeRouteImport } from './routes/smart-home'
+import { Route as TradeRouteImport } from './routes/trade'
+import { Route as AboutIndexRouteImport } from './routes/about/index'
+import { Route as AboutOurStoryRouteImport } from './routes/about/our-story'
 import { Route as CollectionsIndexRouteImport } from './routes/collections/index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections/$slug'
 import { Route as GuidesIndexRouteImport } from './routes/guides/index'
@@ -20,7 +25,12 @@ import { Route as GuidesShippingRouteImport } from './routes/guides/shipping'
 import { Route as InspirationIndexRouteImport } from './routes/inspiration/index'
 import { Route as InspirationSlugRouteImport } from './routes/inspiration/$slug'
 import { Route as InspirationRoomsRouteImport } from './routes/inspiration/rooms'
+import { Route as LegalAccessibilityRouteImport } from './routes/legal/accessibility'
+import { Route as LegalCookiesRouteImport } from './routes/legal/cookies'
+import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
+import { Route as LegalTermsRouteImport } from './routes/legal/terms'
 import { Route as ServicesIndexRouteImport } from './routes/services/index'
+import { Route as ServicesDesignConsultationRouteImport } from './routes/services/design-consultation'
 import { Route as ServicesMeasuringInstallationRouteImport } from './routes/services/measuring-installation'
 import { Route as ShopIndexRouteImport } from './routes/shop/index'
 import { Route as ShopCategoryRouteImport } from './routes/shop/$category'
@@ -29,6 +39,31 @@ import { Route as ShopNeedsIndexRouteImport } from './routes/shop/needs/index'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SmartHomeRoute = SmartHomeRouteImport.update({
+  id: '/smart-home',
+  path: '/smart-home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TradeRoute = TradeRouteImport.update({
+  id: '/trade',
+  path: '/trade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutIndexRoute = AboutIndexRouteImport.update({
+  id: '/about/',
+  path: '/about/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutOurStoryRoute = AboutOurStoryRouteImport.update({
+  id: '/about/our-story',
+  path: '/about/our-story',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
@@ -81,11 +116,37 @@ const InspirationRoomsRoute = InspirationRoomsRouteImport.update({
   path: '/inspiration/rooms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalAccessibilityRoute = LegalAccessibilityRouteImport.update({
+  id: '/legal/accessibility',
+  path: '/legal/accessibility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalCookiesRoute = LegalCookiesRouteImport.update({
+  id: '/legal/cookies',
+  path: '/legal/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/legal/privacy',
+  path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/legal/terms',
+  path: '/legal/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
   id: '/services/',
   path: '/services/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesDesignConsultationRoute =
+  ServicesDesignConsultationRouteImport.update({
+    id: '/services/design-consultation',
+    path: '/services/design-consultation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ServicesMeasuringInstallationRoute =
   ServicesMeasuringInstallationRouteImport.update({
     id: '/services/measuring-installation',
@@ -110,6 +171,10 @@ const ShopNeedsIndexRoute = ShopNeedsIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/smart-home': typeof SmartHomeRoute
+  '/trade': typeof TradeRoute
+  '/about/our-story': typeof AboutOurStoryRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
   '/guides/measuring': typeof GuidesMeasuringRoute
@@ -117,8 +182,14 @@ export interface FileRoutesByFullPath {
   '/guides/shipping': typeof GuidesShippingRoute
   '/inspiration/$slug': typeof InspirationSlugRoute
   '/inspiration/rooms': typeof InspirationRoomsRoute
+  '/legal/accessibility': typeof LegalAccessibilityRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
+  '/services/design-consultation': typeof ServicesDesignConsultationRoute
   '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
+  '/about/': typeof AboutIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/guides/': typeof GuidesIndexRoute
   '/inspiration/': typeof InspirationIndexRoute
@@ -128,6 +199,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/smart-home': typeof SmartHomeRoute
+  '/trade': typeof TradeRoute
+  '/about/our-story': typeof AboutOurStoryRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
   '/guides/measuring': typeof GuidesMeasuringRoute
@@ -135,8 +210,14 @@ export interface FileRoutesByTo {
   '/guides/shipping': typeof GuidesShippingRoute
   '/inspiration/$slug': typeof InspirationSlugRoute
   '/inspiration/rooms': typeof InspirationRoomsRoute
+  '/legal/accessibility': typeof LegalAccessibilityRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
+  '/services/design-consultation': typeof ServicesDesignConsultationRoute
   '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
+  '/about': typeof AboutIndexRoute
   '/collections': typeof CollectionsIndexRoute
   '/guides': typeof GuidesIndexRoute
   '/inspiration': typeof InspirationIndexRoute
@@ -147,6 +228,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/smart-home': typeof SmartHomeRoute
+  '/trade': typeof TradeRoute
+  '/about/our-story': typeof AboutOurStoryRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/guides/care': typeof GuidesCareRoute
   '/guides/measuring': typeof GuidesMeasuringRoute
@@ -154,8 +239,14 @@ export interface FileRoutesById {
   '/guides/shipping': typeof GuidesShippingRoute
   '/inspiration/$slug': typeof InspirationSlugRoute
   '/inspiration/rooms': typeof InspirationRoomsRoute
+  '/legal/accessibility': typeof LegalAccessibilityRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
+  '/services/design-consultation': typeof ServicesDesignConsultationRoute
   '/services/measuring-installation': typeof ServicesMeasuringInstallationRoute
   '/shop/$category': typeof ShopCategoryRoute
+  '/about/': typeof AboutIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/guides/': typeof GuidesIndexRoute
   '/inspiration/': typeof InspirationIndexRoute
@@ -167,6 +258,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/contact'
+    | '/smart-home'
+    | '/trade'
+    | '/about/our-story'
     | '/collections/$slug'
     | '/guides/care'
     | '/guides/measuring'
@@ -174,8 +269,14 @@ export interface FileRouteTypes {
     | '/guides/shipping'
     | '/inspiration/$slug'
     | '/inspiration/rooms'
+    | '/legal/accessibility'
+    | '/legal/cookies'
+    | '/legal/privacy'
+    | '/legal/terms'
+    | '/services/design-consultation'
     | '/services/measuring-installation'
     | '/shop/$category'
+    | '/about/'
     | '/collections/'
     | '/guides/'
     | '/inspiration/'
@@ -185,6 +286,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contact'
+    | '/smart-home'
+    | '/trade'
+    | '/about/our-story'
     | '/collections/$slug'
     | '/guides/care'
     | '/guides/measuring'
@@ -192,8 +297,14 @@ export interface FileRouteTypes {
     | '/guides/shipping'
     | '/inspiration/$slug'
     | '/inspiration/rooms'
+    | '/legal/accessibility'
+    | '/legal/cookies'
+    | '/legal/privacy'
+    | '/legal/terms'
+    | '/services/design-consultation'
     | '/services/measuring-installation'
     | '/shop/$category'
+    | '/about'
     | '/collections'
     | '/guides'
     | '/inspiration'
@@ -203,6 +314,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/contact'
+    | '/smart-home'
+    | '/trade'
+    | '/about/our-story'
     | '/collections/$slug'
     | '/guides/care'
     | '/guides/measuring'
@@ -210,8 +325,14 @@ export interface FileRouteTypes {
     | '/guides/shipping'
     | '/inspiration/$slug'
     | '/inspiration/rooms'
+    | '/legal/accessibility'
+    | '/legal/cookies'
+    | '/legal/privacy'
+    | '/legal/terms'
+    | '/services/design-consultation'
     | '/services/measuring-installation'
     | '/shop/$category'
+    | '/about/'
     | '/collections/'
     | '/guides/'
     | '/inspiration/'
@@ -222,6 +343,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  SmartHomeRoute: typeof SmartHomeRoute
+  TradeRoute: typeof TradeRoute
+  AboutOurStoryRoute: typeof AboutOurStoryRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   GuidesCareRoute: typeof GuidesCareRoute
   GuidesMeasuringRoute: typeof GuidesMeasuringRoute
@@ -229,8 +354,14 @@ export interface RootRouteChildren {
   GuidesShippingRoute: typeof GuidesShippingRoute
   InspirationSlugRoute: typeof InspirationSlugRoute
   InspirationRoomsRoute: typeof InspirationRoomsRoute
+  LegalAccessibilityRoute: typeof LegalAccessibilityRoute
+  LegalCookiesRoute: typeof LegalCookiesRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalTermsRoute: typeof LegalTermsRoute
+  ServicesDesignConsultationRoute: typeof ServicesDesignConsultationRoute
   ServicesMeasuringInstallationRoute: typeof ServicesMeasuringInstallationRoute
   ShopCategoryRoute: typeof ShopCategoryRoute
+  AboutIndexRoute: typeof AboutIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   GuidesIndexRoute: typeof GuidesIndexRoute
   InspirationIndexRoute: typeof InspirationIndexRoute
@@ -246,6 +377,41 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/smart-home': {
+      id: '/smart-home'
+      path: '/smart-home'
+      fullPath: '/smart-home'
+      preLoaderRoute: typeof SmartHomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trade': {
+      id: '/trade'
+      path: '/trade'
+      fullPath: '/trade'
+      preLoaderRoute: typeof TradeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/': {
+      id: '/about/'
+      path: '/about'
+      fullPath: '/about/'
+      preLoaderRoute: typeof AboutIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/our-story': {
+      id: '/about/our-story'
+      path: '/about/our-story'
+      fullPath: '/about/our-story'
+      preLoaderRoute: typeof AboutOurStoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collections/': {
@@ -318,11 +484,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InspirationRoomsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal/accessibility': {
+      id: '/legal/accessibility'
+      path: '/legal/accessibility'
+      fullPath: '/legal/accessibility'
+      preLoaderRoute: typeof LegalAccessibilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/cookies': {
+      id: '/legal/cookies'
+      path: '/legal/cookies'
+      fullPath: '/legal/cookies'
+      preLoaderRoute: typeof LegalCookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/legal/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/legal/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services/': {
       id: '/services/'
       path: '/services'
       fullPath: '/services/'
       preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/design-consultation': {
+      id: '/services/design-consultation'
+      path: '/services/design-consultation'
+      fullPath: '/services/design-consultation'
+      preLoaderRoute: typeof ServicesDesignConsultationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/measuring-installation': {
@@ -358,6 +559,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  SmartHomeRoute: SmartHomeRoute,
+  TradeRoute: TradeRoute,
+  AboutOurStoryRoute: AboutOurStoryRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   GuidesCareRoute: GuidesCareRoute,
   GuidesMeasuringRoute: GuidesMeasuringRoute,
@@ -365,8 +570,14 @@ const rootRouteChildren: RootRouteChildren = {
   GuidesShippingRoute: GuidesShippingRoute,
   InspirationSlugRoute: InspirationSlugRoute,
   InspirationRoomsRoute: InspirationRoomsRoute,
+  LegalAccessibilityRoute: LegalAccessibilityRoute,
+  LegalCookiesRoute: LegalCookiesRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalTermsRoute: LegalTermsRoute,
+  ServicesDesignConsultationRoute: ServicesDesignConsultationRoute,
   ServicesMeasuringInstallationRoute: ServicesMeasuringInstallationRoute,
   ShopCategoryRoute: ShopCategoryRoute,
+  AboutIndexRoute: AboutIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   GuidesIndexRoute: GuidesIndexRoute,
   InspirationIndexRoute: InspirationIndexRoute,
