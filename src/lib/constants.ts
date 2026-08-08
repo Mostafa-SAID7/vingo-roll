@@ -72,7 +72,7 @@ export const BREAKPOINTS = {
 export const REGEX = {
   EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   ZIP_CODE: /^\d{5}(-\d{4})?$/,
-  PHONE: /^[0-9\s\-\+\(\)]+$/,
+  PHONE: /^[0-9\s+()\-]+$/,
   CREDIT_CARD: /^\d{16}$/,
   CVC: /^\d{3}$/,
   EXPIRY: /^\d{2}\/\d{2}$/,

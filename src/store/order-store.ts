@@ -21,7 +21,7 @@ interface OrderState {
   addOrder: (order: Order) => void;
   getOrderById: (id: string) => Order | undefined;
   getUserOrders: (userId: string) => Order[];
-  updateOrderStatus: (orderId: string, status: string) => void;
+  updateOrderStatus: (orderId: string, status: OrderStatus) => void;
   clearOrders: () => void;
 
   // Checkout helpers
@@ -51,7 +51,7 @@ export const useOrderStore = create<OrderState>()(
           total: Math.round(total * 100) / 100,
           status: "confirmed",
           shippingAddress,
-          billingAddress: billingAddress || undefined,
+          ...(billingAddress && { billingAddress }),
           paymentMethod,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),

@@ -18,38 +18,46 @@ export function SearchView({ query: q }: SearchViewProps) {
   const navigate = useNavigate();
   const [value, setValue] = useState(q);
 
+  // Search hooks must be at component level, not in useMemo
+  const searchProducts = useSearch(
+    products.map((p) => ({
+      id: p.id,
+      name: p.name,
+      description: `${p.shortDescription} ${p.styles?.join(" ")} ${p.needs?.join(" ")}`,
+    })),
+    q,
+    { minChars: 1 }
+  );
+
+  const searchCategories = useSearch(
+    categories.map((c) => ({
+      id: c.id,
+      name: c.name,
+      description: c.description,
+    })),
+    q,
+    { minChars: 1 }
+  );
+
+  const searchPosts = useSearch(
+    inspiration.map((i) => ({
+      id: i.id,
+      name: i.title,
+      description: `${i.excerpt} ${i.room}`,
+    })),
+    q,
+    { minChars: 1 }
+  );
+
+  // Now use the search results in useMemo
   const results = useMemo(() => {
     if (!q.trim()) return { products: [], categories: [], posts: [] };
     return {
-      products: useSearch(
-        products.map((p) => ({
-          id: p.id,
-          name: p.name,
-          description: `${p.shortDescription} ${p.styles?.join(" ")} ${p.needs?.join(" ")}`,
-        })),
-        q,
-        { minChars: 1 }
-      ).map((item) => products.find((p) => p.id === item.id)!),
-      categories: useSearch(
-        categories.map((c) => ({
-          id: c.id,
-          name: c.name,
-          description: c.description,
-        })),
-        q,
-        { minChars: 1 }
-      ).map((item) => categories.find((c) => c.id === item.id)!),
-      posts: useSearch(
-        inspiration.map((i) => ({
-          id: i.id,
-          name: i.title,
-          description: `${i.excerpt} ${i.room}`,
-        })),
-        q,
-        { minChars: 1 }
-      ).map((item) => inspiration.find((i) => i.id === item.id)!),
+      products: searchProducts.map((item) => products.find((p) => p.id === item.id)!),
+      categories: searchCategories.map((item) => categories.find((c) => c.id === item.id)!),
+      posts: searchPosts.map((item) => inspiration.find((i) => i.id === item.id)!),
     };
-  }, [q]);
+  }, [q, searchProducts, searchCategories, searchPosts]);
 
   const empty =
     q.trim() && !results.products.length && !results.categories.length && !results.posts.length;
