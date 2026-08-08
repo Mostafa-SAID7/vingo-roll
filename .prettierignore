@@ -6,3 +6,8 @@ pnpm-lock.yaml
 package-lock.json
 bun.lock
 routeTree.gen.ts
+# GitHub Actions workflows with YAML syntax issues
+.github/workflows/feature-branch.yml
+.github/workflows/gitflow-hotfix.yml
+.github/workflows/gitflow-release.yml
+.github/workflows/security.yml
