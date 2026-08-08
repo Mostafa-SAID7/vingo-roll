@@ -14,7 +14,7 @@ export const Route = createFileRoute("/order-confirmation")({
       path: "/order-confirmation",
     }),
   validateSearch: (search: Record<string, unknown>) => ({
-    orderId: (search['orderId'] as string) || "",
+    orderId: (search["orderId"] as string) || "",
   }),
   component: Page,
 });

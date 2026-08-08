@@ -9,23 +9,25 @@
 
 ## Node Version Support
 
-| Version | Status | Notes |
-|---------|--------|-------|
-| Node 20.x | ✅ Supported | Current recommended version |
-| Node 22.x | ✅ Ready | Will work when upgraded |
-| Node 18.x | ⚠️ Not tested | May have compatibility issues |
-| Node <18 | ❌ Not supported | Too old |
+| Version   | Status           | Notes                         |
+| --------- | ---------------- | ----------------------------- |
+| Node 20.x | ✅ Supported     | Current recommended version   |
+| Node 22.x | ✅ Ready         | Will work when upgraded       |
+| Node 18.x | ⚠️ Not tested    | May have compatibility issues |
+| Node <18  | ❌ Not supported | Too old                       |
 
 ---
 
 ## Current Configuration
 
 ### .nvmrc
+
 ```
 20.20.2
 ```
 
 ### package.json engines
+
 ```json
 {
   "engines": {
@@ -36,6 +38,7 @@
 ```
 
 ### .npmrc Settings
+
 ```
 legacy-peer-deps=true
 engine-strict=false
@@ -46,12 +49,14 @@ engine-strict=false
 ## Why These Settings?
 
 ### legacy-peer-deps
+
 - TanStack React Start v1.168.x declares Node >=22.12.0
 - Our Docker uses Node 20 (more stable, widely available)
 - `legacy-peer-deps=true` allows installation with compatible versions
 - Build and functionality unaffected
 
 ### engine-strict=false
+
 - Prevents npm from blocking installation due to engine mismatch
 - Warnings still shown (informational)
 - Tests verify actual compatibility
@@ -104,6 +109,7 @@ docker-compose up -d
 **Cause**: TanStack packages require Node 22.12.0+
 
 **Solution**:
+
 ```bash
 # Use .npmrc with legacy-peer-deps
 npm install --legacy-peer-deps
@@ -118,6 +124,7 @@ npm install --legacy-peer-deps
 **Cause**: package-lock.json out of sync with package.json
 
 **Solution**:
+
 ```bash
 # Regenerate lock file
 npm install
@@ -130,6 +137,7 @@ npm install
 **Cause**: Docker image needs legacy-peer-deps flag
 
 **Solution**:
+
 ```bash
 # Already configured in Dockerfile:
 RUN npm ci --legacy-peer-deps
@@ -182,28 +190,32 @@ git commit -m "chore: upgrade to Node 22.12.0"
 ### GitHub Actions
 
 Current workflow uses Node 20:
+
 ```yaml
 - uses: actions/setup-node@v4
   with:
-    node-version: '20'
+    node-version: "20"
 ```
 
 When upgrading:
+
 ```yaml
 - uses: actions/setup-node@v4
   with:
-    node-version: '22'
-    cache: 'npm'
+    node-version: "22"
+    cache: "npm"
 ```
 
 ### Docker
 
 Current Dockerfile uses Node 20:
+
 ```dockerfile
 FROM node:20-alpine
 ```
 
 When upgrading:
+
 ```dockerfile
 FROM node:22-alpine
 ```
@@ -232,6 +244,7 @@ npm install package@latest
 **Cause**: Lock file needs regeneration
 
 **Fix**:
+
 ```bash
 rm package-lock.json
 npm install
@@ -242,6 +255,7 @@ npm install
 **Cause**: Some dependencies are outdated
 
 **Fix**: These are warnings only. Build still works. Monitor for updates:
+
 ```bash
 npm outdated
 ```
@@ -251,6 +265,7 @@ npm outdated
 **Cause**: Missing --legacy-peer-deps flag
 
 **Fix**: Both Dockerfiles already include this flag. If custom Docker:
+
 ```dockerfile
 RUN npm ci --legacy-peer-deps
 ```
@@ -309,12 +324,12 @@ The flag only affects dependency resolution during installation.
 
 ## Long-term Strategy
 
-| Phase | When | Action |
-|-------|------|--------|
-| **Now** | Aug 2026 | Use Node 20.20.2 + legacy-peer-deps |
-| **Q4 2026** | Oct-Dec | Evaluate Node 22.x stability |
-| **Q1 2027** | Jan-Mar | Plan Node 22.x upgrade |
-| **Future** | Later | Upgrade to Node 22+ |
+| Phase       | When     | Action                              |
+| ----------- | -------- | ----------------------------------- |
+| **Now**     | Aug 2026 | Use Node 20.20.2 + legacy-peer-deps |
+| **Q4 2026** | Oct-Dec  | Evaluate Node 22.x stability        |
+| **Q1 2027** | Jan-Mar  | Plan Node 22.x upgrade              |
+| **Future**  | Later    | Upgrade to Node 22+                 |
 
 ---
 

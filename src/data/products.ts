@@ -316,11 +316,11 @@ function buildProduct(seed: Seed): Product {
     ...(seed.flags?.newArrival && { newArrival: seed.flags.newArrival }),
     ...(seed.flags?.sale && { sale: seed.flags.sale }),
   };
-  
+
   if (seed.collectionId) {
     product.collectionId = seed.collectionId;
   }
-  
+
   return product;
 }
 

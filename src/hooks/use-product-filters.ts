@@ -32,10 +32,12 @@ export function useProductFilters(products: Product[], filters: FilterState): Pr
 
     // Room filter
     if (filters.rooms.length > 0) {
-      filtered = filtered.filter((p) => p.rooms?.some((r) => {
-        const roomSlug = typeof r === 'string' ? r : r.slug;
-        return filters.rooms.includes(roomSlug);
-      }));
+      filtered = filtered.filter((p) =>
+        p.rooms?.some((r) => {
+          const roomSlug = typeof r === "string" ? r : r.slug;
+          return filters.rooms.includes(roomSlug);
+        }),
+      );
     }
 
     // Collection filter

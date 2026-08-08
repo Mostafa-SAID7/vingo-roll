@@ -77,7 +77,7 @@ docker run -p 3000:3000 ghcr.io/Mostafa-SAID7/vingo-roll-studio:v1.9.4
 ### Docker Compose
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   vingo-app:
     image: mohammedhossam/vingo-roll-studio:v1.9.4
@@ -92,19 +92,19 @@ services:
 
 ## 📚 Tech Stack Details
 
-| Layer | Technology |
-|-------|-----------|
-| **Frontend** | React 19 |
-| **Framework** | TanStack Start |
-| **Routing** | TanStack Router |
-| **Styling** | Tailwind CSS v4 |
-| **UI** | Radix UI Components |
-| **Forms** | React Hook Form + Zod |
-| **State** | Zustand + TanStack Query |
-| **Build** | Vite |
-| **Language** | TypeScript |
-| **Linting** | ESLint |
-| **Formatting** | Prettier |
+| Layer          | Technology               |
+| -------------- | ------------------------ |
+| **Frontend**   | React 19                 |
+| **Framework**  | TanStack Start           |
+| **Routing**    | TanStack Router          |
+| **Styling**    | Tailwind CSS v4          |
+| **UI**         | Radix UI Components      |
+| **Forms**      | React Hook Form + Zod    |
+| **State**      | Zustand + TanStack Query |
+| **Build**      | Vite                     |
+| **Language**   | TypeScript               |
+| **Linting**    | ESLint                   |
+| **Formatting** | Prettier                 |
 
 ---
 
@@ -124,6 +124,7 @@ src/
 ## 🎨 Design System
 
 Modern, premium aesthetic:
+
 - Rounded corners (6-24px) for contemporary look
 - Glassmorphism with semi-transparent surfaces
 - Smooth animations (60fps GPU accelerated)

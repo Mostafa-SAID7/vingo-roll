@@ -30,18 +30,22 @@ function Page() {
 
   // Get products for this room
   const roomProducts = products
-    .filter((p) => p.rooms?.some((r) => {
-      const roomSlug = typeof r === 'string' ? r : r.slug;
-      return roomSlug === room.slug;
-    }))
+    .filter((p) =>
+      p.rooms?.some((r) => {
+        const roomSlug = typeof r === "string" ? r : r.slug;
+        return roomSlug === room.slug;
+      }),
+    )
     .slice(0, 12);
 
   // Get inspiration posts for this room
   const relatedPosts = products
-    .filter((p) => p.rooms?.some((r) => {
-      const roomSlug = typeof r === 'string' ? r : r.slug;
-      return roomSlug === room.slug;
-    }))
+    .filter((p) =>
+      p.rooms?.some((r) => {
+        const roomSlug = typeof r === "string" ? r : r.slug;
+        return roomSlug === room.slug;
+      }),
+    )
     .slice(0, 3);
 
   const categories = Array.from(

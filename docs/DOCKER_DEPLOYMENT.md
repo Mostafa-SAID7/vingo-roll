@@ -58,12 +58,14 @@ This guide covers Docker deployment for Vingo Roll Studio. We provide multiple d
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/vingo-roll-studio.git
    cd vingo-roll-studio
    ```
 
 2. **Build and run with Docker Compose**
+
    ```bash
    docker-compose up -d
    ```
@@ -165,11 +167,11 @@ docker rm vingo-roll
 
 ### Environment Variables
 
-| Variable | Value | Notes |
-|----------|-------|-------|
-| NODE_ENV | production | Required for optimization |
-| PORT | 3000 | Application port |
-| VITE_* | * | Vite environment variables |
+| Variable | Value      | Notes                      |
+| -------- | ---------- | -------------------------- |
+| NODE_ENV | production | Required for optimization  |
+| PORT     | 3000       | Application port           |
+| VITE_*   | *          | Vite environment variables |
 
 ---
 
@@ -178,6 +180,7 @@ docker rm vingo-roll
 ### Services
 
 #### app-dev (Development)
+
 ```yaml
 # Development Vite server
 # Port: 5173
@@ -186,6 +189,7 @@ docker rm vingo-roll
 ```
 
 #### app (Production)
+
 ```yaml
 # Production Node.js app
 # Port: 3000
@@ -194,6 +198,7 @@ docker rm vingo-roll
 ```
 
 #### nginx (Reverse Proxy)
+
 ```yaml
 # Nginx reverse proxy
 # Ports: 80 (HTTP), 443 (HTTPS)
@@ -495,10 +500,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 256M
 ```
 
@@ -576,6 +581,7 @@ Before deploying to production:
 ## Support
 
 For issues or questions:
+
 - GitHub Issues: [Report a bug](https://github.com/yourusername/vingo-roll-studio/issues)
 - Documentation: See [docs/](../docs/)
 - Code Quality: See [docs/CODE_QUALITY.md](./CODE_QUALITY.md)

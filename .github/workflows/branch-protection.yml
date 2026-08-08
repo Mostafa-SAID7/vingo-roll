@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github/branch-protection.yml'
+      - ".github/branch-protection.yml"
   workflow_dispatch:
 
 permissions:

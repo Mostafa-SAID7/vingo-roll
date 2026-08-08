@@ -7,12 +7,14 @@ This document defines the code quality standards and automated checks for the Vi
 ## Standards
 
 ### TypeScript
+
 - **Target**: 0 compilation errors
 - **Command**: `npm run build` (includes TypeScript check)
 - **Strict Mode**: Enabled (`tsconfig.json`)
 - **exactOptionalPropertyTypes**: Enabled
 
 ### ESLint
+
 - **Target**: 0 errors (warnings are acceptable during development)
 - **Command**: `npm run lint`
 - **Auto-Fix**: `npm run lint -- --fix`
@@ -23,6 +25,7 @@ This document defines the code quality standards and automated checks for the Vi
   - @typescript-eslint
 
 ### Prettier
+
 - **Print Width**: 100 characters
 - **Tabs**: 2 spaces
 - **Semi**: true
@@ -34,7 +37,9 @@ This document defines the code quality standards and automated checks for the Vi
 ## Automated Checks
 
 ### Pre-Commit Hook (Husky)
+
 Runs automatically before each commit:
+
 1. ESLint with `--fix` on staged files
 2. Prettier on staged files
 3. Git adds fixed files to staging area
@@ -44,30 +49,38 @@ Runs automatically before each commit:
 ### GitHub Actions Workflows
 
 #### 1. **CI Pipeline** (`.github/workflows/ci.yml`)
+
 Runs on:
+
 - Push to main, develop
 - Pull requests
 - Schedule: Daily at 00:00 UTC
 
 Checks:
+
 - ✅ TypeScript compilation (`npm run build`)
 - ✅ ESLint validation (`npm run lint`)
 - ✅ Type checking (included in build)
 
 #### 2. **Auto Lint & Format** (`.github/workflows/lint-fix.yml`)
+
 Runs on:
+
 - Push to main, develop
 - Pull requests
 - Schedule: Daily at 2:00 AM UTC
 
 Actions:
+
 - Runs ESLint with `--fix`
 - Runs Prettier with `--write`
 - Auto-commits fixes (if any)
 - Pushes to the same branch
 
 #### 3. **Branch Protection** (`.github/workflows/branch-protection.yml`)
+
 Automatically configures:
+
 - **main**: Requires 1 approval, all status checks, no force push
 - **develop**: Requires 1 approval, build+lint checks, no force push
 
@@ -111,6 +124,7 @@ npm run lint && npm run build
 Format: `<type>: <subject>`
 
 **Types**:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `refactor`: Code refactoring
@@ -121,6 +135,7 @@ Format: `<type>: <subject>`
 - `chore`: Maintenance
 
 **Examples**:
+
 ```
 feat: add dark mode toggle
 fix: resolve React hooks violation
@@ -130,18 +145,21 @@ ci: update lint workflow
 ## Branch Strategy
 
 ### Main Branch
+
 - Production-ready code
 - Requires PR with 1 approval
 - All checks must pass
 - Auto-lint enabled
 
 ### Develop Branch
+
 - Integration branch
 - Requires PR with 1 approval
 - Build + Lint checks required
 - Auto-lint enabled
 
 ### Feature Branches
+
 - Named: `feature/feature-name`
 - Develop against `develop`
 - Must pass all checks before PR
@@ -149,18 +167,21 @@ ci: update lint workflow
 ## Troubleshooting
 
 ### Pre-commit hook not running
+
 ```bash
 # Re-install hooks
 npx husky install
 ```
 
 ### ESLint cache issues
+
 ```bash
 # Clear cache
 npm run lint -- --fix --cache-location .eslintcache
 ```
 
 ### Prettier formatting conflicts
+
 ```bash
 # Format all files
 npx prettier --write .
@@ -170,6 +191,7 @@ npm run lint
 ```
 
 ### Line ending issues (CRLF vs LF)
+
 ```bash
 # Configure Git
 git config core.autocrlf true
@@ -197,6 +219,7 @@ git commit -m "chore: normalize line endings"
 ## Continuous Improvement
 
 This code quality setup is reviewed:
+
 - Monthly for performance
 - When new tools are adopted
 - Based on team feedback
