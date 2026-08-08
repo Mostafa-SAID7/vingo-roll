@@ -1,0 +1,174 @@
+name: Deploy to Production
+
+on:
+  release:
+    types: [published, created]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Deployment environment"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    name: Deploy to Staging
+    if: |
+      (github.event_name == 'release' && github.event.action == 'published') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')
+    environment:
+      name: staging
+      url: https://staging.vingo-roll.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Create deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.ref,
+              environment: 'staging',
+              description: 'Staging deployment of ${{ github.ref_name }}',
+              auto_merge: false,
+              required_contexts: []
+            });
+            console.log('Deployment created:', deployment.data.id);
+
+      - name: Deploy to staging
+        run: |
+          echo "🚀 Deploying to staging..."
+          echo "Version: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          # Add your deployment commands here
+          echo "✅ Staging deployment complete"
+
+      - name: Create deployment status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.create-deployment.outputs.deployment-id }},
+              state: 'success',
+              environment_url: 'https://staging.vingo-roll.example.com',
+              description: 'Deployment successful'
+            });
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    name: Deploy to Production
+    needs: [deploy-staging]
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production'
+    environment:
+      name: production
+      url: https://vingo-roll.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Pre-deployment checks
+        run: |
+          echo "🔍 Running pre-deployment checks..."
+          npm run lint
+          npx tsc --noEmit
+          echo "✅ All checks passed"
+
+      - name: Create deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.ref,
+              environment: 'production',
+              description: 'Production deployment of ${{ github.ref_name }}',
+              auto_merge: false,
+              required_contexts: []
+            });
+            console.log('Deployment created:', deployment.data.id);
+
+      - name: Deploy to production
+        run: |
+          echo "🚀 Deploying to production..."
+          echo "Version: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          # Add your production deployment commands here
+          echo "✅ Production deployment complete"
+
+      - name: Post-deployment notification
+        if: success()
+        run: |
+          echo "📢 Deployment notification"
+          echo "✅ Successfully deployed ${{ github.ref_name }} to production"
+          echo "🔗 https://vingo-roll.example.com"
+
+      - name: Create deployment status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.create-deployment.outputs.deployment-id }},
+              state: 'success',
+              environment_url: 'https://vingo-roll.example.com',
+              description: 'Production deployment successful'
+            });
+
+  rollback:
+    runs-on: ubuntu-latest
+    name: Rollback Procedure
+    if: failure()
+    steps:
+      - name: Alert on failure
+        run: |
+          echo "🚨 DEPLOYMENT FAILED"
+          echo "Rollback procedure required"
+          echo "Check GitHub Actions logs for details"

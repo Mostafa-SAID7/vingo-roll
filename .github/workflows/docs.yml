@@ -1,0 +1,168 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "docs/**"
+      - "README.md"
+      - "CONTRIBUTING.md"
+      - "CHANGELOG.md"
+      - ".github/workflows/docs.yml"
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "docs/**"
+      - "README.md"
+      - "CONTRIBUTING.md"
+      - "CHANGELOG.md"
+  workflow_dispatch:
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+    name: Validate Documentation
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check markdown files
+        run: |
+          echo "📋 Checking Markdown files..."
+          if command -v mdl &> /dev/null; then
+            mdl docs/ --style relaxed || true
+          else
+            echo "⚠️  mdl not installed, skipping linting"
+          fi
+
+      - name: Check broken links
+        run: |
+          echo "🔗 Checking documentation links..."
+          for file in docs/*.md README.md CONTRIBUTING.md CHANGELOG.md; do
+            if [ -f "$file" ]; then
+              echo "Checking $file..."
+              grep -o '\[.*\](.*\.md)' "$file" | while read line; do
+                link=$(echo "$line" | grep -o '\(.*\.md\)' | tr -d '()')
+                if [ -n "$link" ] && [ ! -f "$link" ]; then
+                  echo "⚠️  Broken link found: $link in $file"
+                fi
+              done
+            fi
+          done
+
+      - name: Validate documentation structure
+        run: |
+          echo "📂 Validating documentation structure..."
+          required_files=(
+            "README.md"
+            "CONTRIBUTING.md"
+            "CHANGELOG.md"
+            "docs/INDEX.md"
+            "docs/GITFLOW.md"
+            "docs/RELEASES.md"
+            "docs/ERROR_HANDLING.md"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ $file exists"
+            else
+              echo "⚠️  Missing: $file"
+            fi
+          done
+
+  generate-toc:
+    runs-on: ubuntu-latest
+    name: Generate Documentation TOC
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate TOC
+        run: |
+          echo "📚 Generating Table of Contents..."
+          if command -v markdown-toc &> /dev/null; then
+            markdown-toc docs/*.md || true
+          else
+            echo "⚠️  markdown-toc not available"
+          fi
+
+  test-examples:
+    runs-on: ubuntu-latest
+    name: Test Documentation Examples
+    if: contains(github.event.head_commit.message, 'docs:') || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test TypeScript examples
+        run: |
+          echo "✓ TypeScript compilation check"
+          npx tsc --noEmit
+
+      - name: Verify code quality
+        run: |
+          echo "✓ Code quality checks"
+          npm run lint
+
+  build-docs:
+    runs-on: ubuntu-latest
+    name: Build Documentation
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Compile documentation
+        run: |
+          echo "📖 Preparing documentation artifacts..."
+          # Create documentation archive
+          mkdir -p _site
+          cp -r docs/* _site/
+          cp README.md _site/
+          cp CONTRIBUTING.md _site/
+          cp CHANGELOG.md _site/
+
+      - name: Upload documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: _site/
+          retention-days: 30
+
+      - name: Archive documentation
+        run: |
+          tar -czf documentation.tar.gz _site/
+          echo "✅ Documentation archived"
+
+  summary:
+    runs-on: ubuntu-latest
+    name: Documentation Summary
+    needs: [validate-docs]
+    if: always()
+
+    steps:
+      - name: Print summary
+        run: |
+          echo "📚 Documentation Workflow Summary"
+          echo "✅ Validation completed"
+          echo "📝 Check workflow logs for details"

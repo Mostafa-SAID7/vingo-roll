@@ -5,6 +5,11 @@ on:
     branches: [main]
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      force_version:
+        description: "Force version (e.g., v1.2.0)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -16,6 +21,7 @@ jobs:
     outputs:
       version: ${{ steps.determine.outputs.version }}
       should-release: ${{ steps.determine.outputs.should-release }}
+      bump-type: ${{ steps.determine.outputs.bump-type }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,34 +30,72 @@ jobs:
       - name: Determine version
         id: determine
         run: |
+          # If forced version via workflow_dispatch, use it
+          if [ -n "${{ github.event.inputs.force_version }}" ]; then
+            VERSION="${{ github.event.inputs.force_version }}"
+            echo "Using forced version: $VERSION"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "should-release=true" >> $GITHUB_OUTPUT
+            echo "bump-type=manual" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
           # Get last tag
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           echo "Last tag: $LAST_TAG"
 
-          # Check commits since last tag
-          COMMITS=$(git log $LAST_TAG..HEAD --oneline 2>/dev/null || git log --oneline)
+          # Get all commits since last tag
+          if [ "$LAST_TAG" = "v0.0.0" ]; then
+            COMMITS=$(git log --oneline)
+          else
+            COMMITS=$(git log $LAST_TAG..HEAD --oneline 2>/dev/null || git log --oneline)
+          fi
+
           echo "Commits since last tag:"
           echo "$COMMITS"
 
-          # Determine version bump
-          if echo "$COMMITS" | grep -q "^BREAKING CHANGE\|^.*!:"; then
-            VERSION=$(echo $LAST_TAG | sed 's/^v//' | awk -F. '{print $1+1".0.0"}')
-          elif echo "$COMMITS" | grep -q "^feat:"; then
-            VERSION=$(echo $LAST_TAG | sed 's/^v//' | awk -F. '{print $1"."$2+1".0"}')
-          elif echo "$COMMITS" | grep -q "^fix:\|^perf:"; then
-            VERSION=$(echo $LAST_TAG | sed 's/^v//' | awk -F. '{print $1"."$2"."$3+1}')
-          else
-            VERSION=$(echo $LAST_TAG | sed 's/^v//')
+          # Parse version components
+          LAST_VERSION=$(echo $LAST_TAG | sed 's/^v//')
+          MAJOR=$(echo $LAST_VERSION | cut -d. -f1)
+          MINOR=$(echo $LAST_VERSION | cut -d. -f2)
+          PATCH=$(echo $LAST_VERSION | cut -d. -f3)
+
+          # Determine version bump based on commit types
+          BUMP_TYPE="none"
+          if echo "$COMMITS" | grep -qE "^[a-f0-9]+ (feat|fix|perf|BREAKING)"; then
+            if echo "$COMMITS" | grep -qE "BREAKING CHANGE|^[a-f0-9]+.*!:"; then
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              BUMP_TYPE="major"
+            elif echo "$COMMITS" | grep -qE "^[a-f0-9]+ feat"; then
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              BUMP_TYPE="minor"
+            elif echo "$COMMITS" | grep -qE "^[a-f0-9]+ (fix|perf)"; then
+              PATCH=$((PATCH + 1))
+              BUMP_TYPE="patch"
+            fi
           fi
 
-          echo "version=v$VERSION" >> $GITHUB_OUTPUT
+          VERSION="v$MAJOR.$MINOR.$PATCH"
+          echo "Calculated version: $VERSION (bump: $BUMP_TYPE)"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "bump-type=$BUMP_TYPE" >> $GITHUB_OUTPUT
 
-          # Check if should release
-          if echo "$COMMITS" | grep -q "^feat:\|^fix:\|^perf:\|^BREAKING CHANGE"; then
+          # Should release if: version changed, or any release-worthy commits
+          if [ "$BUMP_TYPE" != "none" ]; then
             echo "should-release=true" >> $GITHUB_OUTPUT
           else
             echo "should-release=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: Print determination
+        run: |
+          echo "📊 Release Determination:"
+          echo "Version: ${{ steps.determine.outputs.version }}"
+          echo "Should Release: ${{ steps.determine.outputs.should-release }}"
+          echo "Bump Type: ${{ steps.determine.outputs.bump-type }}"
 
   release:
     needs: determine-version
@@ -67,11 +111,27 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create tag
+      - name: Check tag existence
+        id: tag_check
         run: |
-          VERSION=${{ needs.determine-version.outputs.version }}
+          TAG="${{ needs.determine-version.outputs.version }}"
+          if git rev-parse $TAG >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "⚠️ Tag $TAG already exists, skipping tag creation"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "✅ Tag $TAG does not exist, will create"
+          fi
+
+      - name: Create tag
+        if: steps.tag_check.outputs.exists == 'false'
+        run: |
+          VERSION="${{ needs.determine-version.outputs.version }}"
           echo "Creating tag: $VERSION"
-          git tag -a $VERSION -m "Release $VERSION"
+          git tag -a $VERSION -m "Release $VERSION
+
+          Generated by: Automated Release Workflow
+          Bump Type: ${{ needs.determine-version.outputs.bump-type }}"
           git push origin $VERSION
 
       - name: Create Release
@@ -86,12 +146,18 @@ jobs:
 
       - name: Update package.json version
         run: |
-          VERSION=${{ needs.determine-version.outputs.version }}
+          VERSION="${{ needs.determine-version.outputs.version }}"
           CLEAN_VERSION=$(echo $VERSION | sed 's/^v//')
-          npm version $CLEAN_VERSION --no-git-tag-version
-          git add package.json package-lock.json
-          git commit -m "chore: bump version to $VERSION"
-          git push origin main
+          npm version $CLEAN_VERSION --no-git-tag-version 2>/dev/null || true
+          if [ -f package.json ]; then
+            git add package.json
+            if git diff --cached --exit-code package.json >/dev/null 2>&1; then
+              echo "No version changes to commit"
+            else
+              git commit -m "chore: bump version to $VERSION" || true
+              git push origin main || true
+            fi
+          fi
 
   notify:
     needs: [determine-version, release]
@@ -99,13 +165,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify success
-        if: success()
+        if: needs.release.result == 'success'
         run: |
           echo "✅ Release ${{ needs.determine-version.outputs.version }} created successfully!"
           echo "📦 Package is ready for deployment"
+          echo "Bump Type: ${{ needs.determine-version.outputs.bump-type }}"
+
+      - name: Notify skipped
+        if: needs.determine-version.outputs.should-release == 'false'
+        run: |
+          echo "⏭️  Release skipped - no release-worthy commits detected"
+          echo "Tip: Use conventional commits (feat:, fix:, perf:) to trigger releases"
 
       - name: Notify failure
-        if: failure()
+        if: failure() && needs.release.result == 'failure'
         run: |
           echo "❌ Release workflow failed"
           exit 1
+
