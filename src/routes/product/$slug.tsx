@@ -46,10 +46,43 @@ export const Route = createFileRoute("/product/$slug")({
           "@context": "https://schema.org",
           "@type": "Product",
           name: p.name,
-          description: p.shortDescription,
-          offers: { "@type": "Offer", price: p.price, priceCurrency: p.currency },
+          description: p.description,
+          sku: p.slug,
+          image: p.images.map((i) => i.src),
+          brand: { "@type": "Brand", name: "Vingo Roll" },
+          category: p.categoryId.replace("cat-", ""),
+          ...(p.reviewCount
+            ? {
+                aggregateRating: {
+                  "@type": "AggregateRating",
+                  ratingValue: p.rating,
+                  reviewCount: p.reviewCount,
+                },
+              }
+            : {}),
+          offers: {
+            "@type": "Offer",
+            price: p.price,
+            priceCurrency: p.currency,
+            availability:
+              p.stockStatus === "in-stock"
+                ? "https://schema.org/InStock"
+                : "https://schema.org/PreOrder",
+            itemCondition: "https://schema.org/NewCondition",
+            url: `/product/${p.slug}`,
+          },
+        }),
+        jsonLd({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+            { "@type": "ListItem", position: 2, name: "Shop", item: "/shop" },
+            { "@type": "ListItem", position: 3, name: p.name, item: `/product/${p.slug}` },
+          ],
         }),
       ],
+
     };
   },
   component: Page,
