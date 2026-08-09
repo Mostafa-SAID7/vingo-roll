@@ -359,21 +359,33 @@
   animation: vr-glow-pulse 2s ease-in-out infinite;
 }
 
-/* Enhanced shimmer loading animation */
-@keyframes shimmer {
+/* Enhanced shimmer loading animation (transform based = 60fps) */
+@keyframes vr-shimmer {
   0% {
-    background-position: -1000px 0;
-  }
-  50% {
-    background-position: 500px 0;
+    transform: translate3d(-100%, 0, 0);
   }
   100% {
-    background-position: 1000px 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes vr-shimmer-bg {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 
 @utility animate-shimmer {
-  animation: shimmer 2.5s ease-in-out infinite;
+  animation: vr-shimmer 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+@utility animate-shimmer-bg {
+  background-size: 200% 100%;
+  animation: vr-shimmer-bg 2.4s linear infinite;
 }
 
 /* Fade in up animation for staggered skeleton items */
