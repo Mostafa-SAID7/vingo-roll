@@ -46,17 +46,18 @@ function ShopPage() {
                 Filters
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[88vw] max-w-sm overflow-y-auto p-6">
-              <SheetHeader className="p-0">
+            <SheetContent side="left" className="w-[88vw] max-w-sm overflow-y-auto p-4 sm:p-6">
+              <SheetHeader className="sr-only">
                 <SheetTitle>Filters</SheetTitle>
               </SheetHeader>
-              <div className="mt-6">
+              <div className="mt-8">
                 <FilterSidebar
                   filters={filters}
                   onFiltersChange={setFilters}
                   resultsCount={filtered.length}
                 />
               </div>
+            </SheetContent>
             </SheetContent>
           </Sheet>
         </div>
