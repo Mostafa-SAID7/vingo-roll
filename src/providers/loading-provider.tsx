@@ -52,7 +52,9 @@ export function LoadingProvider({ children }: { children: React.ReactNode }) {
     ready.push(
       document.readyState === "complete"
         ? Promise.resolve()
-        : new Promise<void>((resolve) => window.addEventListener("load", () => resolve(), { once: true })),
+        : new Promise<void>((resolve) =>
+            window.addEventListener("load", () => resolve(), { once: true }),
+          ),
     );
 
     void Promise.all(ready).then(finish);

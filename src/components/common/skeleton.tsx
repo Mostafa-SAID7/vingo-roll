@@ -65,10 +65,7 @@ export function SkeletonProductGrid({ count = 4 }: { count?: number }) {
 export function SkeletonHero() {
   return (
     <div className="space-y-6">
-      <Skeleton
-        variant="image"
-        className="h-56 w-full rounded-xl sm:h-80 lg:h-96 lg:aspect-auto"
-      />
+      <Skeleton variant="image" className="h-56 w-full rounded-xl sm:h-80 lg:h-96 lg:aspect-auto" />
       <div className="mx-auto max-w-2xl space-y-4 px-4">
         <Skeleton variant="text" className="mx-auto h-8 w-2/3" />
         <Skeleton variant="text" className="mx-auto h-6 w-3/4" />
