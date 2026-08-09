@@ -42,6 +42,17 @@ const names = [
 const styles = ["Minimal", "Natural", "Classic", "Contemporary"];
 const roomPool = ["living-room", "bedroom", "dining-room", "home-office", "kitchen"];
 
+const materialImages: Record<string, string> = {
+  "Belgian Linen": IMG.linenClose,
+  "Brushed Cotton": IMG.blackout,
+  "Silk Velvet": IMG.velvet,
+  "Sheer Voile": IMG.sheer,
+  "Woven Reed": IMG.woven,
+  "Blackout Twill": IMG.thermal,
+};
+
+const materialImage = (material: string) => materialImages[material] ?? IMG.linen;
+
 export const swatches: Swatch[] = materialsList.map((m, i) => ({
   id: `swatch-${i + 1}`,
   name: `${names[i] ?? "Natural"} ${m.material}`,
@@ -51,7 +62,7 @@ export const swatches: Swatch[] = materialsList.map((m, i) => ({
   lightControl: m.light,
   rooms: [roomPool[i % roomPool.length]!, roomPool[(i + 2) % roomPool.length]!],
   style: styles[i % styles.length]!,
-  image: IMG.linen,
+  image: materialImage(m.material),
 }));
 
 export const SWATCH_LIMIT = 8;
