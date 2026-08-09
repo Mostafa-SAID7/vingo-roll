@@ -5,6 +5,12 @@ export const IMG = {
   linen: "/images/fabrics/linen-texture.jpg",
   bedroom: "/images/rooms/bedroom-blackout.jpg",
   woven: "/images/products/woven-shade.jpg",
+  velvet: "/images/Material/SilkVelvet/VelvetDrape2.jpg",
+  drapery: "/images/products/Draper/Draper1.jpg",
+  sheer: "/images/products/SheerCurtains/VoilePanel/VoilePanel.jpg",
+  thermal: "/images/products/Thermal/Thermal1.png",
+  blackout: "/images/Material/BrushedCotton/Nocturne/Nocturne1.webp",
+  linenClose: "/images/Material/BelgianLinen/Aurelle/Aurelle2.webp",
 } as const;
 
 export const categories: Category[] = [
@@ -15,7 +21,7 @@ export const categories: Category[] = [
     tagline: "Softness, in full length",
     description:
       "Made-to-measure curtains in linen, cotton and velvet — hemmed to the millimetre and finished by hand.",
-    image: IMG.hero,
+    image: IMG.linenClose,
     group: "curtains",
   },
   {
@@ -25,7 +31,7 @@ export const categories: Category[] = [
     tagline: "True darkness, warm hand",
     description:
       "Triple-weave and lined blackout panels that quiet a room's light without the plastic look.",
-    image: IMG.bedroom,
+    image: IMG.blackout,
     group: "curtains",
   },
   {
@@ -34,7 +40,7 @@ export const categories: Category[] = [
     name: "Sheer Curtains",
     tagline: "Light, filtered gently",
     description: "Airy voiles and open-weave linens that turn daylight into something softer.",
-    image: IMG.hero,
+    image: IMG.sheer,
     group: "curtains",
   },
   {
@@ -43,7 +49,7 @@ export const categories: Category[] = [
     name: "Thermal Curtains",
     tagline: "Comfort you can feel",
     description: "Insulating interlined panels that hold warmth in winter and heat out in summer.",
-    image: IMG.linen,
+    image: IMG.thermal,
     group: "curtains",
   },
   {
@@ -52,7 +58,7 @@ export const categories: Category[] = [
     name: "Drapery",
     tagline: "Architectural fall",
     description: "Pinch pleat, ripplefold and goblet headings for rooms with ceiling to spare.",
-    image: IMG.hero,
+    image: IMG.drapery,
     group: "curtains",
   },
   {

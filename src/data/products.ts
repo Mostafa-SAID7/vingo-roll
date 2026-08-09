@@ -36,6 +36,7 @@ type Seed = {
   needs: string[];
   style: string[];
   image: string;
+  gallery?: string[];
   collectionId?: string;
   motorized?: boolean;
   flags?: Partial<Pick<Product, "featured" | "bestseller" | "newArrival" | "sale">>;
@@ -55,6 +56,11 @@ const seeds: Seed[] = [
     needs: ["light-filtering", "privacy", "large-windows"],
     style: ["Minimal", "Natural"],
     image: "/images/Material/BelgianLinen/Aurelle/Aurelle1.jpg",
+    gallery: [
+      "/images/Material/BelgianLinen/Aurelle/Aurelle1.jpg",
+      "/images/Material/BelgianLinen/Aurelle/Aurelle2.webp",
+      "/images/Material/BelgianLinen/Aurelle/Aurelle3.jpg",
+    ],
     collectionId: "col-natural",
     flags: { featured: true, bestseller: true },
     rating: 4.8,
@@ -72,6 +78,11 @@ const seeds: Seed[] = [
     needs: ["blackout", "noise-reduction", "heat-control"],
     style: ["Contemporary", "Classic"],
     image: "/images/Material/BrushedCotton/Nocturne/Nocturne1.webp",
+    gallery: [
+      "/images/Material/BrushedCotton/Nocturne/Nocturne1.webp",
+      "/images/Material/BrushedCotton/Nocturne/Nocturne2.webp",
+      "/images/Material/BrushedCotton/Nocturne/Nocturne3.webp",
+    ],
     collectionId: "col-designer",
     flags: { featured: true, sale: true, bestseller: true },
     rating: 4.9,
@@ -87,7 +98,12 @@ const seeds: Seed[] = [
     rooms: ["living-room", "dining-room", "home-office"],
     needs: ["light-filtering", "large-windows"],
     style: ["Minimal", "Contemporary"],
-    image: IMG.hero,
+    image: "/images/products/SheerCurtains/VoilePanel/VoilePanel.jpg",
+    gallery: [
+      "/images/products/SheerCurtains/VoilePanel/VoilePanel.jpg",
+      "/images/products/SheerCurtains/VoilePanel/VoilePanel2.webp",
+      "/images/products/SheerCurtains/VoilePanel/VoilePanel3.avif",
+    ],
     collectionId: "col-minimal",
     flags: { featured: true },
     rating: 4.6,
@@ -103,7 +119,12 @@ const seeds: Seed[] = [
     rooms: ["living-room", "bedroom"],
     needs: ["heat-control", "noise-reduction", "blackout"],
     style: ["Classic"],
-    image: IMG.linen,
+    image: "/images/products/Thermal/Thermal1.png",
+    gallery: [
+      "/images/products/Thermal/Thermal1.png",
+      "/images/products/Thermal/Thermal2.webp",
+      "/images/products/Thermal/Thermal3.jpg",
+    ],
     collectionId: "col-classic",
     flags: { bestseller: true },
     rating: 4.7,
@@ -119,7 +140,12 @@ const seeds: Seed[] = [
     rooms: ["living-room", "dining-room"],
     needs: ["large-windows", "privacy"],
     style: ["Classic", "Designer"],
-    image: IMG.hero,
+    image: "/images/products/Draper/Draper1.jpg",
+    gallery: [
+      "/images/products/Draper/Draper1.jpg",
+      "/images/products/Draper/Draper2.webp",
+      "/images/products/Draper/Draper3.jpg",
+    ],
     collectionId: "col-designer",
     flags: { featured: true },
     rating: 4.9,
@@ -213,7 +239,12 @@ const seeds: Seed[] = [
     rooms: ["bedroom", "kids-room", "home-office"],
     needs: ["light-filtering", "small-windows"],
     style: ["Natural", "Minimal"],
-    image: IMG.linen,
+    image: "/images/products/SheerCurtains/LinenBlend/Dune%20Sheer%20Linen%20Blend.jpg",
+    gallery: [
+      "/images/products/SheerCurtains/LinenBlend/Dune%20Sheer%20Linen%20Blend.jpg",
+      "/images/products/SheerCurtains/LinenBlend/Dune%20Sheer%20Linen%20Blend2.webp",
+      "/images/products/SheerCurtains/LinenBlend/Dune%20Sheer%20Linen%20Blend3.webp",
+    ],
     collectionId: "col-seasonal",
     flags: { sale: true },
     rating: 4.4,
@@ -246,6 +277,11 @@ const seeds: Seed[] = [
     needs: ["blackout", "noise-reduction"],
     style: ["Designer", "Classic"],
     image: "/images/Material/SilkVelvet/VelvetDrape1.jpg",
+    gallery: [
+      "/images/Material/SilkVelvet/VelvetDrape1.jpg",
+      "/images/Material/SilkVelvet/VelvetDrape2.jpg",
+      "/images/Material/SilkVelvet/VelvetDrape3.jpg",
+    ],
     collectionId: "col-designer",
     flags: { featured: true },
     rating: 4.9,
@@ -268,6 +304,25 @@ const seeds: Seed[] = [
   },
 ];
 
+function buildGallery(seed: Seed) {
+  const alts = [
+    `${seed.name} hung in a styled ${seed.rooms[0]?.replace("-", " ") ?? "living room"} — ${seed.short}`,
+    `${seed.name} across a full window wall showing drape and fall`,
+    `Close-up of the ${seed.name} fabric weave and colour`,
+    `Heading and hardware detail of the ${seed.name}`,
+  ];
+  const kinds = ["main", "room", "texture", "detail"] as const;
+  const srcs =
+    seed.gallery && seed.gallery.length > 0
+      ? [...seed.gallery, IMG.linen].slice(0, 4)
+      : [seed.image, IMG.hero, IMG.linen, IMG.woven];
+  return srcs.map((src, i) => ({
+    src,
+    alt: alts[i] ?? alts[0]!,
+    kind: kinds[i] ?? "detail",
+  }));
+}
+
 function buildProduct(seed: Seed): Product {
   const product: Product = {
     id: seed.slug,
@@ -281,12 +336,7 @@ function buildProduct(seed: Seed): Product {
     currency: "USD",
     rating: seed.rating,
     reviewCount: seed.reviews,
-    images: [
-      { src: seed.image, alt: `${seed.name} installed in a styled room`, kind: "main" },
-      { src: IMG.hero, alt: `${seed.name} seen across a full window wall`, kind: "room" },
-      { src: IMG.linen, alt: `Close-up of the ${seed.name} fabric weave`, kind: "texture" },
-      { src: IMG.woven, alt: `Heading and hardware detail of the ${seed.name}`, kind: "detail" },
-    ],
+    images: buildGallery(seed),
     materials,
     colors,
     sizes,

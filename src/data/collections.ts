@@ -10,7 +10,7 @@ export const collections: Collection[] = [
     story:
       "Pieces we developed with interior designers who kept asking for the same three things: a truer black-out, a softer hand, and a hem that hangs straight after year five.",
     description: "Our most tailored made-to-order drapery and shades.",
-    image: IMG.hero,
+    image: IMG.drapery,
   },
   {
     id: "col-natural",
@@ -38,7 +38,7 @@ export const collections: Collection[] = [
     mood: "Traditional proportions",
     story: "Pinch pleats, cloth tapes and interlining — the details that made drapery an art.",
     description: "Time-tested headings and finishes.",
-    image: IMG.linen,
+    image: IMG.velvet,
   },
   {
     id: "col-contemporary",
@@ -47,7 +47,7 @@ export const collections: Collection[] = [
     mood: "Sharp and quiet",
     story: "Matte finishes, deep tones and motorised operation for modern rooms.",
     description: "Modern silhouettes and smart operation.",
-    image: IMG.bedroom,
+    image: IMG.blackout,
   },
   {
     id: "col-seasonal",
