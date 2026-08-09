@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { SlidersHorizontal } from "lucide-react";
 import { pageHead } from "@/lib/seo";
 import { Crumbs, PageHeader, Section } from "@/components/common/section";
 import { ProductGrid } from "@/components/product/product-card";
 import { FilterSidebar } from "@/components/shop/filter-sidebar";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useProductFilters } from "@/hooks";
 import type { FilterState } from "@/types/common";
 import { FILTER_DEFAULTS } from "@/types/common";
