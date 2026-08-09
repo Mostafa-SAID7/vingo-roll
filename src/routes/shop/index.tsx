@@ -36,6 +36,31 @@ function ShopPage() {
         description="Filter by how you want the light to behave — then narrow by material, colour and room."
       />
       <Section>
+        {/* Mobile / tablet filter trigger */}
+        <div className="mb-6 flex items-center justify-between gap-4 lg:hidden">
+          <p className="text-muted-foreground text-sm">{filtered.length} products</p>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-2">
+                <SlidersHorizontal className="h-4 w-4" />
+                Filters
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[88vw] max-w-sm overflow-y-auto p-6">
+              <SheetHeader className="p-0">
+                <SheetTitle>Filters</SheetTitle>
+              </SheetHeader>
+              <div className="mt-6">
+                <FilterSidebar
+                  filters={filters}
+                  onFiltersChange={setFilters}
+                  resultsCount={filtered.length}
+                />
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
         <div className="grid gap-8 lg:grid-cols-[280px_1fr]">
           {/* Filter Sidebar */}
           <aside className="hidden lg:block">
