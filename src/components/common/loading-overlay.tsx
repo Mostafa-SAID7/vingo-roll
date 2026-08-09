@@ -1,81 +1,69 @@
+import { useEffect, useState } from "react";
+
 import { useLoadingState } from "@/providers/loading-provider";
 import { cn } from "@/lib/utils";
 
 export function LoadingOverlay() {
   const { isInitialLoading } = useLoadingState();
+  const [mounted, setMounted] = useState(true);
+
+  // Unmount after the fade-out so the overlay never blocks the page.
+  useEffect(() => {
+    if (isInitialLoading) {
+      setMounted(true);
+      return;
+    }
+    const t = window.setTimeout(() => setMounted(false), 600);
+    return () => window.clearTimeout(t);
+  }, [isInitialLoading]);
+
+  if (!mounted) return null;
 
   return (
     <div
-      className={cn(
-        "fixed inset-0 z-50 flex items-center justify-center",
-        "bg-gradient-to-br from-background via-background to-accent/5",
-        "transition-all duration-500 pointer-events-none",
-        isInitialLoading ? "opacity-100 backdrop-blur-sm" : "opacity-0 backdrop-blur-0",
-      )}
+      role="status"
+      aria-live="polite"
       aria-hidden={!isInitialLoading}
-      style={{
-        pointerEvents: isInitialLoading ? "auto" : "none",
-      }}
+      className={cn(
+        "fixed inset-0 z-[200] flex items-center justify-center px-6",
+        "bg-background transition-opacity duration-500",
+        isInitialLoading ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+      )}
     >
-      {/* Animated gradient background */}
+      {/* Ambient background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 animate-shimmer" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full blur-3xl animate-pulse" />
+        <div className="animate-shimmer-bg absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/10 to-primary/5" />
+        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-primary/10 to-accent/15 blur-3xl sm:h-96 sm:w-96" />
       </div>
 
       {/* Loading content */}
-      <div className="relative z-10 flex flex-col items-center gap-6">
-        {/* Animated triple-ring spinner */}
-        <div className="relative w-20 h-20">
-          {/* Outer ring */}
+      <div className="relative z-10 flex w-full max-w-xs flex-col items-center gap-5 sm:max-w-sm sm:gap-6">
+        {/* Triple-ring spinner */}
+        <div className="relative h-14 w-14 sm:h-20 sm:w-20">
           <div
-            className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary border-r-accent/50 animate-spin"
+            className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-primary border-r-accent/50"
             style={{ animationDuration: "2.5s" }}
           />
-          {/* Middle ring */}
           <div
-            className="absolute inset-3 rounded-full border-3 border-transparent border-b-accent border-l-primary/50 animate-spin"
+            className="absolute inset-2 animate-spin rounded-full border-2 border-transparent border-b-accent border-l-primary/50 sm:inset-3"
             style={{ animationDuration: "3s", animationDirection: "reverse" }}
           />
-          {/* Inner glow */}
-          <div className="absolute inset-6 rounded-full bg-gradient-to-br from-primary/40 to-accent/40 blur-sm animate-pulse" />
-          {/* Center dot */}
+          <div className="absolute inset-5 rounded-full bg-gradient-to-br from-primary/40 to-accent/40 blur-sm sm:inset-6" />
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-3 h-3 rounded-full bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/50" />
+            <div className="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-primary to-accent sm:h-3 sm:w-3" />
           </div>
         </div>
 
-        {/* Loading text with staggered animation */}
-        <div className="text-center space-y-2">
-          <p className="text-base font-semibold text-foreground tracking-wide">
-            Loading your experience
+        <div className="space-y-1.5 text-center">
+          <p className="font-display text-base tracking-wide text-foreground sm:text-lg">
+            Vingo Roll
           </p>
-          <p className="text-sm text-muted-foreground/80">Preparing styles and content</p>
+          <p className="text-xs text-muted-foreground sm:text-sm">Preparing your experience</p>
         </div>
 
-        {/* Enhanced progress bar */}
-        <div className="w-40 h-1.5 bg-border/40 rounded-full overflow-hidden backdrop-blur-sm border border-border/20">
-          <div
-            className="h-full bg-gradient-to-r from-primary via-accent to-primary rounded-full animate-shimmer"
-            style={{
-              width: "40%",
-              backgroundSize: "200% 100%",
-            }}
-          />
-        </div>
-
-        {/* Loading dots animation */}
-        <div className="flex gap-1.5">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="w-2 h-2 rounded-full bg-primary/60"
-              style={{
-                animation: `pulse 1.4s infinite`,
-                animationDelay: `${i * 0.2}s`,
-              }}
-            />
-          ))}
+        {/* Progress shimmer bar */}
+        <div className="h-1.5 w-full max-w-[16rem] overflow-hidden rounded-full bg-muted">
+          <div className="animate-shimmer-bg h-full w-full rounded-full bg-gradient-to-r from-transparent via-primary to-transparent" />
         </div>
       </div>
     </div>
