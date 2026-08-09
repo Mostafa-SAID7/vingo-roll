@@ -14,18 +14,22 @@ This folder contains configuration files for development tools and linting.
 ## Configuration Reference
 
 ### Prettier (.prettierrc)
+
 - Semicolons: auto
 - Quotes: double
 - Tab width: 2 spaces
 - Trailing commas: es5
 
 ### Lint-staged (.lintstagedrc.json)
+
 Runs on commit:
+
 - TypeScript/JavaScript: ESLint + Prettier
 - JSON/Markdown: Prettier
 - CSS/SCSS: Prettier
 
 ### Bunfig (bunfig.toml)
+
 Alternative package manager configuration when using Bun.
 
 ## Usage
