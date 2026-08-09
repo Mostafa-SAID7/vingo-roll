@@ -58,7 +58,6 @@ function ShopPage() {
                 />
               </div>
             </SheetContent>
-            </SheetContent>
           </Sheet>
         </div>
 
