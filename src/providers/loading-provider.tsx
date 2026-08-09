@@ -20,48 +20,45 @@ export function useLoadingState() {
   return context;
 }
 
+/** Minimum time the shimmer overlay stays visible so it never flashes. */
+const MIN_DURATION = 900;
+/** Hard cap so the overlay can never get stuck. */
+const MAX_DURATION = 4000;
+
 export function LoadingProvider({ children }: { children: React.ReactNode }) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isStylesLoaded, setStylesLoaded] = useState(false);
 
   useEffect(() => {
-    // Simulate styles loading or wait for actual style sheets
-    const timer = setTimeout(() => {
-      setIsInitialLoading(false);
-      setStylesLoaded(true);
-    }, 800); // 800ms delay for styles to fully load
+    const start = performance.now();
+    let done = false;
 
-    // Also check for actual stylesheet loading
-    const checkStylesLoaded = () => {
-      const stylesheets = document.styleSheets;
-      let allLoaded = true;
-
-      for (let i = 0; i < stylesheets.length; i++) {
-        try {
-          if (!(stylesheets[i] as CSSStyleSheet).cssRules) {
-            allLoaded = false;
-            break;
-          }
-        } catch {
-          allLoaded = false;
-          break;
-        }
-      }
-
-      if (allLoaded) {
+    const finish = () => {
+      if (done) return;
+      done = true;
+      const elapsed = performance.now() - start;
+      const wait = Math.max(0, MIN_DURATION - elapsed);
+      window.setTimeout(() => {
         setIsInitialLoading(false);
         setStylesLoaded(true);
-        clearTimeout(timer);
-      }
+      }, wait);
     };
 
-    const styleTimer = setInterval(checkStylesLoaded, 100);
-    checkStylesLoaded();
+    // Wait for fonts + window load (styles, hero imagery), whichever resolves.
+    const ready: Promise<unknown>[] = [];
+    if (typeof document !== "undefined" && "fonts" in document) {
+      ready.push(document.fonts.ready.catch(() => undefined));
+    }
+    ready.push(
+      document.readyState === "complete"
+        ? Promise.resolve()
+        : new Promise<void>((resolve) => window.addEventListener("load", () => resolve(), { once: true })),
+    );
 
-    return () => {
-      clearTimeout(timer);
-      clearInterval(styleTimer);
-    };
+    void Promise.all(ready).then(finish);
+
+    const failsafe = window.setTimeout(finish, MAX_DURATION);
+    return () => window.clearTimeout(failsafe);
   }, []);
 
   return (
